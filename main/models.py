@@ -9,6 +9,9 @@ from django.db import models
 class Tags(models.Model):
     tags = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.tag
+
 
 class Mosaic(models.Model):
     title = models.CharField(max_length=200)
@@ -36,9 +39,4 @@ class Mosaic(models.Model):
 
     def __str__(self):
         return self.title
-
-
-
-    def __str__(self):
-        return self.tag
 
