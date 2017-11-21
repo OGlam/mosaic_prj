@@ -16,7 +16,7 @@ class Tags(models.Model):
 class Mosaic(models.Model):
     title = models.CharField(max_length=200)
     origin = models.CharField(max_length=100)
-    date = models.DateTimeField()
+    date = models.DateField()
     story = models.TextField()
     # media =
     iaa_id = models.CharField(max_length=50)
