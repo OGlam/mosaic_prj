@@ -10,6 +10,3 @@ from main.models import Mosaic
 class MosaicView(generic.DetailView):
     model = Mosaic
 
-
-def detail(request, id):
-    return HttpResponse("hello")

@@ -30,7 +30,7 @@
     <li>Publications: {{ mosaic.publications | linebreaks }}</li>
 
     <li>Images:<br>
-        {% for img in mosaic.mosaicpicture_set.all %}
+        {% for img in mosaic.mosaicpicture_set.all|dictsort:"order_priority" %}
             <img style="max-width: calc(70%);" src="{{ MEDIA_URL }}/{{ img.picture }}" alt="{{ MEDIA_URL }}/{{ img.picture }}">
             <br>
             {{ img.taken_date }} - {{ img.taken_at }} - {{ img.photographer_name }} <br><br><br>
