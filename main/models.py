@@ -1,8 +1,7 @@
 from django.db import models
 
 # Create your models here.
-
-
+from django.utils.text import get_valid_filename
 
 
 class Tags(models.Model):
@@ -41,10 +40,16 @@ class Mosaic(models.Model):
         return self.title
 
 
+def mosaic_dir(instance, filename):
+    import unicodedata
+    value = get_valid_filename(instance.mosaic.origin)
+    return 'mosaic_pictures/{0}_{1}/{2}'.format(instance.mosaic.id,value, filename)
+
+
 class MosaicPicture(models.Model):
-    mosaic = models.ForeignKey (Mosaic, on_delete=models.CASCADE)
-    order_priorety = models.IntegerField (default=100)
-    picture = models.ImageField(upload_to='mosaic_pictures')
+    mosaic = models.ForeignKey(Mosaic, on_delete=models.CASCADE)
+    order_priority = models.IntegerField (default=100)
+    picture = models.ImageField(upload_to=mosaic_dir)
     negative_id = models.CharField(max_length=50)
     photographer_name = models.CharField(max_length=100)
     taken_at = models.CharField(blank = True, max_length=100)
