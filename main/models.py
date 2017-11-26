@@ -43,6 +43,7 @@ class Mosaic(models.Model):
 
 class MosaicPicture(models.Model):
     mosaic = models.ForeignKey (Mosaic, on_delete=models.CASCADE)
+    order_priorety = models.IntegerField (default=100)
     picture = models.ImageField(upload_to='mosaic_pictures')
     negative_id = models.CharField(max_length=50)
     photographer_name = models.CharField(max_length=100)
