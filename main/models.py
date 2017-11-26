@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+from django.utils.safestring import mark_safe
 from django.utils.text import get_valid_filename
 
 
@@ -26,13 +27,13 @@ class Mosaic(models.Model):
     period = models.CharField(max_length=50)
     displayed_at = models.CharField(blank = True, max_length=200)
     tags = models.ManyToManyField(Tags)
-    matriel = models.CharField(max_length=50)
+    material = models.CharField(max_length=50)
     dimen_length = models.DecimalField(max_digits=10, decimal_places=2)
     dimen_width = models.DecimalField(max_digits=10, decimal_places=2)
     dimen_area = models.DecimalField(max_digits=15, decimal_places=2)
-    comments = models.TextField(blank = True)
-    bibliography = models.TextField(blank = True)
-    publications = models.TextField(blank = True)
+    comments = models.TextField(blank=True)
+    bibliography = models.TextField(blank=True)
+    publications = models.TextField(blank=True)
 
     # pictures
 
@@ -56,6 +57,13 @@ class MosaicPicture(models.Model):
     picture_type = models.CharField(max_length=50)
     taken_date = models.DateField()
     comments = models.TextField(blank = True)
+
+    def image_tag(self):
+        if self.picture:
+            return mark_safe('<img src="/media/%s" width="150" height="150" />' % self.picture)
+        else:
+            return '-'
+    image_tag.short_description = 'Image'
 
     def __str__(self):
         return self.negative_id

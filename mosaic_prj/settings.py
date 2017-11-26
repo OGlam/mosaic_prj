@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'django_extensions',
+
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -124,3 +126,16 @@ STATIC_URL = '/static/'
 ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
 MEDIA_URL = '/media/'
+
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocationName", "tel aviv"),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'il'}}),
+        ("markerFitZoom", 12),
+    ),
+    "GOOGLE_MAP_API_KEY": "AIzaSyBUKcHfPZuvN6-aPSqRG0G5lylij8w0HTg"
+}
+
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyBUKcHfPZuvN6-aPSqRG0G5lylij8w0HTg'
+
