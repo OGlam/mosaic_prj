@@ -1,0 +1,110 @@
+<html><head>
+    <style>
+        div.gallery {
+            border: 1px solid #ccc;
+        }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .responsive {
+            padding: 0 6px;
+            float: left;
+            width: 24.99999%;
+        }
+
+        @media only screen and (max-width: 700px){
+            .responsive {
+                width: 49.99999%;
+                margin: 6px 0;
+            }
+        }
+
+        @media only screen and (max-width: 500px){
+            .responsive {
+                width: 100%;
+            }
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<h1 align="center">{{ mosaic.origin }} - {{ mosaic.title }}</h1>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% csrf_token %}
+<br><br>
+<ul>
+    <li>Story: {{ mosaic.story | linebreaks }}</li>
+    <li>IAA ID: {{ mosaic.iaa_id }}</li>
+    <li>IAA permission code: {{ mosaic.iaa_permission_code }}</li>
+    <li>Period:{{ mosaic.period }}</li>
+    <li>Displayed at: {{ mosaic.displayed_at }}</li>
+
+    <li>Tags:
+        {% for tag in mosaic.tags.all %}
+            {{ tag }},
+        {% endfor %}
+    </li>
+    <li>Material: {{ mosaic.material }}</li>
+    <li> Dimensions: {{ mosaic.dimen_length }}L X {{ mosaic.dimen_width }}W,  Area: {{ mosaic.dimen_area }}   </li>
+    <br>
+    <li>
+        Location Found:
+        <ul>
+            <li>Name: {{mosaic.place_name }}</li>
+            <li>Address: {{ mosaic }}</li>
+        </ul>
+    </li>
+
+    <li>Comments: {{ mosaic.comments | linebreaks }}</li>
+    <li>Bibliography: {{ mosaic.bibliography | linebreaks }}</li>
+    <li>Publications: {{ mosaic.publications | linebreaks }}</li>
+
+    <li>Images:<br>
+        {% for img in mosaic.mosaicpicture_set.all|dictsort:"order_priority" %}
+            <div class="responsive">
+                <div class="gallery">
+                    <a target="_blank" href="{{ MEDIA_URL }}/{{ img.picture }}">
+                        <img width="600" height="400" src="{{ MEDIA_URL }}/{{ img.picture }}" alt="{{ MEDIA_URL }}/{{ img.picture }}">
+                    </a>
+                    <div class="desc">
+                        {{ img.taken_date }} - {{ img.taken_at }} - {{ img.photographer_name }}
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+        {#    date = models.DateField()#}
+        {#    # media =#}
+        {#    # gps_longitude#}
+        {#    # gps_latitude#}
+
+</ul>
+{#{% for choice in question.choice_set.all %}#}
+{#    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />#}
+{#    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />#}
+{#{% endfor %}#}
+</body>
+</html>
+

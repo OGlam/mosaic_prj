@@ -1,9 +1,11 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
 # Create your views here.
 from main.models import Tags, Mosaic, MosaicPicture
+from django.views import generic
 
 
 def tags(request):
