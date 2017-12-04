@@ -1,0 +1,15 @@
+<h1>Tag Page</h1>
+
+<div class="row">
+
+    {% for pic in mosaic_pics %}
+    <div class="col-md-3">{{ pic.mosaic_id }}</div>
+
+        <!-- if last column in row -->
+        {% if forloop.counter|divisibleby:"4" and not forloop.last %}
+        </div><div class="row">
+        {% endif %}
+
+    {% endfor %}
+
+</div>

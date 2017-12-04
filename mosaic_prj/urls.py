@@ -18,7 +18,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from main import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^tags/', views.tags),
+    url(r'^tag/(?P<tagid>\d+)/$', views.tagPage, name='tag-url'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

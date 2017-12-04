@@ -1,0 +1,12 @@
+<h1>Tags</h1>
+
+
+{#<ul>#}
+{#{% for tag in tags %}<li style="color:{{ color }}"><a href="{% url 'tagPage.html' %}">{{ tag }}</a></li>{% endfor %}#}
+{#</ul>#}
+
+<ul>
+{% for tag in tags %}
+<li><a href="{% url 'tag-url' tag.id %}">{{ tag.tags }}</a></li>
+{% endfor %}
+</ul>
