@@ -19,6 +19,8 @@ def tags(request):
     }
     return render(request, "tags.html", d)
 
+class MosaicView(generic.DetailView):
+    model = Mosaic
 
 def tagPage(request, tagid):
     try:
