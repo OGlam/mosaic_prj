@@ -12,8 +12,8 @@ def tags(request):
     print("in")
     tags_list = Tags.objects.all()
     for tag in tags_list:
-        print (tag.tags)
-    tags = [tag.tags for tag in tags_list]
+        print (tag.tag)
+    tags = [tag.tag for tag in tags_list]
     d = {
         'tags': tags_list
     }
@@ -28,10 +28,15 @@ def tagPage(request, tagid):
     except ObjectDoesNotExist:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
-    mosaics = Mosaic.objects.filter(tags=tag)
-    mosaic_pics = MosaicPicture.objects.filter(mosaic__tags = tag)
+    mosaics = set(Mosaic.objects.filter(tags=tag))
+    # mosaic_pics = MosaicPicture.objects.filter(mosaic__tags = tag)
+    mosaic_pics = []
     if len(mosaics) == 0:
         return HttpResponseNotFound('<h1>No Mosaics with this tag</h1>')
+
+    for mosaic in mosaics:
+        pictures = MosaicPicture.objects.filter(mosaic=mosaic).order_by('order_priority')
+        mosaic_pics.append(pictures[0])
 
     d = {
         'mosaics': mosaics,

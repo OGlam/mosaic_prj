@@ -7,6 +7,6 @@
 
 <ul>
 {% for tag in tags %}
-<li><a href="{% url 'tag-url' tag.id %}">{{ tag.tags }}</a></li>
+<li><a href="{% url 'tag-url' tag.id %}">{{ tag.tag }}</a></li>
 {% endfor %}
 </ul>

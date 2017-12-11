@@ -6,13 +6,14 @@ from django.utils.text import get_valid_filename
 
 
 class Tags(models.Model):
-    tags = models.CharField(max_length=20)
+    tag = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.tags
+        return self.tag
 
 
 class Mosaic(models.Model):
+    # top_picture = models.ForeignKey(MosaicPicture, blank=True)
     title = models.CharField(max_length=200)
     origin = models.CharField(max_length=100)
     date = models.DateField()
