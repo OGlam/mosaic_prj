@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^main/', include('main.urls')),
     url(r'^tags/', views.tags),
+    url(r'^map/', views.map),
     url(r'^tag/(?P<tagid>\d+)/$', views.tagPage, name='tag-url'),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

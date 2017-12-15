@@ -1,5 +1,6 @@
+import folium as folium
+from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
@@ -44,3 +45,20 @@ def tagPage(request, tagid):
     }
 
     return render(request, "tagPage.html", d)
+
+def map(request):
+    mosaics = Mosaic.objects.all()
+    map = folium.Map(
+        location=[31.781959, 35.2137],
+        tiles='Stamen Toner',
+        zoom_start=12
+    )
+    marker_cluster = MarkerCluster().add_to(map)
+    for point in mosaics:
+        folium.Marker(
+            location = [point.dimen_width, point.dimen_length],
+            popup = point.title
+        ).add_to(marker_cluster)
+    map.save("main/templates/map.html")
+
+    return render(request, "MapPage.html")
