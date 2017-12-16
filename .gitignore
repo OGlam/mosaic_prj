@@ -3,6 +3,7 @@ db.sqlite3
 main/__pycache__/
 main/migrations/__pycache__/
 mosaic_prj/__pycache__/
+mosaic_prj/local_settings.py
 
 /mosaic_prj/media/_autofixture/100x100.png
 /mosaic_prj/media/_autofixture/200x300.png
