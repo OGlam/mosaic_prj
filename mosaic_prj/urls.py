@@ -8,10 +8,11 @@ from django.views.i18n import JavaScriptCatalog
 from main import views
 
 urlpatterns = [
+    path('', views.HomeView.as_view(), name='home'),
     path('tags', views.tags, name='tags'),
-    path('map', views.map, name='map'),
+    path('map', views.mosaic_map, name='map'),
     path('main/', include('main.urls')),
-    path('tag/<int:tagid>/', views.tagPage, name='tag-url'),
+    path('tag/<int:tagid>/', views.tag_page, name='tag-url'),
     path('admin/', admin.site.urls),
     path('jsi18n/', JavaScriptCatalog.as_view(packages=['main']), name='javascript-catalog'),
     path('i18n/', include('django.conf.urls.i18n')),

@@ -1,31 +1,42 @@
-import folium as folium
+import folium
+from django.views.generic import TemplateView, DetailView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
+from main.models import Tag, Mosaic, MosaicPicture
+from django.utils.translation import ugettext as _
 
-# Create your views here.
-from main.models import Tags, Mosaic, MosaicPicture
-from django.views import generic
+from mosaic_prj.base_views import IAAUIMixin
+
+
+class HomeView(IAAUIMixin, TemplateView):
+    template_name = 'main/home.html'
+    page_title = _('Home page')
+    page_name = 'home'
+
+
+class MosaicView(DetailView):
+    model = Mosaic
+    template_name = 'main/mosaic_detail.html'
+    context_object_name = 'mosaic'
 
 
 def tags(request):
     print("in")
-    tags_list = Tags.objects.all()
+    tags_list = Tag.objects.all()
     for tag in tags_list:
-        print (tag.tag)
+        print(tag.tag)
     tags = [tag.tag for tag in tags_list]
     d = {
         'tags': tags_list
     }
     return render(request, "tags.html", d)
 
-class MosaicView(generic.DetailView):
-    model = Mosaic
 
-def tagPage(request, tagid):
+def tag_page(request, tagid):
     try:
-        tag = Tags.objects.get(id=tagid)
+        tag = Tag.objects.get(id=tagid)
     except ObjectDoesNotExist:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
@@ -44,21 +55,22 @@ def tagPage(request, tagid):
         'mosaic_pics': mosaic_pics
     }
 
-    return render(request, "tagPage.html", d)
+    return render(request, "tag_page.html", d)
 
-def map(request):
+
+def mosaic_map(request):
     mosaics = Mosaic.objects.all()
-    map = folium.Map(
+    m = folium.Map(
         location=[31.781959, 35.2137],
         tiles='Stamen Toner',
         zoom_start=12
     )
-    marker_cluster = MarkerCluster().add_to(map)
+    marker_cluster = MarkerCluster().add_to(m)
     for point in mosaics:
         folium.Marker(
-            location = [point.dimen_width, point.dimen_length],
-            popup = point.title
+            location=[point.dimen_width, point.dimen_length],
+            popup=point.title
         ).add_to(marker_cluster)
-    map.save("main/templates/map.html")
+    m.save("main/templates/map.html")
 
-    return render(request, "MapPage.html")
+    return render(request, "map_page.html")

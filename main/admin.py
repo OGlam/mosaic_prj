@@ -1,26 +1,23 @@
 from django.contrib import admin
-
-# Register your models here.
-from .models import Mosaic, Tags, MosaicPicture
+from .models import Mosaic, Tag, MosaicPicture
 
 
-class PictureInLine (admin.TabularInline):
+class PictureInline(admin.TabularInline):
     model = MosaicPicture
     extra = 1
     list_display = ('image_tag', 'product',)
     readonly_fields = ('image_tag',)
 
 
-class MosaicAdmin (admin.ModelAdmin):
-    inlines = [PictureInLine]
+class MosaicAdmin(admin.ModelAdmin):
+    inlines = [PictureInline]
 
 
-class PictureAdmin (admin.ModelAdmin):
+class PictureAdmin(admin.ModelAdmin):
     fields = ('image_tag',)
     readonly_fields = ('image_tag',)
 
 
-admin.site.register(Tags)
+admin.site.register(Tag)
 admin.site.register(Mosaic, MosaicAdmin)
 admin.site.register(MosaicPicture, PictureAdmin)
-
