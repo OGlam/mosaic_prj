@@ -17,16 +17,16 @@ class Mosaic(models.Model):
     title = models.CharField(max_length=200)
     origin = models.CharField(max_length=100)
     date = models.DateField()
-    story = models.TextField(blank = True)
+    story = models.TextField(blank=True)
     # media =
     iaa_id = models.CharField(max_length=50)
     iaa_permission_code = models.CharField(max_length=50)
-    place_name = models.CharField(blank = True, max_length=100)
+    place_name = models.CharField(blank=True, max_length=100)
     # gps_longitude
     # gps_latitude
-    address = models.CharField(blank = True, max_length=200)
+    address = models.CharField(blank=True, max_length=200)
     period = models.CharField(max_length=50)
-    displayed_at = models.CharField(blank = True, max_length=200)
+    displayed_at = models.CharField(blank=True, max_length=200)
     tags = models.ManyToManyField(Tags)
     material = models.CharField(max_length=50)
     dimen_length = models.DecimalField(max_digits=10, decimal_places=4)
@@ -45,25 +45,26 @@ class Mosaic(models.Model):
 def mosaic_dir(instance, filename):
     import unicodedata
     value = get_valid_filename(instance.mosaic.origin)
-    return 'mosaic_pictures/{0}_{1}/{2}'.format(instance.mosaic.id,value, filename)
+    return 'mosaic_pictures/{0}_{1}/{2}'.format(instance.mosaic.id, value, filename)
 
 
 class MosaicPicture(models.Model):
     mosaic = models.ForeignKey(Mosaic, on_delete=models.CASCADE)
-    order_priority = models.IntegerField (default=100)
+    order_priority = models.IntegerField(default=100)
     picture = models.ImageField(upload_to=mosaic_dir)
     negative_id = models.CharField(max_length=50)
     photographer_name = models.CharField(max_length=100)
-    taken_at = models.CharField(blank = True, max_length=100)
+    taken_at = models.CharField(blank=True, max_length=100)
     picture_type = models.CharField(max_length=50)
     taken_date = models.DateField()
-    comments = models.TextField(blank = True)
+    comments = models.TextField(blank=True)
 
     def image_tag(self):
         if self.picture:
             return mark_safe('<img src="/media/%s" width="150" height="150" />' % self.picture)
         else:
             return '-'
+
     image_tag.short_description = 'Image'
 
     def __str__(self):
