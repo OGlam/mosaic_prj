@@ -13,10 +13,9 @@ mosaic_prj/__pycache__/
 
 *.orig
 *.py[cod]
-.idea/
-/mosaic_prj/local_settings.py
-/media/
-/design/
+mosaic_prj/local_settings.py
+media/
+design/
 *~
 *.pot
 man/
