@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Mosaic, Tag, MosaicPicture
+from .models import Tag, MosaicPicture, MosaicItem
 
 
 class PictureInline(admin.TabularInline):
@@ -9,7 +9,7 @@ class PictureInline(admin.TabularInline):
     readonly_fields = ('image_tag',)
 
 
-class MosaicAdmin(admin.ModelAdmin):
+class MosaicItemAdmin(admin.ModelAdmin):
     inlines = [PictureInline]
 
 
@@ -19,5 +19,5 @@ class PictureAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Tag)
-admin.site.register(Mosaic, MosaicAdmin)
+admin.site.register(MosaicItem, MosaicItemAdmin)
 admin.site.register(MosaicPicture, PictureAdmin)

@@ -4,7 +4,7 @@ from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from main.models import Tag, Mosaic, MosaicPicture
+from main.models import Tag, MosaicItem, MosaicPicture
 from django.utils.translation import ugettext as _
 
 from mosaic_prj.base_views import IAAUIMixin
@@ -17,7 +17,7 @@ class HomeView(IAAUIMixin, TemplateView):
 
 
 class MosaicView(DetailView):
-    model = Mosaic
+    model = MosaicItem
     template_name = 'main/mosaic_detail.html'
     context_object_name = 'mosaic'
 
@@ -40,7 +40,7 @@ def tag_page(request, tagid):
     except ObjectDoesNotExist:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
-    mosaics = set(Mosaic.objects.filter(tags=tag))
+    mosaics = set(MosaicItem.objects.filter(tags=tag))
     # mosaic_pics = MosaicPicture.objects.filter(mosaic__tags = tag)
     mosaic_pics = []
     if len(mosaics) == 0:
@@ -59,7 +59,7 @@ def tag_page(request, tagid):
 
 
 def mosaic_map(request):
-    mosaics = Mosaic.objects.all()
+    mosaics = MosaicItem.objects.all()
     m = folium.Map(
         location=[31.781959, 35.2137],
         tiles='Stamen Toner',
