@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.files.uploadedfile import UploadedFile
 from django.core.management.base import BaseCommand
 
-from main.models import Mosaic, MosaicPicture
+from main.models import MosaicItem, MosaicPicture
 
 
 class Command(BaseCommand):
@@ -18,7 +18,7 @@ class Command(BaseCommand):
     def handle(self, n, **options):
         for i in range(n):
             # Create random mosaic
-            o = Mosaic()
+            o = MosaicItem()
             o.title = silly.name()
             o.origin = silly.title()
             o.iaa_id = silly.title()
