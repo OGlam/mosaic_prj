@@ -1,10 +1,12 @@
+from builtins import super
+
 import folium
 from django.views.generic import TemplateView, DetailView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from main.models import Tag, MosaicItem, MosaicPicture
+from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite
 from django.utils.translation import ugettext as _
 
 from mosaic_prj.base_views import IAAUIMixin
@@ -14,6 +16,11 @@ class HomeView(IAAUIMixin, TemplateView):
     template_name = 'main/home.html'
     page_title = _('Home page')
     page_name = 'home'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['popular_site'] = MosaicSite.objects.filter(featured=True)[:5]
+        return context
 
 
 class MosaicView(DetailView):

@@ -115,6 +115,9 @@ class MosaicItem(models.Model):
     def __str__(self):
         return self.misp_rashut
 
+    def get_all_pictures_by_position(self):
+        return self.pictures.order_by('-order_priority')
+
 
 class MosaicPicture(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
