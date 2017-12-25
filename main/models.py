@@ -72,7 +72,7 @@ class MosaicSite(models.Model):
     comments = models.TextField(_('Comments'), blank=True)
 
     def __str__(self):
-        return f'[{self.site_id}] {self.title}'
+        return u'[{}] {}'.format(self.site_id, self.title)
 
 
 class MosaicItem(models.Model):
