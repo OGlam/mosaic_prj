@@ -11,3 +11,14 @@ mosaic_prj/local_settings.py
 /mosaic_prj/media/_autofixture/200x300_2.png
 /mosaic_prj/media/_autofixture/200x300_3.png
 /mosaic_prj/media/_autofixture/200x300_4.png
+
+*.orig
+*.py[cod]
+mosaic_prj/local_settings.py
+media/
+design/
+*~
+*.pot
+man/
+pip-selfcheck.json
+local/

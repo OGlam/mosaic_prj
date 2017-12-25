@@ -1,0 +1,38 @@
+{% load i18n static mosaic %}
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <b>{% trans 'Antiquities Authoroty' %}</b> | {% trans 'Mosaics' %}
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="flex-column align-items-start ml-lg-0 ml-3" id="main-navbar">
+            <form class="form-inline my-2 my-lg-0 ml-auto">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
+            <ul class="navbar-nav flex-row mb-2">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">{% trans 'Home page' %} <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{% trans 'Popular' %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{% trans 'Tags' %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{% trans 'Period' %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{% trans 'Map' %}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
