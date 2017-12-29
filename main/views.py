@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
-from main.forms import TagForm
+from main.forms import TagForm, MosaicSiteForm
 from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite
 from django.utils.translation import ugettext as _
 
@@ -58,6 +58,34 @@ class TagUpdateView(IAAUIMixin, UpdateView):
 class TagDeleteView(IAAUIMixin, DeleteView):
     model = Tag
     success_url = reverse_lazy('main:tag_create')
+
+
+class MosaicSiteCreateView(IAAUIMixin, CreateView):
+    template_name = 'main/mosaic_site_form.html'
+    model = MosaicSite
+    form_class = MosaicSiteForm
+    success_url = reverse_lazy('main:site_create')
+    page_title = _('Mosaic site create')
+    page_name = 'mosaic_site_create'
+
+    def get_context_data(self, **kwargs):
+        d = super(MosaicSiteCreateView, self).get_context_data(**kwargs)
+        d['sites'] = MosaicSite.objects.all()
+        return d
+
+
+class MosaicSiteUpdateView(IAAUIMixin, UpdateView):
+    template_name = 'main/mosaic_site_form.html'
+    model = MosaicSite
+    form_class = MosaicSiteForm
+    success_url = reverse_lazy('main:site_create')
+    page_title = _('Mosaic site update')
+    page_name = 'mosaic_site_update'
+
+
+class MosaicSiteDeleteView(IAAUIMixin, DeleteView):
+    model = MosaicSite
+    success_url = reverse_lazy('main:site_create')
 
 
 def tags(request):
