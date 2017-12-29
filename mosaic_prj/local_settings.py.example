@@ -4,9 +4,11 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mosaic',
         'USER': 'mosaic',
-        'PASSWORD': 'mosaic'
+        'PASSWORD': 'mosaic',
+        'HOST' : '127.0.0.1',
+        'PORT'    : '5432',
     },
 }
