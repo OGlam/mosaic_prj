@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tag, MosaicPicture, MosaicItem
+from .models import Tag, MosaicPicture, MosaicItem, MosaicSite
 
 
 class PictureInline(admin.TabularInline):
@@ -19,5 +19,6 @@ class PictureAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Tag)
+admin.site.register(MosaicSite)
 admin.site.register(MosaicItem, MosaicItemAdmin)
 admin.site.register(MosaicPicture, PictureAdmin)
