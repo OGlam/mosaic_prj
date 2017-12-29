@@ -1,11 +1,14 @@
 from builtins import super
 
 import folium
-from django.views.generic import TemplateView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
+
+from main.forms import TagForm
 from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite
 from django.utils.translation import ugettext as _
 
@@ -27,6 +30,34 @@ class MosaicView(DetailView):
     model = MosaicItem
     template_name = 'main/mosaic_detail.html'
     context_object_name = 'mosaic'
+
+
+class TagCreateView(IAAUIMixin, CreateView):
+    template_name = 'main/tag_form.html'
+    model = Tag
+    form_class = TagForm
+    success_url = reverse_lazy('main:tag_create')
+    page_title = _('Tag create')
+    page_name = 'tag_create'
+
+    def get_context_data(self, **kwargs):
+        d = super(TagCreateView, self).get_context_data(**kwargs)
+        d['tags'] = Tag.objects.all()
+        return d
+
+
+class TagUpdateView(IAAUIMixin, UpdateView):
+    template_name = 'main/tag_form.html'
+    model = Tag
+    form_class = TagForm
+    success_url = reverse_lazy('main:tag_create')
+    page_title = _('Tag update')
+    page_name = 'tag_update'
+
+
+class TagDeleteView(IAAUIMixin, DeleteView):
+    model = Tag
+    success_url = reverse_lazy('main:tag_create')
 
 
 def tags(request):
