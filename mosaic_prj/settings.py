@@ -130,6 +130,8 @@ USE_TZ = True
 
 AUTH_USER_MODEL = 'users.User'
 
+LOGIN_REDIRECT_URL = 'home'
+
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'mosaic_prj', 'locale'),
 )

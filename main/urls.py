@@ -8,4 +8,7 @@ urlpatterns = [
     path('tag/create/', views.TagCreateView.as_view(), name='tag_create'),
     path('tag/update/<int:pk>/', views.TagUpdateView.as_view(), name='tag_update'),
     path('tag/delete/<int:pk>/', views.TagDeleteView.as_view(), name='tag_delete'),
+    path('site/create/', views.MosaicSiteCreateView.as_view(), name='site_create'),
+    path('site/update/<int:pk>/', views.MosaicSiteUpdateView.as_view(), name='site_update'),
+    path('site/delete/<int:pk>/', views.MosaicSiteDeleteView.as_view(), name='site_delete'),
 ]
