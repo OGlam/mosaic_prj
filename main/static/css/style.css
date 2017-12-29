@@ -1,3 +1,52 @@
+/* Generic */
+.no-btn {
+    border: 0;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+/* Header */
+header {
+    background-color: #fff;
+    border-bottom: 2px solid #666;
+    box-shadow: 0 1px 10px #666;
+    margin-bottom: 0.5rem;
+}
+
+.bg-white {
+    background-color: #fff !important;
+}
+
+.navbar-brand {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 30px;
+}
+
+.navbar-brand img {
+    background-color: #ccc;
+}
+
+/* Main */
+main {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Responsive */
+@media only screen and (max-width: 767px) {
+    #main-search-form {
+        width: 85%;
+        margin-left: 15%;
+    }
+
+    header .navbar-toggler {
+        position: absolute;
+        left: 0;
+        top: -42px;
+    }
+}
+
 .gallery {
     border: 1px solid #ccc;
 }
