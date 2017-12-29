@@ -41,6 +41,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">{% trans 'Map' %}</a>
                     </li>
+                    {% if request.user.is_admin %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-primary dropdown-toggle" href="#" id="adminMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {% trans 'Admin menu' %}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="adminMenuLink">
+                                <a class="dropdown-item" href="{% url 'main:tag_create' %}">
+                                    {% trans 'Tags' %}
+                                </a>
+                                <a class="dropdown-item" href="{% url 'main:site_create' %}">
+                                    {% trans 'Sites' %}
+                                </a>
+                            </div>
+                        </li>
+                    {% endif %}
                 </ul>
                 <form id="lang-form" class="form-inline my-2 my-lg-0" action="{% url 'set_language' %}" method="post">{% csrf_token %}
                     <input name="next" type="hidden" value="{{ redirect_to }}"/>
