@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
-from main.forms import TagForm, MosaicSiteForm, MosaicItemForm
+from main.forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm
 from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite
 from django.utils.translation import ugettext as _
 
@@ -100,11 +100,7 @@ class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
     page_name = 'mosaic_sitem_create'
 
     def get_success_url(self):
-        return reverse('main:item_create', args=[self.kwargs['site_id']])
-
-    def form_valid(self, form):
-        form.instance.mosaic_site_id = self.kwargs['site_id']
-        return super().form_valid(form)
+        return reverse_lazy('main:item_create')
 
     def get_context_data(self, **kwargs):
         d = super(MosaicItemCreateView, self).get_context_data(**kwargs)
@@ -115,7 +111,7 @@ class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
 class MosaicItemUpdateView(SuccessMessageMixin, IAAUIMixin, UpdateView):
     template_name = 'main/mosaic_item_form.html'
     model = MosaicItem
-    form_class = MosaicItemForm
+    form_class = MosaicItemUpdateForm
     success_message = _('Mosaic item updated successfully')
     page_title = _('Mosaic item update')
     page_name = 'mosaic_item_update'
@@ -126,7 +122,7 @@ class MosaicItemUpdateView(SuccessMessageMixin, IAAUIMixin, UpdateView):
         }
 
     def get_success_url(self):
-        return reverse('main:item_create', args=[self.kwargs['site_id']])
+        return reverse_lazy('main:item_create')
 
 
 class MosaicItemDeleteView(SuccessMessageMixin, IAAUIMixin, DeleteView):
@@ -134,7 +130,7 @@ class MosaicItemDeleteView(SuccessMessageMixin, IAAUIMixin, DeleteView):
     success_message = _('Mosaic item deleted successfully')
 
     def get_success_url(self):
-        return reverse('main:item_create', args=[self.kwargs['site_id']])
+        return reverse_lazy('main:item_create')
 
 
 def tags(request):
