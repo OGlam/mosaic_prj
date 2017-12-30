@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Tag, MosaicPicture, MosaicItem
+from .models import Tag, MosaicPicture, MosaicItem, MosaicSite
+
+
+class MosaicSiteAdmin(admin.ModelAdmin):
+    list_display = ('site_id', 'title', 'origin')
+    list_display_links = ('site_id', 'title', 'origin')
 
 
 class PictureInline(admin.TabularInline):
@@ -19,5 +24,6 @@ class PictureAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Tag)
+admin.site.register(MosaicSite, MosaicSiteAdmin)
 admin.site.register(MosaicItem, MosaicItemAdmin)
 admin.site.register(MosaicPicture, PictureAdmin)

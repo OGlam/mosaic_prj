@@ -1,14 +1,15 @@
 from builtins import super
 
 import folium
-from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
-from main.forms import TagForm, MosaicSiteForm
+from main.forms import TagForm, MosaicSiteForm, MosaicItemForm
 from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite
 from django.utils.translation import ugettext as _
 
@@ -60,11 +61,12 @@ class TagDeleteView(IAAUIMixin, DeleteView):
     success_url = reverse_lazy('main:tag_create')
 
 
-class MosaicSiteCreateView(IAAUIMixin, CreateView):
+class MosaicSiteCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
     template_name = 'main/mosaic_site_form.html'
     model = MosaicSite
     form_class = MosaicSiteForm
     success_url = reverse_lazy('main:site_create')
+    success_message = _('Mosaic site created successfully')
     page_title = _('Mosaic site create')
     page_name = 'mosaic_site_create'
 
@@ -74,11 +76,12 @@ class MosaicSiteCreateView(IAAUIMixin, CreateView):
         return d
 
 
-class MosaicSiteUpdateView(IAAUIMixin, UpdateView):
+class MosaicSiteUpdateView(SuccessMessageMixin, IAAUIMixin, UpdateView):
     template_name = 'main/mosaic_site_form.html'
     model = MosaicSite
     form_class = MosaicSiteForm
     success_url = reverse_lazy('main:site_create')
+    success_message = _('Mosaic site updated successfully')
     page_title = _('Mosaic site update')
     page_name = 'mosaic_site_update'
 
@@ -86,6 +89,52 @@ class MosaicSiteUpdateView(IAAUIMixin, UpdateView):
 class MosaicSiteDeleteView(IAAUIMixin, DeleteView):
     model = MosaicSite
     success_url = reverse_lazy('main:site_create')
+
+
+class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
+    template_name = 'main/mosaic_item_form.html'
+    model = MosaicItem
+    form_class = MosaicItemForm
+    success_message = _('Mosaic item created successfully')
+    page_title = _('Mosaic item create')
+    page_name = 'mosaic_sitem_create'
+
+    def get_success_url(self):
+        return reverse('main:item_create', args=[self.kwargs['site_id']])
+
+    def form_valid(self, form):
+        form.instance.mosaic_site_id = self.kwargs['site_id']
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        d = super(MosaicItemCreateView, self).get_context_data(**kwargs)
+        d['items'] = MosaicItem.objects.all()
+        return d
+
+
+class MosaicItemUpdateView(SuccessMessageMixin, IAAUIMixin, UpdateView):
+    template_name = 'main/mosaic_item_form.html'
+    model = MosaicItem
+    form_class = MosaicItemForm
+    success_message = _('Mosaic item updated successfully')
+    page_title = _('Mosaic item update')
+    page_name = 'mosaic_item_update'
+
+    def get_initial(self):
+        return {
+            'materials': tuple(self.object.materials)
+        }
+
+    def get_success_url(self):
+        return reverse('main:item_create', args=[self.kwargs['site_id']])
+
+
+class MosaicItemDeleteView(SuccessMessageMixin, IAAUIMixin, DeleteView):
+    model = MosaicItem
+    success_message = _('Mosaic item deleted successfully')
+
+    def get_success_url(self):
+        return reverse('main:item_create', args=[self.kwargs['site_id']])
 
 
 def tags(request):
