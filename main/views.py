@@ -3,7 +3,7 @@ from builtins import super
 import folium
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView, ListView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
@@ -91,6 +91,12 @@ class MosaicSiteDeleteView(IAAUIMixin, DeleteView):
     success_url = reverse_lazy('main:site_create')
 
 
+class MosaicItemListView(IAAUIMixin, ListView):
+    model = MosaicItem
+    template_name = 'main/mosaic_item_list.html'
+    context_object_name = 'items'
+
+
 class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
     template_name = 'main/mosaic_item_form.html'
     model = MosaicItem
@@ -100,7 +106,7 @@ class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
     page_name = 'mosaic_sitem_create'
 
     def get_success_url(self):
-        return reverse_lazy('main:item_create')
+        return reverse_lazy('main:item_list')
 
     def form_valid(self, form):
         context = self.get_context_data()
@@ -122,7 +128,6 @@ class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         d = super(MosaicItemCreateView, self).get_context_data(**kwargs)
-        d['items'] = MosaicItem.objects.all()
         if self.request.POST:
             d['mosaic_picture_formset'] = MosaicPictureFormSet(self.request.POST, self.request.FILES,
                                                                prefix='mosaic_picture_formset')
@@ -145,7 +150,40 @@ class MosaicItemUpdateView(SuccessMessageMixin, IAAUIMixin, UpdateView):
         }
 
     def get_success_url(self):
-        return reverse_lazy('main:item_create')
+        return reverse_lazy('main:item_list')
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        mosaic_picture_formset = context['mosaic_picture_formset']
+
+        if mosaic_picture_formset.is_valid():
+            self.object = form.save()
+            mosaic_picture_formset.save()
+            return super().form_valid(form)
+
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+                mosaic_picture_formset=mosaic_picture_formset
+            )
+        )
+        # return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        d = super(MosaicItemUpdateView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            d['mosaic_picture_formset'] = MosaicPictureFormSet(
+                self.request.POST,
+                self.request.FILES,
+                prefix='mosaic_picture_formset',
+                instance=self.object
+            )
+        else:
+            d['mosaic_picture_formset'] = MosaicPictureFormSet(
+                prefix='mosaic_picture_formset',
+                instance=self.object
+            )
+        return d
 
 
 class MosaicItemDeleteView(SuccessMessageMixin, IAAUIMixin, DeleteView):
@@ -153,7 +191,7 @@ class MosaicItemDeleteView(SuccessMessageMixin, IAAUIMixin, DeleteView):
     success_message = _('Mosaic item deleted successfully')
 
     def get_success_url(self):
-        return reverse_lazy('main:item_create')
+        return reverse_lazy('main:item_list')
 
 
 def tags(request):
