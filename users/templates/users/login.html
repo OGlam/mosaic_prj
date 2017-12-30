@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% load static mosaic i18n %}
+
+{% block content %}
+    <div class="row justify-content-md-center">
+        <div class="col col-md-8">
+            <h1>{% trans 'Login' %}</h1>
+        </div>
+        <div class="col col-md-8">
+            {% include '_base_form.html' with form=form submit_text=_('Submit') labels=True login_form=True %}
+        </div>
+    </div>
+{% endblock %}

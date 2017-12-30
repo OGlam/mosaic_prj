@@ -50,6 +50,18 @@ class PictureType(object):
     )
 
 
+class ArcheologicalContext(object):
+    CHURCH = _('Church')
+    SYNAGOGUE = _('Synagogue')
+    PUBLIC_BUILDING = _('Public building')
+
+    CHOICES = (
+        ('church', CHURCH),
+        ('synagogue', SYNAGOGUE),
+        ('public', PUBLIC_BUILDING),
+    )
+
+
 class Tag(models.Model):
     tag_he = models.CharField(max_length=100)
     tag_en = models.CharField(max_length=100)
@@ -67,17 +79,26 @@ class MosaicSite(models.Model):
     title = models.CharField(_('Title'), max_length=200)  # Display name
     origin = models.CharField(_('Origin'), max_length=100)  # MOTSA (address)
     story = models.TextField(_('Story'), blank=True)
+    archeological_context = models.CharField(_('Archeological context'), max_length=50, blank=True,
+                                             choices=ArcheologicalContext.CHOICES)
     period = models.CharField(_('Period'), max_length=50, blank=True, choices=Periods.CHOICES)
     video_id = models.CharField(_('Youtube video ID'), max_length=50, blank=True)
     comments = models.TextField(_('Comments'), blank=True)
+    featured = models.BooleanField(_('Is featured?'), default=False)
+    latitude = models.FloatField(_('Latitude'), blank=True, null=True)
+    longitude = models.FloatField(_('Longitude'), blank=True, null=True)
 
     def __str__(self):
         return u'[{}] {}'.format(self.site_id, self.title)
 
+    def get_site_cover_image(self):
+        return MosaicPicture.objects.filter(mosaic__mosaic_site=self, is_cover=True).order_by('?')
+
 
 class MosaicItem(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
-    mosaic_site = models.ForeignKey(MosaicSite, verbose_name=_('Mosaic site'), on_delete=models.CASCADE, related_name='items')
+    mosaic_site = models.ForeignKey(MosaicSite, verbose_name=_('Mosaic site'), on_delete=models.CASCADE,
+                                    related_name='items')
     misp_rashut = models.CharField(verbose_name=_('Rashut number'), max_length=200)
     description = models.TextField(_('Description'), blank=True)
     tags = models.ManyToManyField(Tag, verbose_name=_('Tags'), blank=True, related_name='mosaic_items')
@@ -94,10 +115,14 @@ class MosaicItem(models.Model):
     def __str__(self):
         return self.misp_rashut
 
+    def get_all_pictures_by_position(self):
+        return self.pictures.order_by('-order_priority')
+
 
 class MosaicPicture(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     mosaic = models.ForeignKey(MosaicItem, verbose_name=_('Mosaic'), on_delete=models.CASCADE, related_name='pictures')
+    tags = models.ManyToManyField(Tag, verbose_name=_('Tags'), blank=True, related_name='mosaic_pictures')
     is_cover = models.BooleanField(_('Cover image'), default=False)
     order_priority = models.IntegerField(_('Order priority'), default=100)
     picture = models.ImageField(_('Picture'), upload_to=mosaic_dir)

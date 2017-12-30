@@ -39,8 +39,9 @@
         </div>
     {% endfor %}
     {% if formset %}
-        <hr>
-        {% include '_base_formset.html' with form=artifact_image_formset %}
+        <div class="row position-relative mb-3 pb-3">
+            {% include '_base_formset.html' with form=mosaic_picture_formset %}
+        </div>
     {% endif %}
     <div class="form-group">
         <button type="submit" class="btn btn-{{ button_color|default:"primary" }}">

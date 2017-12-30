@@ -1,38 +1,79 @@
 {% load i18n static mosaic %}
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <b>{% trans 'Antiquities Authoroty' %}</b> | {% trans 'Mosaics' %}
+    <nav class="navbar navbar-light bg-light bg-white justify-content-between">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" width="119" height="30" class="d-inline-block align-top"
+                 alt="{% trans 'Antiquities Authoroty' %}">
+            {% trans 'Antiquities Authoroty' %} | {% trans 'Mosaics' %}
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="flex-column align-items-start ml-lg-0 ml-3" id="main-navbar">
-            <form class="form-inline my-2 my-lg-0 ml-auto">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-            </form>
-            <ul class="navbar-nav flex-row mb-2">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">{% trans 'Home page' %} <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{% trans 'Popular' %}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{% trans 'Tags' %}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{% trans 'Period' %}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{% trans 'Map' %}</a>
-                </li>
-            </ul>
-        </div>
+        <form id="main-search-form" class="form-inline">
+            <div class="input-group">
+                <input class="form-control" type="search" placeholder="{% trans 'Search' %}"
+                       aria-describedby="main-search" aria-label="Search">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="main-search">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </form>
     </nav>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white justify-content-between pr-md-0 pl-md-0">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="main-navbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">{% trans 'Home page' %} <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% trans 'Popular' %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% trans 'Tags' %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% trans 'Period' %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% trans 'Map' %}</a>
+                    </li>
+                    {% if request.user.is_admin %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link btn btn-sm align-middle btn-primary text-white dropdown-toggle" href="#" id="adminMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {% trans 'Admin menu' %}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="adminMenuLink">
+                                <a class="dropdown-item" href="{% url 'main:tag_create' %}">
+                                    {% trans 'Tags' %}
+                                </a>
+                                <a class="dropdown-item" href="{% url 'main:site_create' %}">
+                                    {% trans 'Sites' %}
+                                </a>
+                                <a class="dropdown-item" href="{% url 'main:item_list' %}">
+                                    {% trans 'Items' %}
+                                </a>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+                <form id="lang-form" class="form-inline my-2 my-lg-0" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                    <select id="lang-switcher" class="form-control" name="language">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.name_local }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </nav>
+    </div>
 </header>
