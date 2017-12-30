@@ -58,9 +58,9 @@ class MosaicItemForm(forms.ModelForm):
         model = MosaicItem
         exclude = [
             'created_at',
-            'mosaic_site'
         ]
         widgets = {
+            'mosaic_site': forms.Select(attrs={'class': 'form-control'}),
             'misp_rashut': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
@@ -83,3 +83,8 @@ class MosaicItemForm(forms.ModelForm):
                     classes = self.fields[field].widget.attrs.get('class', '')
                     classes += ' is-invalid'
                     self.fields[field].widget.attrs['class'] = classes
+
+
+class MosaicItemUpdateForm(MosaicItemForm):
+    class Meta(MosaicItemForm.Meta):
+        exclude = MosaicItemForm.Meta.exclude + ['mosaic_site']

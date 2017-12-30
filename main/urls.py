@@ -11,7 +11,7 @@ urlpatterns = [
     path('site/create/', views.MosaicSiteCreateView.as_view(), name='site_create'),
     path('site/update/<int:pk>/', views.MosaicSiteUpdateView.as_view(), name='site_update'),
     path('site/delete/<int:pk>/', views.MosaicSiteDeleteView.as_view(), name='site_delete'),
-    path('site/<int:site_id>/item/create/', views.MosaicItemCreateView.as_view(), name='item_create'),
-    path('site/<int:site_id>/item/update/<int:pk>/', views.MosaicItemUpdateView.as_view(), name='item_update'),
-    path('site/<int:site_id>/item/delete/<int:pk>/', views.MosaicItemDeleteView.as_view(), name='item_delete'),
+    path('item/create/', views.MosaicItemCreateView.as_view(), name='item_create'),
+    path('item/update/<int:pk>/', views.MosaicItemUpdateView.as_view(), name='item_update'),
+    path('item/delete/<int:pk>/', views.MosaicItemDeleteView.as_view(), name='item_delete'),
 ]
