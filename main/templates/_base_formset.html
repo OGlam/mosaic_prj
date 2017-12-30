@@ -13,6 +13,14 @@
                 {{ hidden }}
             {% endfor %}
             {% for field in f.visible_fields %}
+                {% if field|is_file and field.value %}
+                    <figure class="figure">
+                        <figcaption class="figure-caption">
+                            {% trans 'Current picture' %}
+                        </figcaption>
+                        <img src="{{ field.value.url }}" class="figure-img img-fluid rounded" alt="">
+                    </figure>
+                {% endif %}
                 {% if field|is_checkbox %}
                     <div class="form-check">
                         <label class="form-check-label">

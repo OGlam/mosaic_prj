@@ -18,46 +18,6 @@
         <div class="col col-md-8">
             {% include '_base_form.html' with form=form with_files=True formset=True submit_text=object|yesno:_('Update,Save') labels=True %}
         </div>
-        {% if not object %}
-            <div class="col col-md-8">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">{% trans 'Mosaic site' %}</th>
-                            <th scope="col">{% trans 'Misp rashut' %}</th>
-                            <th scope="col">{% trans 'Rishayon' %}</th>
-                            <th scope="col">{% trans 'Actions' %}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in items %}
-                            <tr>
-                                <td>[{{ item.mosaic_site_id }}] {{ item.mosaic_site.title }}</td>
-                                <td>{{ item.misp_rashut }}</td>
-                                <td>{{ item.rishayon }}</td>
-                                <td>
-                                    <a class="text-warning" href="{% url 'main:item_update' item.id %}">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit' %}
-                                    </a>
-                                    <form class="d-inline-block" action="{% url 'main:item_delete' item.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" class="no-btn text-danger">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i> {% trans 'Delete' %}
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        {% empty %}
-                            <tr>
-                                <td colspan="4">
-                                    {% trans 'No items found' %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
     </div>
 {% endblock %}
 
