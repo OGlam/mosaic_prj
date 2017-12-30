@@ -2,14 +2,14 @@ from builtins import super
 
 import folium
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
-from main.forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm
+from main.forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet
 from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite
 from django.utils.translation import ugettext as _
 
@@ -102,9 +102,32 @@ class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('main:item_create')
 
+    def form_valid(self, form):
+        context = self.get_context_data()
+        mosaic_picture_formset = context['mosaic_picture_formset']
+
+        if mosaic_picture_formset.is_valid():
+            self.object = form.save()
+            mosaic_picture_formset.instance = self.object
+            mosaic_picture_formset.save()
+            return super().form_valid(form)
+
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+                mosaic_picture_formset=mosaic_picture_formset
+            )
+        )
+        # return super().form_invalid(form)
+
     def get_context_data(self, **kwargs):
         d = super(MosaicItemCreateView, self).get_context_data(**kwargs)
         d['items'] = MosaicItem.objects.all()
+        if self.request.POST:
+            d['mosaic_picture_formset'] = MosaicPictureFormSet(self.request.POST, self.request.FILES,
+                                                               prefix='mosaic_picture_formset')
+        else:
+            d['mosaic_picture_formset'] = MosaicPictureFormSet(prefix='mosaic_picture_formset')
         return d
 
 

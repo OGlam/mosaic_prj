@@ -5,6 +5,41 @@
     background-color: transparent;
 }
 
+.delete-row {
+    display: block;
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.add-row {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 50px);
+    width: 200px;
+    text-align: center;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.delete-row:hover,
+.add-row:hover {
+    color: #fff;
+}
+
 /* Header */
 header {
     background-color: #fff;

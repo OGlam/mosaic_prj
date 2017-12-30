@@ -1,6 +1,7 @@
 from django import forms
+from django.forms import inlineformset_factory
 
-from .models import Tag, MosaicSite, ArcheologicalContext, MosaicItem, Materials
+from .models import Tag, MosaicSite, ArcheologicalContext, MosaicItem, Materials, MosaicPicture, PictureType
 
 
 class TagForm(forms.ModelForm):
@@ -88,3 +89,50 @@ class MosaicItemForm(forms.ModelForm):
 class MosaicItemUpdateForm(MosaicItemForm):
     class Meta(MosaicItemForm.Meta):
         exclude = MosaicItemForm.Meta.exclude + ['mosaic_site']
+
+
+class MosaicPictureForm(forms.ModelForm):
+    class Meta:
+        model = MosaicPicture
+        fields = [
+            'picture',
+            'negative_id',
+            'photographer_name',
+            'taken_at',
+            'picture_type',
+            'taken_date',
+            'comments',
+            'tags',
+            'order_priority',
+            'is_cover',
+        ]
+        widgets = {
+            'picture': forms.FileInput(attrs={'class': 'form-control-file'}),
+            'negative_id': forms.TextInput(attrs={'class': 'form-control'}),
+            'photographer_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'taken_at': forms.DateInput(attrs={'class': 'form-control'}),
+            'picture_type': forms.Select(attrs={'class': 'form-control'}, choices=PictureType.CHOICES),
+            'taken_date': forms.Select(attrs={'class': 'form-control'}),
+            'comments': forms.Textarea(attrs={'class': 'form-control'}),
+            'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'order_priority': forms.NumberInput(attrs={'class': 'form-control'}),
+            'is_cover': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(MosaicPictureForm, self).__init__(*args, **kwargs)
+        if self.errors:
+            for field in self.fields:
+                if field in self.errors:
+                    classes = self.fields[field].widget.attrs.get('class', '')
+                    classes += ' is-invalid'
+                    self.fields[field].widget.attrs['class'] = classes
+
+
+MosaicPictureFormSet = inlineformset_factory(
+    MosaicItem,
+    MosaicPicture,
+    form=MosaicPictureForm,
+    extra=2,
+    can_delete=False
+)
