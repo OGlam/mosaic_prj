@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Tag, MosaicPicture, MosaicItem, MosaicSite
 
+from main.getData import getData
+from .models import Tag, MosaicPicture, MosaicItem, MosaicSite
 
 class MosaicSiteAdmin(admin.ModelAdmin):
     list_display = ('site_id', 'title', 'origin')
@@ -27,3 +28,4 @@ admin.site.register(Tag)
 admin.site.register(MosaicSite, MosaicSiteAdmin)
 admin.site.register(MosaicItem, MosaicItemAdmin)
 admin.site.register(MosaicPicture, PictureAdmin)
+# getData()
