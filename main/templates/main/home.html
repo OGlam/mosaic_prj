@@ -50,7 +50,7 @@
                     <div class="card card-block text-center tag-card">
                         {{  tag.picture.0.image_tag }}
                         <row>
-                            <h4> {{ tag.tag | title }} </h4>
+                            <h4 class = "white-card-text"> {{ tag.tag | title }} </h4>
                         </row>
                     </div>
                 </a>
@@ -58,7 +58,25 @@
         </div>
     </div>
 
-    {#    </div>#}
+    <div class="row">
+
+        <div class="head">
+            <h3>Archaeological Context</h3>
+        </div>
+    </div>
+    <div class="row arc-context">
+        {% for arc_context in archeological_context %}
+            <div class="col-4">
+                <div class="card card-block gray-card-text text-center">
+                    {{  arc_context.picture.0.image_tag }}
+                    <row>
+                        <h4 class="gray-card-text"> {{  arc_context.arc_context.1 | title }} </h4>
+                    </row>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}
 {# by tags #}
 
@@ -66,22 +84,7 @@
 {# map #}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
+    {#    <div class="container-fluid">#}
 
-            <div class="head">
-                <h3>Archaeological Context</h3>
-            </div>
-        </div>
-        <div class="row">
-            {% for arc_context in archeological_context %}
-                <div class="col-4">
-                    <div class="card card-block text-center">
-                        {{  arc_context.picture.0.image_tag }}
-                        {{  arc_context.arc_context.1 | title }}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+    {#    </div>#}
 {% endblock %}
