@@ -103,12 +103,12 @@ class MosaicItem(models.Model):
     description_he = models.TextField(_('Description hebrew'), blank=True)
     description_en = models.TextField(_('Description english'), blank=True)
     tags = models.ManyToManyField(Tag, verbose_name=_('Tags'), blank=True, related_name='mosaic_items')
-    length = models.DecimalField(_('Length'), max_digits=10, decimal_places=4)
-    width = models.DecimalField(_('Width'), max_digits=10, decimal_places=4)
-    area = models.DecimalField(_('Area'), max_digits=15, decimal_places=2)
+    length = models.DecimalField(_('Length'), max_digits=10, decimal_places=4, blank=True, null=True)
+    width = models.DecimalField(_('Width'), max_digits=10, decimal_places=4, blank=True, null=True)
+    area = models.DecimalField(_('Area'), max_digits=15, decimal_places=2, blank=True, null=True)
     rishayon = models.CharField(_('Rishayon'), max_length=50)
     materials = ArrayField(models.CharField(_('Material'), max_length=50, choices=Materials.CHOICES),
-                           blank=True)
+                           blank=True, null=True)
     year = models.CharField(_('Year'), max_length=200, blank=True)  # RISHAYON (/1972)
     displayed_at = models.CharField(_('Displayed at'), max_length=200, blank=True)
     bibliography_he = models.TextField(_('Bibliography hebrew'), blank=True)
@@ -142,7 +142,7 @@ class MosaicPicture(models.Model):
 
     def image_tag(self):
         if self.picture:
-            return mark_safe('<img src="{}" height="85%" width="auto" />'.format(self.picture.url))
+            return mark_safe('<img src="{}" height="100%" width="auto" />'.format(self.picture.url))
         else:
             return '-'
 
