@@ -1,10 +1,10 @@
 import folium
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from main.models import Tag, MosaicItem, MosaicPicture
+from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite
 from django.utils.translation import ugettext as _
 
 from mosaic_prj.base_views import IAAUIMixin
@@ -74,3 +74,13 @@ def mosaic_map(request):
     m.save("main/templates/map.html")
 
     return render(request, "map_page.html")
+
+
+class SiteListView(ListView):
+    model = MosaicSite
+    template_name = 'main/site_list.html'
+    context_object_name = 'site_list'
+
+
+    def get_queryset(self):
+        return MosaicSite.objects.order_by('-title').reverse()

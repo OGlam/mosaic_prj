@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "main/base.html" %}
+{% load static i18n %}
 
-</body>
-</html>
+{% block content %}
+    <h2>{% trans 'Site List' %}</h2>
+    <ul>
+        {% for mosaic in site_list %}
+            <li>{{mosaic.get_mosaic_title_first_letter}}:<br>
+                <div class="responsive">
+                    <div class="gallery">
+                        <a target="_blank" href="{{ mosaic.get_site_cover_image_url }}">
+                            <img width="600" height="400" src="{{ mosaic.get_site_cover_image_url }}" alt="{{ mosaic.title }}">
+                        </a>
+                        <div class="desc">
+                            {{ mosaic.title }}
+                        </div>
+                    </div>
+                </div>
+                {% ifchanged mosaic.get_mosaic_title_first_letter %} ssssssssss<br> {% endifchanged %}
+            </li>
+           <br>
+        {% endfor %}
+    </ul>
+{% endblock %}
