@@ -116,5 +116,12 @@ main {
 @media only screen and (max-width: 500px) {
     .responsive {
         width: 100%;
+        height: 100px;
     }
+}
+
+
+.scroll {
+    overflow-x: auto;
+    white-space: nowrap;
 }

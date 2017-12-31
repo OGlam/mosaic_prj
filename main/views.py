@@ -10,7 +10,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render
 
 from main.forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet
-from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite
+from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArcheologicalContext
 from django.utils.translation import ugettext as _
 
 from mosaic_prj.base_views import IAAUIMixin
@@ -23,8 +23,43 @@ class HomeView(IAAUIMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['popular_site'] = MosaicSite.objects.filter(featured=True)[:5]
+        context['popular_sites'] = self.getFeaturedContext()
+        context['tags'] = self.getTagsContext()
+        context['archeological_context'] = self.getArcheologicalContext()
+        # context['map_context'] = self.getMapDataContext()
         return context
+
+    def getFeaturedContext(self):
+        result = []
+        for site in MosaicSite.objects.filter(featured=True)[:5]:
+            item = MosaicItem.objects.filter(mosaic_site=site)[:1]
+            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=item, is_cover=True)[:1]
+            if (picture.count() > 0):
+                result.append({"site":site, "picture":picture})
+        return result;
+
+    def getTagsContext(self):
+        result = []
+        for tag in Tag.objects.all() :
+            itemByTag = MosaicItem.objects.filter(tags=tag)[:1]
+            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=itemByTag, is_cover=True)[:1]
+            if (picture.count() > 0):
+                result.append({"tag": tag, "item":itemByTag, "picture": picture})
+        return result
+
+
+    def getArcheologicalContext(self):
+        result = []
+        for arc_contxt in ArcheologicalContext.CHOICES:
+            site = MosaicSite.objects.filter(archeological_context=arc_contxt[0])[:1]
+            item = MosaicItem.objects.filter(mosaic_site=site)[:1]
+            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=item, is_cover=True)[:1]
+            if (picture.count() > 0):
+                result.append({"arc_context": arc_contxt, "item":item, "picture": picture})
+        return result
+
+    def getMapDataContext(self):
+        pass
 
 
 class MosaicView(DetailView):
