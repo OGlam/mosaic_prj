@@ -1,5 +1,9 @@
 {% extends 'main/base.html' %}
 {% load static i18n %}
+{% block extracss %}
+    <link href="{% static 'css/home' %}.css" rel="stylesheet">
+{% endblock %}
+
 
 {% block beofre_grid %}
     <div id="mosaic" class="carousel slide" data-ride="carousel">
@@ -12,7 +16,7 @@
         </ol>
 
         <!-- The slideshow -->
-        <div class="carousel-inner">
+        <div class="carousel-inner text-center">
             {% for a_pop_site in popular_sites %}
                 {% if forloop.counter == 1 %} <div class="carousel-item active"> {% else %} <div class="carousel-item"> {% endif %}
             <a href="{% url 'main:site' a_pop_site.site.id %}">
@@ -41,19 +45,26 @@
 {# map #}
 
 {% block content %}
-    <div class="container-fluid">
+    <div class="container-fluid subjects">
+        <div class="row flex-row">
+            <div class="head">
+                <h3>Subjects</h3>
+            </div>
+        </div>
         <div class="row flex-row flex-nowrap scroll">
             {% for tag in tags %}
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <a href="{% url 'tag-url' tag.tag.id %}">
-                    <div class="card card-block text-center">
-                        {{  tag.picture.0.image_tag }}
-                        {{  tag.tag }}
-                    </div>
+                        <div class="card card-block text-center">
+                            {{  tag.picture.0.image_tag }}
+                            {{  tag.tag }}
+                        </div>
                     </a>
                 </div>
             {% endfor %}
         </div>
+    </div>
+
     </div>
     <div class="container">
 

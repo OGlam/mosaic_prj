@@ -120,8 +120,3 @@ main {
     }
 }
 
-
-.scroll {
-    overflow-x: auto;
-    white-space: nowrap;
-}

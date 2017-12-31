@@ -138,7 +138,7 @@ class MosaicPicture(models.Model):
 
     def image_tag(self):
         if self.picture:
-            return mark_safe('<img src="{}" width="100%" height="auto" />'.format(self.picture.url))
+            return mark_safe('<img src="{}" height="85%" width="auto" />'.format(self.picture.url))
         else:
             return '-'
 
