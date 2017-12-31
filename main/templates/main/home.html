@@ -22,7 +22,7 @@
             <a href="{% url 'main:site' a_pop_site.site.id %}">
                 {{ a_pop_site.picture.0.image_tag }}
                 <div class="carousel-caption">
-                    <h1>{{ a_pop_site.site.title }}#}</h1>
+                    <h1>{{ a_pop_site.site.title | title }}#}</h1>
                 </div>
             </a>
             </div>
@@ -38,6 +38,27 @@
             </a>
         </div>
     </div>
+    <div class="container-fluid subjects">
+        <div class="row">
+            <div class="head">
+                <h3>Subjects</h3>
+            </div>
+        </div>
+        <div class="row flex-row flex-nowrap scroll">
+            {% for tag in tags %}
+                <a href="{% url 'tag-url' tag.tag.id %}">
+                    <div class="card card-block text-center tag-card">
+                        {{  tag.picture.0.image_tag }}
+                        <row>
+                            <h4> {{ tag.tag | title }} </h4>
+                        </row>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    {#    </div>#}
 {% endblock %}
 {# by tags #}
 
@@ -45,35 +66,19 @@
 {# map #}
 
 {% block content %}
-    <div class="container-fluid subjects">
-        <div class="row flex-row">
+    <div class="container-fluid">
+        <div class="row">
+
             <div class="head">
-                <h3>Subjects</h3>
+                <h3>Archaeological Context</h3>
             </div>
         </div>
-        <div class="row flex-row flex-nowrap scroll">
-            {% for tag in tags %}
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="{% url 'tag-url' tag.tag.id %}">
-                        <div class="card card-block text-center">
-                            {{  tag.picture.0.image_tag }}
-                            {{  tag.tag }}
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    </div>
-    <div class="container">
-
         <div class="row">
             {% for arc_context in archeological_context %}
                 <div class="col-4">
                     <div class="card card-block text-center">
                         {{  arc_context.picture.0.image_tag }}
-                        {{  arc_context.arc_context.1 }}
+                        {{  arc_context.arc_context.1 | title }}
                     </div>
                 </div>
             {% endfor %}

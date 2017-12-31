@@ -1,13 +1,30 @@
-
-.scroll {
-    overflow-x: auto;
-    white-space: nowrap;
+.subjects {
+    width:100%;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0 60px;
+    height: auto;
 }
+
+
 
 .card-block {
-    height: 170px;
+    height: 200px;
+    color: #e7685a;
+    font-weight: bolder;
+    background-color: white;
+    background-clip: padding-box;
+    width:auto;
+}
+.card-block h4 {
+    background-color: white;
+    margin: 0px;
+    padding-bottom: 5px;
 }
 
+.tag-card {
+    margin: 10px;
+}
 .carousel-inner {
     height: 570px;
 }
@@ -31,10 +48,12 @@
 
 .head{
     margin-left: auto;
+    padding-top: 25px;
     margin-right: auto;
 }
 
-.subjects {
-    width:100%;
-    background-color: #80bdff;
+.scroll {
+    overflow-x: auto;
+    padding: 10px 0 70px 0;
+
 }
