@@ -42,7 +42,10 @@ class HomeView(IAAUIMixin, TemplateView):
         result = []
         for tag in Tag.objects.all() :
             itemByTag = MosaicItem.objects.filter(tags=tag)[:1]
-            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=itemByTag, is_cover=True)[:1]
+            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(tags=tag, mosaic=itemByTag)[:1]
+            if picture.count() == 0:
+                picture = MosaicPicture.objects.extra(order_by=['order_priority']).filter(mosaic=itemByTag,
+                                                                                          is_cover=True)[:1]
             if (picture.count() > 0):
                 result.append({"tag": tag, "item":itemByTag, "picture": picture})
         return result
