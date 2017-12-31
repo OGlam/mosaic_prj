@@ -11,32 +11,31 @@
         <!-- Indicators -->
         <ol class="carousel-indicators">
             {% for a_pop_site in popular_sites %}
-                <li data-target="#myCarousel" data-slide-to="{{ forloop.counter }}" {% if forloop.counter == 1 %} class="active" {% endif %}></li>
+                <li data-target="#myCarousel" data-slide-to="{{ forloop.counter }}"{% if forloop.first %} class="active"{% endif %}></li>
             {% endfor %}
         </ol>
 
         <!-- The slideshow -->
         <div class="carousel-inner text-center">
             {% for a_pop_site in popular_sites %}
-                {% if forloop.counter == 1 %} <div class="carousel-item active"> {% else %} <div class="carousel-item"> {% endif %}
-            <a href="{% url 'main:site' a_pop_site.site.id %}">
-                {{ a_pop_site.picture.0.image_tag }}
-                <div class="carousel-caption">
-                    <h1>{{ a_pop_site.site.title }}#}</h1>
+                <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                    <a href="{% url 'main:site' a_pop_site.site.id %}">
+                        {{ a_pop_site.picture.0.image_tag }}
+                        <div class="carousel-caption">
+                            <h1>{{ a_pop_site.site.title }}</h1>
+                        </div>
+                    </a>
                 </div>
-            </a>
-            </div>
             {% endfor %}
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#mosaic" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#mosaic" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
         </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#mosaic" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#mosaic" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
     </div>
 {% endblock %}
 {# by tags #}
@@ -56,24 +55,21 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <a href="{% url 'tag-url' tag.tag.id %}">
                         <div class="card card-block text-center">
-                            {{  tag.picture.0.image_tag }}
-                            {{  tag.tag }}
+                            {{ tag.picture.0.image_tag }}
+                            {{ tag.tag }}
                         </div>
                     </a>
                 </div>
             {% endfor %}
         </div>
     </div>
-
-    </div>
     <div class="container">
-
         <div class="row">
             {% for arc_context in archeological_context %}
                 <div class="col-4">
                     <div class="card card-block text-center">
-                        {{  arc_context.picture.0.image_tag }}
-                        {{  arc_context.arc_context.1 }}
+                        {{ arc_context.picture.0.image_tag }}
+                        {{ arc_context.arc_context.1 }}
                     </div>
                 </div>
             {% endfor %}
