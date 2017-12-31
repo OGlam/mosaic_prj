@@ -1,29 +1,23 @@
 from django.conf import settings
 from django.conf.urls.static import static
-
-"""mosaic_prj URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
-from django.conf.urls import url, include
+from django.conf.urls import include
 from django.contrib import admin
+from django.urls import path
+from django.views.i18n import JavaScriptCatalog
+
 from main import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^main/', include('main.urls')),
-    url(r'^tags/', views.tags),
-    url(r'^map/', views.map),
-    url(r'^tag/(?P<tagid>\d+)/$', views.tagPage, name='tag-url'),
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('', views.HomeView.as_view(), name='home'),
+    path('', include('main.urls')),
+    path('account/', include('users.urls')),
+    path('map', views.mosaic_map, name='map'),
+    path('tag/<int:tagid>/', views.tag_page, name='tag-url'),
+    path('admin/', admin.site.urls),
+    path('jsi18n/', JavaScriptCatalog.as_view(packages=['main']), name='javascript-catalog'),
+    path('i18n/', include('django.conf.urls.i18n')),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

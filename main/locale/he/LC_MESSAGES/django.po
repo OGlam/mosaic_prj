@@ -1,0 +1,161 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-25 10:29+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:25
+msgid "Title"
+msgstr ""
+
+#: models.py:26
+msgid "Origin"
+msgstr ""
+
+#: models.py:28 templates/main/mosaic_detail.html:9
+msgid "Story"
+msgstr ""
+
+#: models.py:29 templates/main/mosaic_detail.html:10
+msgid "IAA ID"
+msgstr ""
+
+#: models.py:30 templates/main/mosaic_detail.html:11
+msgid "IAA permission code"
+msgstr ""
+
+#: models.py:31
+msgid "Place name"
+msgstr ""
+
+#: models.py:34 templates/main/mosaic_detail.html:28
+msgid "Address"
+msgstr ""
+
+#: models.py:35 templates/main/_header.html:30
+#: templates/main/mosaic_detail.html:12
+msgid "Period"
+msgstr ""
+
+#: models.py:36 templates/main/mosaic_detail.html:13
+msgid "Displayed at"
+msgstr ""
+
+#: models.py:37 templates/main/_header.html:27
+#: templates/main/mosaic_detail.html:15
+msgid "Tags"
+msgstr ""
+
+#: models.py:38 templates/main/mosaic_detail.html:20
+msgid "Material"
+msgstr ""
+
+#: models.py:42 models.py:59 templates/main/mosaic_detail.html:32
+msgid "Comments"
+msgstr ""
+
+#: models.py:43 templates/main/mosaic_detail.html:33
+msgid "Bibliography"
+msgstr ""
+
+#: models.py:44 templates/main/mosaic_detail.html:34
+msgid "Publications"
+msgstr ""
+
+#: models.py:51
+msgid "Mosaic"
+msgstr ""
+
+#: models.py:53
+msgid "Picture"
+msgstr ""
+
+#: models.py:54
+msgid "Negative ID"
+msgstr ""
+
+#: models.py:55
+msgid "Photographer name"
+msgstr ""
+
+#: models.py:56
+msgid "Taken at"
+msgstr ""
+
+#: models.py:57
+msgid "Picture type"
+msgstr ""
+
+#: models.py:58
+msgid "Taken date"
+msgstr ""
+
+#: templates/_base_form.html:47
+msgid "Submit"
+msgstr ""
+
+#: templates/_base_form.html:51
+msgid "Forgot password"
+msgstr ""
+
+#: templates/_base_formset.html:4
+msgid "Upload images"
+msgstr ""
+
+#: templates/main/_header.html:6
+msgid "Antiquities Authoroty"
+msgstr ""
+
+#: templates/main/_header.html:6
+msgid "Mosaics"
+msgstr ""
+
+#: templates/main/_header.html:21 views.py:15
+msgid "Home page"
+msgstr ""
+
+#: templates/main/_header.html:24
+msgid "Popular"
+msgstr ""
+
+#: templates/main/_header.html:33
+msgid "Map"
+msgstr ""
+
+#: templates/main/base.html:15
+msgid "Israel Antiquities Authority"
+msgstr ""
+
+#: templates/main/mosaic_detail.html:21
+msgid "Dimensions"
+msgstr ""
+
+#: templates/main/mosaic_detail.html:22
+msgid "Area"
+msgstr ""
+
+#: templates/main/mosaic_detail.html:25
+msgid "Location Found"
+msgstr ""
+
+#: templates/main/mosaic_detail.html:27
+msgid "Name"
+msgstr ""
+
+#: templates/main/mosaic_detail.html:36
+msgid "Images"
+msgstr ""

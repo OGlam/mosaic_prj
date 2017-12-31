@@ -1,0 +1,56 @@
+{% load i18n mosaic %}
+
+<form {% if form_id %}id="{{ form_id }}" {% endif %} method="post" autocomplete="off"{% if action %}
+                       action="{{ action }}"{% endif %}{% if with_files %} enctype="multipart/form-data"{% endif %}>
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.non_field_errors.as_text }}
+        </div>
+    {% endif %}
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    {% for field in form.visible_fields %}
+        {% if field|is_checkbox %}
+            <div class="form-check">
+                <label class="form-check-label">
+                    {{ field }}
+                    {{ field.label }}
+                </label>
+                {% if field.help_text %}
+                    <small id="{{ field.html_name }}HelpBlock" class="form-text text-muted">
+                        {{ field.help_text|safe }}
+                    </small>
+                {% endif %}
+        {% else %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <small id="{{ field.html_name }}HelpBlock" class="form-text text-muted">
+                        {{ field.help_text|safe }}
+                    </small>
+                {% endif %}
+        {% endif %}
+        {% if field.errors %}
+            <div class="invalid-feedback">{{ field.errors.as_text }}</div>
+        {% endif %}
+        </div>
+    {% endfor %}
+    {% if formset %}
+        <div class="row position-relative mb-3 pb-3">
+            {% include '_base_formset.html' with form=mosaic_picture_formset %}
+        </div>
+    {% endif %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-{{ button_color|default:"primary" }}">
+            {{ submit_text|default:_('Submit') }}
+        </button>
+        {% if login_form %}
+            <a href="{% url 'users:password_reset' %}">
+                {% trans 'Forgot password' %}?
+            </a>
+        {% endif %}
+    </div>
+</form>

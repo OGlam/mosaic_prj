@@ -5,11 +5,11 @@
 * Create a virtualenv:
  goto pycharrm preferences define pyton point to local vervion
 
-        mkvirtualenv xtracker
+        mkvirtualenv mosiac_project
 
 * activate virtualenv
         
-        source nameOfVirtualEnv/bin/activate
+        workon mosiac_project
 
 * Install requirements:
 
@@ -21,7 +21,7 @@
 
 * Create some sample data:
 
-        python manage.py create_expenses 100
+        python manage.py create_mosaics 20
 
 
 * Run your server:

@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% load static mosaic i18n %}
+
+{% block content %}
+    <div class="row justify-content-md-center">
+        <div class="col col-md-8">
+            <h1>{{ page_title }}</h1>
+        </div>
+        {% if messages %}
+            <div class="col col-md-8">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="col col-md-8">
+            {% include '_base_form.html' with form=form with_files=True formset=True submit_text=object|yesno:_('Update,Save') labels=True %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/jquery.formset.js' %}"></script>
+    <script>
+        $(function() {
+            $(".{{ mosaic_picture_formset.prefix }}").formset({
+                prefix: "{{ mosaic_picture_formset.prefix }}",
+                formCssClass: "dynamic-{{ mosaic_picture_formset.prefix }}",
+                addText: "<i class=\"fa fa-plus\" aria-hidden=\"true\"></i> {% trans 'Add another picture' %}",
+                deleteText: "<i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i> {% trans 'Delete picture' %}"
+            });
+        })
+    </script>
+{% endblock %}

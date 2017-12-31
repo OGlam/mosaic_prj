@@ -3,7 +3,6 @@ from django.contrib import admin
 from main.getData import getData
 from .models import Tag, MosaicPicture, MosaicItem, MosaicSite
 
-
 class MosaicSiteAdmin(admin.ModelAdmin):
     list_display = ('site_id', 'title', 'origin')
     list_display_links = ('site_id', 'title', 'origin')
