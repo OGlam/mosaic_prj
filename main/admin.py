@@ -24,6 +24,8 @@ class PictureAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Tag)
+
 admin.site.register(MosaicSite, MosaicSiteAdmin)
+
 admin.site.register(MosaicItem, MosaicItemAdmin)
 admin.site.register(MosaicPicture, PictureAdmin)
