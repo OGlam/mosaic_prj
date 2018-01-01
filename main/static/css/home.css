@@ -26,7 +26,7 @@
     margin: 10px;
 }
 .carousel-inner {
-    height: 570px;
+   max-height: 500px;
 }
 
 .carousel-item {
