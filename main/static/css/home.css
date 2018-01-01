@@ -1,3 +1,10 @@
+.sub-featured-card {
+    padding: 50px;
+    border: 25px!important;
+    color: #80bdff;
+    border-color: #1c7430;
+}
+
 .subjects {
     width:100%;
     background-color: #f2f2f2;
@@ -10,13 +17,15 @@
 
 .subjects .card-block {
     height: 200px;
-    color: #e7685a;
+    /*color: #e7685a;*/
     font-weight: bolder;
     background-color: white;
     background-clip: padding-box;
     width:auto;
 }
+
 .white-card-text {
+    color: #e7685a;
     background-color: white;
     margin: 0px;
     padding-bottom: 5px;
@@ -29,9 +38,6 @@
    max-height: 500px;
 }
 
-.carousel-item {
-}
-
 .carousel-inner img {
     width: 100%;
 }
@@ -39,9 +45,17 @@
 .carousel-caption {
     top:5%;
 }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 100px;
+    width: 60px;
+    color: #e7685a ;
+}
+
 .carousel-caption h1 {
-    color: #1d2124;
-    padding:5px 15px;
+    color: #e7685a;
+    padding:10px 20px;
     display: inline-block;
     background-color: white;
 }
@@ -60,6 +74,7 @@
 
 .gray-card-text {
     background-color: #f2f2f2;
+    color: #e7685a;
     margin: 0px;
     padding-bottom: 5px;
 }
@@ -77,3 +92,13 @@
     width: 100%;
     height: auto;
 }
+
+
+
+.sub-featured .card-block img {
+    width: 100%;
+    height: auto;
+    border-bottom: 5px;
+
+}
+

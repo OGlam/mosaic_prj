@@ -22,7 +22,7 @@
             <a href="{% url 'main:site' a_pop_site.site.id %}">
                 {{ a_pop_site.picture.0.image_tag }}
                 <div class="carousel-caption">
-                    <h1>{{ a_pop_site.site.title | title }}</h1>
+                    <h1>{{ a_pop_site.site.title_en | title }}</h1>
                 </div>
             </a>
             </div>
@@ -36,6 +36,22 @@
             <a class="carousel-control-next" href="#mosaic" data-slide="next">
                 <span class="carousel-control-next-icon"></span>
             </a>
+        </div>
+    </div>
+
+    <div class="container-fluid sub-featured">
+        <div class="row">
+            {% for site in popular_sites_sub %}
+                <div class="col-6">
+                    <div class="card card-block sub-featured-card text-center">
+                        {{  site.picture.0.image_tag }}
+                        <row>
+                            <h4 class="white-card-text"> {{  site.title_en | title }} </h4>
+                        </row>
+                    </div>
+                </div>
+            {% endfor %}
+
         </div>
     </div>
     <div class="container-fluid subjects">
