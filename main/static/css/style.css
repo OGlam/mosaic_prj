@@ -55,11 +55,11 @@ header {
 .navbar-brand {
     font-size: 0.9rem;
     margin: 0;
-    line-height: 30px;
+    line-height: 60px;
 }
 
 .navbar-brand img {
-    background-color: #ccc;
+    margin-right: 2rem;
 }
 
 /* Main */

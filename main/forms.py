@@ -9,8 +9,8 @@ class TagForm(forms.ModelForm):
         model = Tag
         fields = '__all__'
         widgets = {
-            'tag_he': forms.TextInput(attrs={'class': 'form-control'}),
-            'tag_en': forms.TextInput(attrs={'class': 'form-control'}),
+            'tag_he': forms.TextInput(attrs={'class': 'form-control', 'dir': 'rtl'}),
+            'tag_en': forms.TextInput(attrs={'class': 'form-control', 'dir': 'ltr'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -31,9 +31,12 @@ class MosaicSiteForm(forms.ModelForm):
         ]
         widgets = {
             'site_id': forms.TextInput(attrs={'class': 'form-control'}),
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'origin': forms.TextInput(attrs={'class': 'form-control'}),
-            'story': forms.Textarea(attrs={'class': 'form-control'}),
+            'title_he': forms.TextInput(attrs={'class': 'form-control', 'dir': 'rtl'}),
+            'title_en': forms.TextInput(attrs={'class': 'form-control', 'dir': 'ltr'}),
+            'origin_he': forms.TextInput(attrs={'class': 'form-control', 'dir': 'rtl'}),
+            'origin_en': forms.TextInput(attrs={'class': 'form-control', 'dir': 'ltr'}),
+            'story_he': forms.Textarea(attrs={'class': 'form-control', 'dir': 'rtl'}),
+            'story_en': forms.Textarea(attrs={'class': 'form-control', 'dir': 'ltr'}),
             'archeological_context': forms.Select(attrs={'class': 'form-control'},
                                                   choices=ArcheologicalContext.CHOICES),
             'period': forms.TextInput(attrs={'class': 'form-control'}),
@@ -63,7 +66,8 @@ class MosaicItemForm(forms.ModelForm):
         widgets = {
             'mosaic_site': forms.Select(attrs={'class': 'form-control'}),
             'misp_rashut': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'description_he': forms.Textarea(attrs={'class': 'form-control', 'dir': 'rtl'}),
+            'description_en': forms.Textarea(attrs={'class': 'form-control', 'dir': 'ltr'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'length': forms.TextInput(attrs={'class': 'form-control'}),
             'width': forms.TextInput(attrs={'class': 'form-control'}),
@@ -73,7 +77,8 @@ class MosaicItemForm(forms.ModelForm):
                                               choices=Materials.CHOICES),
             'year': forms.TextInput(attrs={'class': 'form-control'}),
             'displayed_at': forms.TextInput(attrs={'class': 'form-control'}),
-            'bibliography': forms.Textarea(attrs={'class': 'form-control'}),
+            'bibliography_he': forms.Textarea(attrs={'class': 'form-control', 'dir': 'rtl'}),
+            'bibliography_en': forms.Textarea(attrs={'class': 'form-control', 'dir': 'ltr'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -97,11 +102,13 @@ class MosaicPictureForm(forms.ModelForm):
         fields = [
             'picture',
             'negative_id',
-            'photographer_name',
+            'photographer_name_he',
+            'photographer_name_en',
             'taken_at',
             'picture_type',
             'taken_date',
-            'comments',
+            'comments_he',
+            'comments_en',
             'tags',
             'order_priority',
             'is_cover',
@@ -109,11 +116,13 @@ class MosaicPictureForm(forms.ModelForm):
         widgets = {
             'picture': forms.FileInput(attrs={'class': 'form-control-file'}),
             'negative_id': forms.TextInput(attrs={'class': 'form-control'}),
-            'photographer_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'photographer_name_he': forms.TextInput(attrs={'class': 'form-control', 'dir': 'rtl'}),
+            'photographer_name_en': forms.TextInput(attrs={'class': 'form-control', 'dir': 'ltr'}),
             'taken_at': forms.TextInput(attrs={'class': 'form-control'}),
             'picture_type': forms.Select(attrs={'class': 'form-control'}, choices=PictureType.CHOICES),
             'taken_date': forms.DateInput(attrs={'class': 'form-control'}),
-            'comments': forms.Textarea(attrs={'class': 'form-control'}),
+            'comments_he': forms.Textarea(attrs={'class': 'form-control', 'dir': 'rtl'}),
+            'comments_en': forms.Textarea(attrs={'class': 'form-control', 'dir': 'ltr'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'order_priority': forms.NumberInput(attrs={'class': 'form-control'}),
             'is_cover': forms.CheckboxInput(attrs={'class': 'form-check-input'}),

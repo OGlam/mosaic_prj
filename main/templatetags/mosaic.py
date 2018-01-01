@@ -1,6 +1,7 @@
 from django import template
 from django.forms import CheckboxInput, FileInput, RadioSelect, CheckboxSelectMultiple, SelectMultiple, Select
 from django.template.loader import render_to_string
+from django.utils import translation
 from django.utils.safestring import mark_safe
 
 register = template.Library()
@@ -57,3 +58,15 @@ def svg_icon(icon_name, class_name='', from_upload=False, rtl=False):
         result += render_to_string('svgs/{}{}.svg'.format(icon_name, '_he' if rtl else '_en'))
     result += '</span>'
     return mark_safe(result)
+
+
+@register.simple_tag
+def bidi(instance, field):
+    lang = translation.get_language()[:2]
+    return getattr(instance, field + "_" + lang)
+
+
+@register.filter
+def bd(instance, field):
+    lang = translation.get_language()[:2]
+    return getattr(instance, field + "_" + lang)

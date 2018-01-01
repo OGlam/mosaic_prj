@@ -29,14 +29,17 @@ class Command(BaseCommand):
             # Create random mosaic site
             s = MosaicSite()
             s.site_id = silly.title()
-            s.title = silly.name()
-            s.origin = silly.title()
-            s.story = silly.thing()
-            s.archeological_context = ['church', 'synagogue', 'public'][random.randint(0, 2)]
+            s.title_he = silly.name()
+            s.title_en = silly.name()
+            s.origin_he = silly.title()
+            s.origin_en = silly.title()
+            s.story_he = silly.thing()
+            s.story_en = silly.thing()
+            s.archeological_context = random.choice(['church', 'synagogue', 'public'])
             s.period = 'byzantine'
             s.video_id = silly.title()
             s.comments = silly.thing()
-            s.featured = [True, False][random.randint(0, 1)]
+            s.featured = random.choice([True, False])
             s.latitude = silly.number()
             s.longitude = silly.number()
             s.save()
@@ -48,27 +51,32 @@ class Command(BaseCommand):
                 mi.width = silly.number()
                 mi.area = silly.number()
                 mi.rishayon = silly.title()
-                mi.materials = [Materials.CHOICES[random.randint(0, len(Materials.CHOICES) - 1)][0]]
+                mi.materials = [random.choice(Materials.CHOICES)[0]]
                 mi.year = silly.datetime().year
                 mi.displayed_at = silly.address()
-                mi.bibliography = silly.thing()
+                mi.description_he = silly.thing()
+                mi.description_en = silly.thing()
+                mi.bibliography_he = silly.thing()
+                mi.bibliography_en = silly.thing()
                 mi.save()
                 mi.tags.add(Tag.objects.all().order_by('?')[0])
                 for k in range(3):
                     mp = MosaicPicture()
                     mp.mosaic = mi
-                    mp.is_cover = [True, False][random.randint(0, 1)]
+                    mp.is_cover = random.choice([True, False])
                     mp.order_priority = random.randint(1, 100)
                     filename = os.path.join(
                         settings.BASE_DIR, f'mosaic_images/{random.randint(1, 12)}.jpg'
                     )
                     mp.picture = UploadedFile(open(filename, "br"))
                     mp.negative_id = silly.number()
-                    mp.photographer_name = silly.name()
+                    mp.photographer_name_he = silly.name()
+                    mp.photographer_name_en = silly.name()
                     mp.taken_at = silly.country()
-                    mp.picture_type = PictureType.CHOICES[random.randint(0, len(PictureType.CHOICES) - 1)][0]
+                    mp.picture_type = random.choice(PictureType.CHOICES)[0]
                     mp.taken_date = silly.datetime().date()
-                    mp.comments = silly.thing()
+                    mp.comments_he = silly.thing()
+                    mp.comments_en = silly.thing()
                     mp.full_clean()
                     mp.save()
                     mp.tags.add(Tag.objects.all().order_by('?')[0])

@@ -34,8 +34,8 @@
                         {% for site in sites %}
                             <tr>
                                 <td>{{ site.site_id }}</td>
-                                <td>{{ site.title }}</td>
-                                <td>{{ site.origin }}</td>
+                                <td>{% bidi site 'title' %}</td>
+                                <td>{% bidi site 'origin' %}</td>
                                 <td>{{ site.featured|boolean_to_icon }}</td>
                                 <td>
                                     <a class="text-warning" href="{% url 'main:site_update' site.id %}">

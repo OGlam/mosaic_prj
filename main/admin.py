@@ -4,8 +4,8 @@ from main.getData import getData
 from .models import Tag, MosaicPicture, MosaicItem, MosaicSite
 
 class MosaicSiteAdmin(admin.ModelAdmin):
-    list_display = ('site_id', 'title', 'origin')
-    list_display_links = ('site_id', 'title', 'origin')
+    list_display = ('site_id', 'title_he', 'title_en', 'origin_he', 'origin_en')
+    list_display_links = ('site_id', 'title_he', 'title_en', 'origin_he', 'origin_en')
 
 
 class PictureInline(admin.TabularInline):

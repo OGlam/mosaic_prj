@@ -69,16 +69,16 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag_he if settings.LANGUAGE_CODE == 'he' else self.tag_en
 
-    def get_lang_tag(self):
-        return self.tag_he if settings.LANGUAGE_CODE == 'he' else self.tag_en
-
 
 class MosaicSite(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     site_id = models.CharField(_('Site ID'), max_length=200)  # MOTSA (3357/12)
-    title = models.CharField(_('Title'), max_length=200)  # Display name
-    origin = models.CharField(_('Origin'), max_length=100)  # MOTSA (address)
-    story = models.TextField(_('Story'), blank=True)
+    title_he = models.CharField(_('Title hebrew'), max_length=200)  # Display name
+    title_en = models.CharField(_('Title english'), max_length=200)  # Display name
+    origin_he = models.CharField(_('Origin hebrew'), max_length=100)  # MOTSA (address)
+    origin_en = models.CharField(_('Origin english'), max_length=100)  # MOTSA (address)
+    story_he = models.TextField(_('Story hebrew'), blank=True)
+    story_en = models.TextField(_('Story english'), blank=True)
     archeological_context = models.CharField(_('Archeological context'), max_length=50, blank=True,
                                              choices=ArcheologicalContext.CHOICES)
     period = models.CharField(_('Period'), max_length=50, blank=True, choices=Periods.CHOICES)
@@ -89,7 +89,7 @@ class MosaicSite(models.Model):
     longitude = models.FloatField(_('Longitude'), blank=True, null=True)
 
     def __str__(self):
-        return u'[{}] {}'.format(self.site_id, self.title)
+        return u'[{}] {}'.format(self.site_id, self.title_he if settings.LANGUAGE_CODE == 'he' else self.title_en)
 
     def get_site_cover_image(self):
         return MosaicPicture.objects.filter(mosaic__mosaic_site=self, is_cover=True).order_by('?')
@@ -100,7 +100,8 @@ class MosaicItem(models.Model):
     mosaic_site = models.ForeignKey(MosaicSite, verbose_name=_('Mosaic site'), on_delete=models.CASCADE,
                                     related_name='items')
     misp_rashut = models.CharField(verbose_name=_('Rashut number'), max_length=200)
-    description = models.TextField(_('Description'), blank=True)
+    description_he = models.TextField(_('Description hebrew'), blank=True)
+    description_en = models.TextField(_('Description english'), blank=True)
     tags = models.ManyToManyField(Tag, verbose_name=_('Tags'), blank=True, related_name='mosaic_items')
     length = models.DecimalField(_('Length'), max_digits=10, decimal_places=4, blank=True, null=True)
     width = models.DecimalField(_('Width'), max_digits=10, decimal_places=4, blank=True, null=True)
@@ -110,7 +111,8 @@ class MosaicItem(models.Model):
                            blank=True, null=True)
     year = models.CharField(_('Year'), max_length=200, blank=True)  # RISHAYON (/1972)
     displayed_at = models.CharField(_('Displayed at'), max_length=200, blank=True)
-    bibliography = models.TextField(_('Bibliography'), blank=True)
+    bibliography_he = models.TextField(_('Bibliography hebrew'), blank=True)
+    bibliography_en = models.TextField(_('Bibliography english'), blank=True)
 
     def __str__(self):
         return self.misp_rashut
@@ -127,11 +129,13 @@ class MosaicPicture(models.Model):
     order_priority = models.IntegerField(_('Order priority'), default=100)
     picture = models.ImageField(_('Picture'), upload_to=mosaic_dir)
     negative_id = models.CharField(_('Negative ID'), max_length=50)
-    photographer_name = models.CharField(_('Photographer name'), max_length=200, blank=True)
+    photographer_name_he = models.CharField(_('Photographer name hebrew'), max_length=200, blank=True)
+    photographer_name_en = models.CharField(_('Photographer name english'), max_length=200, blank=True)
     taken_at = models.CharField(_('Taken at'), max_length=200, blank=True)
     picture_type = models.CharField(_('Picture type'), max_length=50, choices=PictureType.CHOICES, blank=True)
     taken_date = models.DateField(_('Taken date'), blank=True, null=True)
-    comments = models.TextField(_('Comments'), blank=True)
+    comments_he = models.TextField(_('Comments hebrew'), blank=True)
+    comments_en = models.TextField(_('Comments english'), blank=True)
 
     def __str__(self):
         return self.negative_id

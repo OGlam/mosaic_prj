@@ -1,12 +1,12 @@
 {% extends 'main/base.html' %}
-{% load static i18n %}
+{% load static mosaic i18n %}
 
 {% block content %}
-    <h1 align="center">{{ mosaic.origin }} - {{ mosaic.title }}</h1>
+    <h1 align="center">{% bidi mosaic 'origin' %} - {% bidi mosaic 'title' %}</h1>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <br><br>
     <ul>
-        <li>{% trans 'Story' %}: {{ mosaic.story|linebreaks }}</li>
+        <li>{% trans 'Story' %}: {{ mosaic.story|bd|linebreaks }}</li>
         <li>{% trans 'IAA ID' %}: {{ mosaic.iaa_id }}</li>
         <li>{% trans 'IAA permission code' %}: {{ mosaic.iaa_permission_code }}</li>
         <li>{% trans 'Period' %}:{{ mosaic.period }}</li>
