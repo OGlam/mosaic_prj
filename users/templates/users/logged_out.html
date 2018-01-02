@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% load static mosaic i18n %}
+
+{% block content %}
+    <div class="row justify-content-md-center">
+        <div class="col col-md-8">
+            <h1>{% trans 'Logout' %}</h1>
+        </div>
+        <div class="col col-md-8">
+            {% trans 'Goodbye, come back again soon!' %}
+        </div>
+    </div>
+{% endblock %}
