@@ -50,6 +50,7 @@ def getOrCreateMosaicSite(misp_rashut, xlmosaics):
     print ("site_id", site_id)
     new_mosaic_site.site_id = site_id
     new_mosaic_site.title_en = new_mosaic_site.origin_en = mosaic_info.iloc[0]['MOTSA_E'].split('(')[0]
+    new_mosaic_site.title_he = new_mosaic_site.origin_he = mosaic_info.iloc[0]['MOTSA'].split('(')[0]
     new_mosaic_site.period = mosaic_info.iloc[0]['TKU_OBJ_E']
     new_mosaic_site.save()
     # TODO: COMPLETE THE MISSING FIELDS FOR MOSAIC SITE
