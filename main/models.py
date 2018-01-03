@@ -50,7 +50,7 @@ class PictureType(object):
     )
 
 
-class ArcheologicalContext(object):
+class ArchaeologicalContext(object):
     CHURCH = _('Church')
     SYNAGOGUE = _('Synagogue')
     PUBLIC_BUILDING = _('Public building')
@@ -79,8 +79,8 @@ class MosaicSite(models.Model):
     origin_en = models.CharField(_('Origin english'), max_length=100)  # MOTSA (address)
     story_he = models.TextField(_('Story hebrew'), blank=True)
     story_en = models.TextField(_('Story english'), blank=True)
-    archeological_context = models.CharField(_('Archeological context'), max_length=50, blank=True,
-                                             choices=ArcheologicalContext.CHOICES)
+    archaeological_context = models.CharField(_('Archaeological context'), max_length=50, blank=True,
+                                              choices=ArchaeologicalContext.CHOICES)
     period = models.CharField(_('Period'), max_length=50, blank=True, choices=Periods.CHOICES)
     video_id = models.CharField(_('Youtube video ID'), max_length=50, blank=True)
     comments = models.TextField(_('Comments'), blank=True)
@@ -97,10 +97,7 @@ class MosaicSite(models.Model):
     def get_site_cover_image_url(self):
         for mosaic_picture in self.get_site_cover_image():
             return mosaic_picture.picture.url
-        return "file://" + os.path.join(settings.BASE_DIR, 'mosaic_images/empty-image.png')
-
-    def get_mosaic_title_first_letter(self):
-        return self.title[0].upper()
+        return "{}empty-image.png".format(settings.STATIC_URL)
 
 
 class MosaicItem(models.Model):
@@ -114,7 +111,7 @@ class MosaicItem(models.Model):
     length = models.DecimalField(_('Length'), max_digits=10, decimal_places=4, blank=True, null=True)
     width = models.DecimalField(_('Width'), max_digits=10, decimal_places=4, blank=True, null=True)
     area = models.DecimalField(_('Area'), max_digits=15, decimal_places=2, blank=True, null=True)
-    rishayon = models.CharField(_('Rishayon'), max_length=50)
+    rishayon = models.CharField(_('Rishayon'), max_length=50, blank=True)
     materials = ArrayField(models.CharField(_('Material'), max_length=50, choices=Materials.CHOICES),
                            blank=True, null=True)
     year = models.CharField(_('Year'), max_length=200, blank=True)  # RISHAYON (/1972)
@@ -124,6 +121,9 @@ class MosaicItem(models.Model):
 
     def __str__(self):
         return self.misp_rashut
+
+    def get_highest_cover(self):
+        return self.pictures.filter(is_cover=True).order_by('order_priority').first()
 
 
 class MosaicPicture(models.Model):

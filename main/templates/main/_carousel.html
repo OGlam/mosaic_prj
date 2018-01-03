@@ -1,0 +1,33 @@
+{% load static i18n mosaic %}
+
+<div id="carousel-{{ id }}" class="carousel slide" data-ride="carousel">
+    {% if indicators %}
+        <ol class="carousel-indicators">
+            {% for a_pop_site in popular_sites %}
+                <li data-target="#carousel-{{ id }}" data-slide-to="{{ forloop.counter0 }}"{% if forloop.first %} class="active"{% endif %}></li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+    <div class="carousel-inner">
+        {% for a_pop_site in popular_sites %}
+            <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                <a href="{% url 'main:site' a_pop_site.id %}">
+                    <img class="d-block w-100" src="{{ a_pop_site.get_highest_cover.picture.url }}" alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ a_pop_site.mosaic_site|bd:'title'|title }}</h5>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    {% if controler %}
+        <a class="carousel-control-prev" href="#carousel-{{ id }}" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">{% trans 'Previous' %}</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-{{ id }}" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">{% trans 'Next' %}</span>
+        </a>
+    {% endif %}
+</div>

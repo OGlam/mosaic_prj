@@ -11,9 +11,9 @@
         <meta name="robots" content="noindex, nofollow">
         {% block extrameta %}{% endblock %}
         {% block title %}
-        <title>
-            {% block page_title %}{{ page_title }}{% endblock %} | {% trans 'Israel Antiquities Authority' %}
-        </title>
+            <title>
+                {% block page_title %}{{ page_title }}{% endblock %} | {% trans 'Israel Antiquities Authority' %}
+            </title>
         {% endblock %}
         <link rel="icon" type="image/png" href="{% static 'images/favicon-32x32.png' %}" sizes="32x32">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
@@ -21,21 +21,11 @@
         {% block extrahead %}{% endblock %}
         <link href="{% static 'css/bootstrap' %}{% if LANGUAGE_BIDI %}_rtl{% endif %}.css" rel="stylesheet">
         <link href="{% static 'css/style' %}{% if LANGUAGE_BIDI %}_rtl{% endif %}.css" rel="stylesheet">
-        <link href="{% static 'css/site_style' %}{% if LANGUAGE_BIDI %}_rtl{% endif %}.css" rel="stylesheet">
         {% block extracss %}{% endblock %}
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
     </head>
     <body>
-        <!--[if lte IE 8]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>.</p>
-        <![endif]-->
         {% block header %}{% include 'main/_header.html' %}{% endblock %}
         {% block main %}
-            {% block beofre_grid %}
-            {% endblock %}
             <div class="container">
                 <div class="row">
                     <div class="col-12">

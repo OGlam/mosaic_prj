@@ -2,3 +2,282 @@ body {
     direction: rtl;
     text-align: right;
 }
+
+/* Generic */
+.no-btn {
+    border: 0;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.delete-row {
+    display: block;
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.add-row {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: calc(50% - 50px);
+    width: 200px;
+    text-align: center;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.delete-row:hover,
+.add-row:hover {
+    color: #fff;
+}
+
+/* Carousel */
+.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.carousel-indicators .active {
+    background-color: #e7685a;
+}
+
+/* Header */
+header {
+    background-color: #fff;
+    border-bottom: 2px solid #666;
+    box-shadow: 0 1px 10px #666;
+    margin-bottom: 0.5rem;
+}
+
+.bg-white {
+    background-color: #fff !important;
+}
+
+.navbar-brand {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 60px;
+}
+
+.navbar-brand img {
+    margin-left: 2rem;
+}
+
+/* Home */
+.sub-featured-card {
+    padding: 50px;
+    border: 25px !important;
+    color: #80bdff;
+    border-color: #1c7430;
+}
+
+.subjects {
+    width: 100%;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0 60px;
+    height: auto;
+}
+
+.subjects .card-block {
+    height: 200px;
+    /*color: #e7685a;*/
+    font-weight: bolder;
+    background-color: white;
+    background-clip: padding-box;
+    width: auto;
+}
+
+.white-card-text {
+    color: #e7685a;
+    background-color: #fff;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.tag-card {
+    margin: 10px;
+}
+
+.carousel-inner {
+    max-height: 500px;
+}
+
+.carousel-caption {
+    top: 5%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 100px;
+    width: 60px;
+    color: #e7685a;
+}
+
+.carousel-caption h5 {
+    color: #e7685a;
+    padding: 10px 20px;
+    display: inline-block;
+    background-color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.head {
+    margin-right: auto;
+    padding-top: 25px;
+    margin-left: auto;
+}
+
+.scroll {
+    overflow-x: scroll;
+    padding: 10px 0 70px 0;
+
+}
+
+.gray-card-text {
+    background-color: #f2f2f2;
+    color: #e7685a;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.arc-context .card-block {
+    display: inline-block;
+    margin: 0;
+    height: auto;
+}
+
+.arc-context {
+    padding: 20px;
+}
+
+.arc-context .card-block img {
+    width: 100%;
+    height: auto;
+}
+
+.sub-featured .card-block img {
+    width: 100%;
+    height: auto;
+    border-bottom: 5px;
+
+}
+
+/* Main */
+main {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Site */
+body {
+    background: #F3F3F3;
+}
+
+.site_gallery img {
+    width: 200px;
+    height: 200px;
+}
+
+.site_desc {
+    width: 100%;
+    background: #FFFFFF;
+    padding: 15px;
+    text-align: center;
+}
+
+.site_responsive {
+    padding: 0 6px;
+    float: right;
+    width: 100%;
+}
+
+.table-row {
+    display: block;
+    margin: 0 0 1em 0;
+    padding: 0;
+}
+
+.table-cel {
+    margin: .5em;
+    background: #fff;
+    display: inline-block;
+    vertical-align: top;
+    list-style: none;
+}
+
+.table-cel span {
+    display: block;
+    padding: 0 1em;
+    background: #fff;
+    text-align: center;
+    line-height: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'David Libre', serif;
+    font-size: 1.6em;
+    font-weight: 500;
+    color: #3E3E3E;
+}
+
+.table-cel img {
+    max-width: 100%;
+    height: 200px
+}
+
+.capital-letter {
+    font-family: 'Assistant', sans-serif;
+    font-size: 2em;
+    font-weight: 300;
+    color: #484848;
+}
+
+.gallery {
+    border: 1px solid #ccc;
+}
+
+.gallery:hover {
+    border: 1px solid #777;
+}
+
+.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+/* Responsive */
+@media only screen and (max-width: 767px) {
+    #main-search-form {
+        width: 85%;
+        margin-right: 15%;
+    }
+
+    header .navbar-toggler {
+        position: absolute;
+        right: 0;
+        top: -42px;
+    }
+}
