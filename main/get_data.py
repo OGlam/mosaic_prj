@@ -139,6 +139,8 @@ def create_photo(mosaic, photo_name, xl_photos):
 
 def download_pic(link, photo_name):
     res = requests.get(link, stream=True)
+    if not os.path.exists(os.path.join(settings.BASE_DIR, 'images_to_upload')):
+        os.makedirs(os.path.join(settings.BASE_DIR, 'images_to_upload'))
     filename = os.path.join(
         settings.BASE_DIR, f'images_to_upload/{photo_name}'
     )
