@@ -1,26 +1,16 @@
 {% load i18n mosaic %}
 
-<div class="col-12">
-    <h2 class="text-center">{% trans 'Upload pictures' %}</h2>
-</div>
-{{ form.management_form }}
-{{ form.non_form_errors }}
-{% for f in form %}
-    <div class="col-12 col-md-6 {{ form.prefix }}">
+<div class="formset-wrapper">
+    <h2>{% trans 'Upload images' %}</h2>
+    {{ form.management_form }}
+    {{ form.non_form_errors }}
+    {% for f in form %}
         {{ f.id }}
-        <div class="jumbotron">
+        <div class="jumbotron {{ form.prefix }}">
             {% for hidden in f.hidden_fields %}
                 {{ hidden }}
             {% endfor %}
             {% for field in f.visible_fields %}
-                {% if field|is_file and field.value %}
-                    <figure class="figure">
-                        <figcaption class="figure-caption">
-                            {% trans 'Current picture' %}
-                        </figcaption>
-                        <img src="{{ field.value.url }}" class="figure-img img-fluid rounded" alt="">
-                    </figure>
-                {% endif %}
                 {% if field|is_checkbox %}
                     <div class="form-check">
                         <label class="form-check-label">
@@ -47,9 +37,9 @@
                 {% endif %}
                 </div>
             {% endfor %}
-            {% if form.can_delete %}
-                {{ f.DELETE }}
-            {% endif %}
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+    {% if form.can_delete %}
+        {{ f.DELETE }}
+    {% endif %}
+</div>

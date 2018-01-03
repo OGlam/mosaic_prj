@@ -94,6 +94,14 @@ class MosaicSite(models.Model):
     def get_site_cover_image(self):
         return MosaicPicture.objects.filter(mosaic__mosaic_site=self, is_cover=True).order_by('?')
 
+    def get_site_cover_image_url(self):
+        for mosaic_picture in self.get_site_cover_image():
+            return mosaic_picture.picture.url
+        return "file://" + os.path.join(settings.BASE_DIR, 'mosaic_images/empty-image.png')
+
+    def get_mosaic_title_first_letter(self):
+        return self.title[0].upper()
+
 
 class MosaicItem(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
@@ -116,9 +124,6 @@ class MosaicItem(models.Model):
 
     def __str__(self):
         return self.misp_rashut
-
-    def get_all_pictures_by_position(self):
-        return self.pictures.order_by('-order_priority')
 
 
 class MosaicPicture(models.Model):

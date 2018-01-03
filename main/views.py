@@ -1,9 +1,7 @@
 from builtins import super
 
 import folium
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import TemplateView, DetailView, ListView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
@@ -294,3 +292,13 @@ def mosaic_map(request):
     m.save("main/templates/map.html")
 
     return render(request, "map_page.html")
+
+
+class SiteListView(ListView):
+    model = MosaicSite
+    template_name = 'main/site_list.html'
+    context_object_name = 'site_list'
+
+
+    def get_queryset(self):
+        return MosaicSite.objects.order_by('-title').reverse()

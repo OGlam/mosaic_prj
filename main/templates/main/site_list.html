@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+{% load static i18n %}
+{% load static %}
+
+{% block extra_head %}
+<link href="https://fonts.googleapis.com/css?family=David+Libre" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+    <h2>{% trans 'Site List' %}</h2>
+    <ul class="table-row">
+        {% for mosaic in site_list %}
+            {% ifchanged mosaic.get_mosaic_title_first_letter %}
+                </ul>
+                <h2 class="capital-letter">{{mosaic.get_mosaic_title_first_letter}}</h2>
+                <ul class="table-row">
+            {% endifchanged %}
+
+                <li class="table-cel">
+                    <img src="{{ mosaic.get_site_cover_image_url }}" alt="{{ mosaic.title }}"/>
+                    <span>{{ mosaic.title }}</span>
+                </li>
+         {% endfor %}
+    </ul>
+
+{% endblock %}

@@ -18,4 +18,6 @@ urlpatterns = [
     path('item/create/', views.MosaicItemCreateView.as_view(), name='item_create'),
     path('item/update/<int:pk>/', views.MosaicItemUpdateView.as_view(), name='item_update'),
     path('item/delete/<int:pk>/', views.MosaicItemDeleteView.as_view(), name='item_delete'),
+    #http://localhost:8000/main/site_list/
+    path('site_list/', views.SiteListView.as_view(), name='site_list'),
 ]
