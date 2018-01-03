@@ -57,6 +57,38 @@ def getOrCreateMosaicSite(misp_rashut, xlmosaics):
     return new_mosaic_site
 
 
+def getCoef(dimension):
+    if "cm" in dimension.lower() or not "m" in dimension.lower():
+        return 1
+    else:
+        return 100
+    pass
+
+
+def getDimensionsInfo(new_mos, obj_dimensions_str):
+    if obj_dimensions_str == None:
+        return
+    dimensions = str(obj_dimensions_str).split("\n")
+    for dimension in dimensions:
+        nums = [int(s) for s in dimension.split() if s.isdigit()]
+        if len(nums) > 1:
+            print("too many numbers can't parse")
+            return
+        if len(nums) == 0:
+            print("no numbers to parse")
+            return
+        if "length" in dimension.lower():
+            new_mos.length = nums[0] * getCoef(dimension)
+            continue
+        if "width" in dimension.lower():
+            new_mos.width = nums[0] * getCoef(dimension)
+            continue
+        new_mos.area = nums[0]
+    pass
+
+
+
+
 def getMosaic(misp_rashut, xlmosaics):
     mosaic_items = MosaicItem.objects.filter(misp_rashut__startswith = misp_rashut)
     if len(mosaic_items) > 0:
@@ -72,6 +104,7 @@ def getMosaic(misp_rashut, xlmosaics):
     new_mos.mosaic_site = mosaic_site
     new_mos.misp_rashut = misp_rashut
     new_mos.description = mosaic_info.iloc[0]['OBJ_DESC_E']
+    getDimensionsInfo(new_mos, mosaic_info.iloc[0]['OBJ_DIM_E'])
     tagscol = mosaic_info.iloc[0]['TIPUS_E']
     tagsFromDB = Tag.objects.all()
     print("not saved", i)
