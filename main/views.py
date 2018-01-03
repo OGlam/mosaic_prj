@@ -24,6 +24,7 @@ class HomeView(IAAUIMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['popular_sites'] = self.getFeaturedContext()
+        context['popular_sites_sub'] = self.getSubFeaturedContext()
         context['tags'] = self.getTagsContext()
         context['archeological_context'] = self.getArcheologicalContext()
         # context['map_context'] = self.getMapDataContext()
@@ -31,7 +32,16 @@ class HomeView(IAAUIMixin, TemplateView):
 
     def getFeaturedContext(self):
         result = []
-        for site in MosaicSite.objects.filter(featured=True)[:5]:
+        for site in MosaicSite.objects.filter(featured=True)[:3]:
+            item = MosaicItem.objects.filter(mosaic_site=site)[:1]
+            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=item, is_cover=True)[:1]
+            if (picture.count() > 0):
+                result.append({"site":site, "picture":picture})
+        return result;
+
+    def getSubFeaturedContext(self):
+        result = []
+        for site in MosaicSite.objects.filter(featured=True)[3:5]:
             item = MosaicItem.objects.filter(mosaic_site=site)[:1]
             picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=item, is_cover=True)[:1]
             if (picture.count() > 0):

@@ -10,16 +10,11 @@ import requests
 
 def getData():
     print("hi3")
-    # this is on my personal computer - should be on the net
     xlphotos = pd.ExcelFile("listing_of_photos.xlsx").parse("Sheet1")
     photo_names = xlphotos.name.unique()
     print(photo_names)
-
     xlcnts = pd.ExcelFile("Copy of רשימת חפצים ונגטיבים עם נגטיב מקור והעתק דיגיטאלי.xlsx").parse("גיליון1")
-    # print(xlcnts.head())
-    # rashut_nums = xlcncts[photo_names]
-    # print(rashut_nums.head())
-    # get the connection between photo number and misp_rashut
+    # get the connection between photo number and misp_rashut:
     xlcnts = xlcnts.loc[xlcnts['neg_misp'].isin(photo_names)]
     xlmosaics = pd.ExcelFile("oglam-mosaics.csv.xlsx").parse("oglam-mosaics.csv")
 
@@ -31,15 +26,12 @@ def getData():
         if mosaic == None:
             print("failed")
             continue
-        sds = createPhoto(mosaic, photo, xlphotos)
+        createPhoto(mosaic, photo, xlphotos)
 
 def getMispRashut(photo, xlcnts):
-    # print("getMispRashut")
     rashut_nums = xlcnts.loc[xlcnts['neg_misp'] == photo]
-    # print(rashut_nums)
     if not rashut_nums.empty:
         misp_rashut = rashut_nums.iloc[0]['misp_rashut_b']
-        # misp_rashut = misp_rashut.split("/")[0]
         return misp_rashut
     pass
 
@@ -57,10 +49,44 @@ def getOrCreateMosaicSite(misp_rashut, xlmosaics):
     new_mosaic_site = MosaicSite()
     print ("site_id", site_id)
     new_mosaic_site.site_id = site_id
-    new_mosaic_site.title = new_mosaic_site.origin = mosaic_info.iloc[0]['MOTSA_E'].split('(')[0]
+    new_mosaic_site.title_en = new_mosaic_site.origin_en = mosaic_info.iloc[0]['MOTSA_E'].split('(')[0]
+    new_mosaic_site.title_he = new_mosaic_site.origin_he = mosaic_info.iloc[0]['MOTSA'].split('(')[0]
     new_mosaic_site.period = mosaic_info.iloc[0]['TKU_OBJ_E']
     new_mosaic_site.save()
+    # TODO: COMPLETE THE MISSING FIELDS FOR MOSAIC SITE
     return new_mosaic_site
+
+
+def getCoef(dimension):
+    if "cm" in dimension.lower() or not "m" in dimension.lower():
+        return 1
+    else:
+        return 100
+    pass
+
+
+def getDimensionsInfo(new_mos, obj_dimensions_str):
+    if obj_dimensions_str == None:
+        return
+    dimensions = str(obj_dimensions_str).split("\n")
+    for dimension in dimensions:
+        nums = [int(s) for s in dimension.split() if s.isdigit()]
+        if len(nums) > 1:
+            print("too many numbers can't parse")
+            return
+        if len(nums) == 0:
+            print("no numbers to parse")
+            return
+        if "length" in dimension.lower():
+            new_mos.length = nums[0] * getCoef(dimension)
+            continue
+        if "width" in dimension.lower():
+            new_mos.width = nums[0] * getCoef(dimension)
+            continue
+        new_mos.area = nums[0]
+    pass
+
+
 
 
 def getMosaic(misp_rashut, xlmosaics):
@@ -68,20 +94,17 @@ def getMosaic(misp_rashut, xlmosaics):
     if len(mosaic_items) > 0:
         return mosaic_items[0]
 
-    #check if a mosaic site exists
+    #check if a mosaic site exists, if not - create it
     mosaic_site = getOrCreateMosaicSite(misp_rashut, xlmosaics)
 
-    # mosaic_info = xlmosaics.loc[xlmosaics['MISP_RASHUT'] == misp_rashut]
+    # get the info from the excel
     mosaic_info = xlmosaics.loc[xlmosaics['MISP_RASHUT'].str.startswith(misp_rashut)]
-    global i
-    if i<5:
-        print(mosaic_info.iloc[0:3, 0:4], i)
-        i = i+1
     # create new mosaic item
     new_mos = MosaicItem()
     new_mos.mosaic_site = mosaic_site
     new_mos.misp_rashut = misp_rashut
     new_mos.description = mosaic_info.iloc[0]['OBJ_DESC_E']
+    getDimensionsInfo(new_mos, mosaic_info.iloc[0]['OBJ_DIM_E'])
     tagscol = mosaic_info.iloc[0]['TIPUS_E']
     tagsFromDB = Tag.objects.all()
     print("not saved", i)
@@ -94,6 +117,7 @@ def getMosaic(misp_rashut, xlmosaics):
             new_mos.tags.add(tag)
 
     new_mos.save()
+    # TODO: COMPLETE THE MISSING FIELDS FOR MOSAIC ITEM
     return new_mos
 
 
@@ -102,28 +126,32 @@ def getMosaic(misp_rashut, xlmosaics):
 
 
 def createPhoto(mosaic, photoname, xlphotos):
-    # print (MosaicPicture.objects.all().delete())
-    # return
     photo_row = xlphotos.loc[xlphotos['name'] == photoname]
     if not photo_row.empty:
         link = photo_row.iloc[0]['download_link']
+        photo_full_name = photo_row.iloc[0]['name_orig']
     else:
         return
-    # if len(MosaicPicture.objects.filter(negative_id=photoname)) > 0:
-    #     return
     new_pic = MosaicPicture()
     new_pic.mosaic = mosaic
     new_pic.negative_id = photoname
-    new_pic.picture = link
-    # print(link, photoname)
-    filename = uploadPic(link, photoname)
+    filename = os.path.join(
+        settings.BASE_DIR, f'images_to_upload/{photo_full_name}'
+    )
     print(photoname, filename)
-    new_pic.picture = UploadedFile(open(filename, "br"))
+    try:
+        file_object = open(filename, "br")
+        print("opened ",filename)
+    except IOError:
+        print ("Could not open file! Make sure the file is in the folder", filename)
+    new_pic.picture = UploadedFile(file_object)
     new_pic.save()
+
+    #TODO: ADD MISSING FIELDS TO MOSAIC PICTURE
 
     pass
 
-def uploadPic(link, photoname):
+def downloadPic(link, photoname):
     res = requests.get(link, stream=True)
     filename = os.path.join(
         settings.BASE_DIR, f'temp_images/{photoname}.jpg'
