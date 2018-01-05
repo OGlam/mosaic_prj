@@ -15,6 +15,36 @@ from django.utils.translation import ugettext as _
 
 from mosaic_prj.base_views import IAAUIMixin
 
+class SiteView(IAAUIMixin, TemplateView):
+    template_name = 'main/mosaic_site.html'
+    page_title = _('Mosaic Site')
+    page_name = 'site'
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteView, self).get_context_data(**kwargs)
+        mosaic = MosaicSite.objects.filter(id = kwargs.get('pk', None))[0:1]
+        context['mosaic'] = mosaic = mosaic[0] if mosaic else None
+        if not mosaic:
+            print("no such id")
+            return context
+
+        print(type(mosaic))
+        context['pictures_to_show'] = self.getPicturesOfSite(mosaic)
+        context['main_picture'] = self.getMainPicture(mosaic, context)
+
+
+        return context
+
+    def getPicturesOfSite(self, mosaic):
+        pictures = MosaicPicture.objects.filter(mosaic__mosaic_site__id=mosaic.id).order_by('mosaic')
+        # print(len(pictures), " ", pictures, "\n", type(pictures))
+        # print(pictures[0].picture.url)
+        return pictures if pictures else None
+
+    def getMainPicture(self, mosaic, context):
+        cover_pictures = MosaicPicture.objects.filter(mosaic__mosaic_site__id=mosaic.id, is_cover=True)
+        return cover_pictures[0] if cover_pictures else context['pictures_to_show'][0]
+
 
 class HomeView(IAAUIMixin, TemplateView):
     template_name = 'main/home.html'
