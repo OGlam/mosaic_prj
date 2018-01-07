@@ -38,9 +38,9 @@
         {% endif %}
         </div>
     {% endfor %}
-    {% if formset %}
+    {% if with_formset %}
         <hr>
-        {% include '_base_formset.html' with form=artifact_image_formset %}
+        {% include '_base_formset.html' with form=formset %}
     {% endif %}
     <div class="form-group">
         <button type="submit" class="btn btn-{{ button_color|default:"primary" }}">

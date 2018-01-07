@@ -54,6 +54,13 @@
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script src="{% static 'vendors/OwlCarousel2-2.2.1/dist/owl.carousel.min.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
+        <script>
+            {% if LANGUAGE_BIDI %}
+                let is_rtl = true;
+            {% else %}
+                let is_rtl = false;
+            {% endif %}
+        </script>
         {% block scripts %}{% endblock %}
         <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     </body>

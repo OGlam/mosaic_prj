@@ -63,18 +63,22 @@
 
 {% block scripts %}
 <script>
+    let navText = (is_rtl) ? [
+                '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
+                '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>'
+            ] : [
+                '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>',
+                '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
+            ];
     $(function () {
         $('.owl-carousel').owlCarousel({
             loop: true,
             margin: 10,
             nav: true,
             center: true,
-            rtl: true,
+            rtl: is_rtl,
             dots: false,
-            navText: [
-                '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>',
-                '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
-            ],
+            navText: navText,
             responsive:{
                 0: {
                     items: 1

@@ -28,7 +28,8 @@ class HomeView(IAAUIMixin, TemplateView):
         context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).distinct('tags__tag_he')
         context['archaeological_context'] = [
             MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).first() for x in
-            ArchaeologicalContext.CHOICES if MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exists()
+            ArchaeologicalContext.CHOICES if
+            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exists()
         ]
         # context['map_context'] = self.getMapDataContext()
         return context
@@ -152,9 +153,12 @@ class MosaicItemUpdateView(SuccessMessageMixin, IAAUIMixin, UpdateView):
     page_name = 'mosaic_item_update'
 
     def get_initial(self):
-        return {
-            'materials': tuple(self.object.materials)
-        }
+        d = {}
+
+        if self.object.materials:
+            d['materials'] = tuple(self.object.materials)
+
+        return d
 
     def get_success_url(self):
         return reverse_lazy('main:item_list')
@@ -246,10 +250,11 @@ def mosaic_map(request):
     )
     marker_cluster = MarkerCluster().add_to(m)
     for point in mosaics:
-        folium.Marker(
-            location=[point.dimen_width, point.dimen_length],
-            popup=point.title
-        ).add_to(marker_cluster)
+        if point.length and point.width:
+            folium.Marker(
+                location=[point.width, point.length],
+                popup=point.mosaic_site.title_he
+            ).add_to(marker_cluster)
     m.save("main/templates/map.html")
 
     return render(request, "map_page.html")
