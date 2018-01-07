@@ -27,19 +27,29 @@
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">{% trans 'Home page' %} <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">
+                            {% trans 'HOME PAGE' %} <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{% trans 'Popular' %}</a>
+                        <a class="nav-link" href="{% url 'main:site_list' %}">
+                            {% trans 'SITES' %}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{% trans 'Tags' %}</a>
+                        <a class="nav-link" href="#">
+                            {% trans 'SUBJECT' %}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{% trans 'Period' %}</a>
+                        <a class="nav-link" href="#">
+                            {% trans 'PERIOD' %}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{% trans 'Map' %}</a>
+                        <a class="nav-link" href="#">
+                            {% trans 'MAP' %}
+                        </a>
                     </li>
                     {% if request.user.is_admin %}
                         <li class="nav-item dropdown">

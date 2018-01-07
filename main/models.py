@@ -95,9 +95,9 @@ class MosaicSite(models.Model):
         return MosaicPicture.objects.filter(mosaic__mosaic_site=self, is_cover=True).order_by('?')
 
     def get_site_cover_image_url(self):
-        for mosaic_picture in self.get_site_cover_image():
-            return mosaic_picture.picture.url
-        return "{}empty-image.png".format(settings.STATIC_URL)
+        if self.get_site_cover_image():
+            return self.get_site_cover_image()[0].picture.url
+        return "{}images/empty-image.png".format(settings.STATIC_URL)
 
 
 class MosaicItem(models.Model):
