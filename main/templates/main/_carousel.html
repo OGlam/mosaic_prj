@@ -12,7 +12,7 @@
         {% for a_pop_site in popular_sites %}
             <div class="carousel-item{% if forloop.first %} active{% endif %}">
                 <a href="{% url 'main:site' a_pop_site.id %}">
-                    <img class="d-block w-100" src="{{ a_pop_site.get_highest_cover.picture.url }}" alt="">
+                    <img class="d-block w-100" src="{{ a_pop_site.get_highest_cover }}" alt="">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{ a_pop_site.mosaic_site|bd:'title'|title }}</h5>
                     </div>

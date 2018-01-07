@@ -1,4 +1,8 @@
 /* Generic */
+.text-white {
+    color: #fff;
+}
+
 .no-btn {
     border: 0;
     cursor: pointer;
@@ -75,28 +79,72 @@ header {
 }
 
 /* Home */
-.sub-featured-card {
-    padding: 50px;
-    border: 25px !important;
-    color: #80bdff;
-    border-color: #1c7430;
+.sub-featured {
+    background-color: #fff;
+    padding: 4rem 0;
+}
+
+.sub-featured .card,
+.sub-featured .card img {
+    border: 0;
+    border-radius: 0;
+}
+
+.sub-featured .card img {
+    height: 300px;
+}
+
+.sub-featured .card-title {
+    font-size: 2.5rem;
+    line-height: 5rem;
+    border-bottom: 0.5rem solid #e7685a;
+    color: #e7685a;
 }
 
 .subjects {
-    width: 100%;
     background-color: #f2f2f2;
-    margin: 0;
-    padding: 0 60px;
-    height: auto;
+    padding: 2rem;
 }
 
-.subjects .card-block {
-    height: 200px;
-    /*color: #e7685a;*/
-    font-weight: bolder;
-    background-color: white;
-    background-clip: padding-box;
-    width: auto;
+.subjects .tag-item a {
+    display: block;
+    width: 201px;
+    height: 201px;
+}
+
+.subjects .tag-item a span {
+    display: block;
+    width: 201px;
+    height: 160px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.subjects .tag-item a h4 {
+    margin: 0;
+    text-align: center;
+    background-color: #fff;
+    color: #e7685a !important;
+    padding: 0.6rem 0;
+    font-weight: bold;
+    font-size: 1.125rem;
+}
+
+.subjects .owl-nav {
+    font-size: 30px;
+}
+
+.subjects .owl-prev {
+    position: absolute;
+    top: 70px;
+    left: -30px;
+}
+
+.subjects .owl-next {
+    position: absolute;
+    top: 70px;
+    right: -30px;
 }
 
 .white-card-text {
@@ -150,29 +198,17 @@ header {
     background-color: #f2f2f2;
     color: #e7685a;
     margin: 0;
-    padding-bottom: 5px;
-}
-
-.arc-context .card-block {
-    display: inline-block;
-    margin: 0;
-    height: auto;
+    padding: 0.5rem 0;
 }
 
 .arc-context {
-    padding: 20px;
+    padding: 2rem 0;
+    background-color: #fff;
 }
 
-.arc-context .card-block img {
-    width: 100%;
-    height: auto;
-}
-
-.sub-featured .card-block img {
-    width: 100%;
-    height: auto;
-    border-bottom: 5px;
-
+.arc-context .card img {
+    width: 350px;
+    height: 200px;
 }
 
 /* Main */

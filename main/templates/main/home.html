@@ -2,61 +2,91 @@
 {% load static i18n mosaic %}
 
 {% block main %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {% include 'main/_carousel.html' with id='mosaic' controler=True indicators=True popular_sites=popular_sites %}
-            </div>
-            <div class="col-12 sub-featured">
-                <div class="row">
-                    {% for site in popular_sites_sub %}
-                        <div class="col-6">
-                            <div class="card card-block sub-featured-card text-center">
-                                <img src="{{ site.get_highest_cover.picture.url }}" height="100%" width="auto" />
-                                <h4 class="white-card-text">{{ site.mosaic_site|bd:'title'|title }} </h4>
-                            </div>
+    {% include 'main/_carousel.html' with id='mosaic' controler=True indicators=True popular_sites=popular_sites %}
+    <div class="sub-featured">
+        <div class="container">
+            <div class="row">
+                {% for site in popular_sites_sub %}
+                    <div class="col-6">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ site.get_highest_cover }}" alt="Card image cap">
+                            <h5 class="card-title text-center">
+                                {{ site.mosaic_site|bd:'title'|title }}
+                            </h5>
                         </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="col-12 subjects">
-                <div class="row">
-                    <div class="head">
-                        <h3>{% trans 'Subjects' %}</h3>
                     </div>
-                </div>
-                <div class="row flex-row flex-nowrap scroll">
-                    {% for tag in tags %}
-                        {% for t in tag.tags.all %}
-                            <a href="{% url 'tag-url' t.id %}">
-                                <div class="card card-block text-center tag-card">
-                                    <img src="{{ tag.picture.url }}" height="100%" width="auto" />
-                                    <h4 class = "white-card-text"> {{ t|bd:'tag'|title }} </h4>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="head text-center">
-                    <h3>{% trans 'Archaeological Context' %}</h3>
-                </div>
-            </div>
-            <div class="col-12 arc-context">
-                {% for arc_context in archeological_context %}
-                    {% if arc_context %}
-                        <div class="col-4">
-                            <div class="card card-block gray-card-text text-center">
-                                <img src="{{ arc_context.picture.url }}" height="100%" width="auto" />
-                                <h4 class="gray-card-text">
-                                    {{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}
-                                </h4>
-                            </div>
-                        </div>
-                    {% endif %}
                 {% endfor %}
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="subjects">
+            <h3 class="text-center mb-4">{% trans 'Subjects' %}</h3>
+            <div class="owl-carousel owl-theme">
+                {% for tag in tags %}
+                    {% for t in tag.tags.all %}
+                        <div class="tag-item item">
+                            <a href="{% url 'tag-url' t.id %}">
+                                <span style="background-image: url({{ tag.get_image }});"></span>
+                                <h4 class="text-white">
+                                    {{ t|bd:'tag'|title }}
+                                </h4>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="arc-context">
+        <div class="container">
+            <h3 class="text-center">
+                {% trans 'Archaeological Context' %}
+            </h3>
+            {% if archaeological_context %}
+                <div class="row">
+                    {% for arc_context in archaeological_context %}
+                        <div class="col-4">
+                            <div class="card">
+                                <img src="{{ arc_context.get_image }}" class="img-fluid" />
+                                <h4 class="gray-card-text text-center">
+                                    {{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}
+                                </h4>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            center: true,
+            rtl: true,
+            dots: false,
+            navText: [
+                '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>',
+                '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
+            ],
+            responsive:{
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 3
+                },
+                1200: {
+                    items: 5
+                }
+            }
+        })
+    })
+</script>
 {% endblock %}

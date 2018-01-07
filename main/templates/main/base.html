@@ -18,31 +18,41 @@
         <link rel="icon" type="image/png" href="{% static 'images/favicon-32x32.png' %}" sizes="32x32">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
         <link href="{% static 'vendors/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendors/OwlCarousel2-2.2.1/dist/assets/owl.carousel.min.css' %}" rel="stylesheet">
         {% block extrahead %}{% endblock %}
         <link href="{% static 'css/bootstrap' %}{% if LANGUAGE_BIDI %}_rtl{% endif %}.css" rel="stylesheet">
         <link href="{% static 'css/style' %}{% if LANGUAGE_BIDI %}_rtl{% endif %}.css" rel="stylesheet">
         {% block extracss %}{% endblock %}
     </head>
     <body>
-        {% block header %}{% include 'main/_header.html' %}{% endblock %}
-        {% block main %}
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <main>
-                            {% block content %}BASE CONTENT{% endblock %}
-                        </main>
+        <header>
+            {% block header %}
+                {% include 'main/_header.html' %}
+            {% endblock %}
+        </header>
+        <main>
+            {% block main %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <main>
+                                {% block content %}BASE CONTENT{% endblock %}
+                            </main>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endblock %}
-        {% block footer %}
-            {% include 'main/_footer.html' %}
-        {% endblock %}
+            {% endblock %}
+        </main>
+        <footer>
+            {% block footer %}
+                {% include 'main/_footer.html' %}
+            {% endblock %}
+        </footer>
         {% block modals %}{% endblock %}
         <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
         <script src="{% static 'js/popper.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'vendors/OwlCarousel2-2.2.1/dist/owl.carousel.min.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
         {% block scripts %}{% endblock %}
         <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>

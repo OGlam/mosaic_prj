@@ -123,7 +123,10 @@ class MosaicItem(models.Model):
         return self.misp_rashut
 
     def get_highest_cover(self):
-        return self.pictures.filter(is_cover=True).order_by('order_priority').first()
+        res = self.pictures.filter(is_cover=True).order_by('order_priority').first()
+        if res:
+            return res.picture.url
+        return '{}images/empty-image.png'.format(settings.STATIC_URL)
 
 
 class MosaicPicture(models.Model):
@@ -144,6 +147,11 @@ class MosaicPicture(models.Model):
 
     def __str__(self):
         return self.negative_id
+
+    def get_image(self):
+        if self.picture:
+            return self.picture.url
+        return '{}images/empty-image.png'.format(settings.STATIC_URL)
 
     def image_tag(self):
         if self.picture:

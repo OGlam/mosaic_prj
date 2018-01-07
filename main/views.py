@@ -22,19 +22,16 @@ class HomeView(IAAUIMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        mosaic_items = MosaicItem.objects.filter(mosaic_site__featured=True)
+        mosaic_items = MosaicItem.objects.filter(mosaic_site__featured=True).distinct('mosaic_site_id')
         context['popular_sites'] = mosaic_items[:3]
         context['popular_sites_sub'] = mosaic_items[3:5]
         context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).distinct('tags__tag_he')
-        context['archeological_context'] = [
-            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x).first() for x in
-            ArchaeologicalContext.CHOICES
+        context['archaeological_context'] = [
+            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).first() for x in
+            ArchaeologicalContext.CHOICES if MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exists()
         ]
         # context['map_context'] = self.getMapDataContext()
         return context
-
-    def getMapDataContext(self):
-        pass
 
 
 class MosaicView(DetailView):
