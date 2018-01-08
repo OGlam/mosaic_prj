@@ -70,3 +70,9 @@ def bidi(instance, field):
 def bd(instance, field):
     lang = translation.get_language()[:2]
     return getattr(instance, field + "_" + lang)
+
+
+@register.filter
+def bd_first_letter(instance, field):
+    lang = translation.get_language()[:2]
+    return getattr(instance, field + "_" + lang).upper()[0]

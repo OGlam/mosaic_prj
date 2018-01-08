@@ -1,106 +1,96 @@
 {% extends 'main/base.html' %}
-{% load static i18n %}
-{% block extracss %}
-    <link href="{% static 'css/home' %}.css" rel="stylesheet">
+{% load static i18n mosaic %}
+
+{% block main %}
+    {% include 'main/_carousel.html' with id='mosaic' controler=True indicators=True popular_sites=popular_sites %}
+    <div class="sub-featured">
+        <div class="container">
+            <div class="row">
+                {% for site in popular_sites_sub %}
+                    <div class="col-6">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ site.get_highest_cover }}" alt="Card image cap">
+                            <h5 class="card-title text-center">
+                                {{ site.mosaic_site|bd:'title'|title }}
+                            </h5>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="subjects">
+            <h3 class="text-center mb-4">{% trans 'Subjects' %}</h3>
+            <div class="owl-carousel owl-theme">
+                {% for tag in tags %}
+                    {% for t in tag.tags.all %}
+                        <div class="tag-item item">
+                            <a href="{% url 'tag-url' t.id %}">
+                                <span style="background-image: url({{ tag.get_image }});"></span>
+                                <h4 class="text-white">
+                                    {{ t|bd:'tag'|title }}
+                                </h4>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="arc-context">
+        <div class="container">
+            <h3 class="text-center">
+                {% trans 'Archaeological Context' %}
+            </h3>
+            {% if archaeological_context %}
+                <div class="row">
+                    {% for arc_context in archaeological_context %}
+                        <div class="col-4">
+                            <div class="card">
+                                <img src="{{ arc_context.get_image }}" class="img-fluid" />
+                                <h4 class="gray-card-text text-center">
+                                    {{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}
+                                </h4>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 
-
-{% block beofre_grid %}
-    <div id="mosaic" class="carousel slide" data-ride="carousel">
-
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            {% for a_pop_site in popular_sites %}
-                <li data-target="#myCarousel" data-slide-to="{{ forloop.counter }}" {% if forloop.counter == 1 %} class="active" {% endif %}></li>
-            {% endfor %}
-        </ol>
-
-        <!-- The slideshow -->
-        <div class="carousel-inner text-center">
-            {% for a_pop_site in popular_sites %}
-                {% if forloop.counter == 1 %} <div class="carousel-item active"> {% else %} <div class="carousel-item"> {% endif %}
-            <a href="{% url 'main:site' a_pop_site.site.id %}">
-                {{ a_pop_site.picture.0.image_tag }}
-                <div class="carousel-caption">
-                    <h1>{{ a_pop_site.site.title_en | title }}</h1>
-                </div>
-            </a>
-            </div>
-            {% endfor %}
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#mosaic" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#mosaic" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
-    </div>
-
-    <div class="container-fluid sub-featured">
-        <div class="row">
-            {% for site in popular_sites_sub %}
-                <div class="col-6">
-                    <div class="card card-block sub-featured-card text-center">
-                        {{  site.picture.0.image_tag }}
-                        <row>
-                            <h4 class="white-card-text"> {{  site.title_en | title }} </h4>
-                        </row>
-                    </div>
-                </div>
-            {% endfor %}
-
-        </div>
-    </div>
-    <div class="container-fluid subjects">
-        <div class="row">
-            <div class="head">
-                <h3>Subjects</h3>
-            </div>
-        </div>
-        <div class="row flex-row flex-nowrap scroll">
-            {% for tag in tags %}
-                <a href="{% url 'tag-url' tag.tag.id %}">
-                    <div class="card card-block text-center tag-card">
-                        {{  tag.picture.0.image_tag }}
-                        <row>
-                            <h4 class = "white-card-text"> {{ tag.tag | title }} </h4>
-                        </row>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-    </div>
-
-    <div class="row">
-
-        <div class="head">
-            <h3>Archaeological Context</h3>
-        </div>
-    </div>
-    <div class="row arc-context">
-        {% for arc_context in archeological_context %}
-            <div class="col-4">
-                <div class="card card-block gray-card-text text-center">
-                    {{  arc_context.picture.0.image_tag }}
-                    <row>
-                        <h4 class="gray-card-text"> {{  arc_context.arc_context.1 | title }} </h4>
-                    </row>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
-{% endblock %}
-{# by tags #}
-
-{# by arc_context#}
-{# map #}
-
-{% block content %}
-    {#    <div class="container-fluid">#}
-
-    {#    </div>#}
+{% block scripts %}
+<script>
+    let navText = (is_rtl) ? [
+                '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
+                '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>'
+            ] : [
+                '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>',
+                '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
+            ];
+    $(function () {
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            center: true,
+            rtl: is_rtl,
+            dots: false,
+            navText: navText,
+            responsive:{
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 3
+                },
+                1200: {
+                    items: 5
+                }
+            }
+        })
+    })
+</script>
 {% endblock %}

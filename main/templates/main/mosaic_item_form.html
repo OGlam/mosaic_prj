@@ -16,7 +16,7 @@
             </div>
         {% endif %}
         <div class="col col-md-8">
-            {% include '_base_form.html' with form=form with_files=True formset=True submit_text=object|yesno:_('Update,Save') labels=True %}
+            {% include '_base_form.html' with form=form formset=mosaic_picture_formset with_files=True with_formset=True submit_text=object|yesno:_('Update,Save') labels=True %}
         </div>
     </div>
 {% endblock %}

@@ -1,17 +1,16 @@
-from builtins import super
-
 import folium
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView, ListView
+from django.utils import translation
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-
-from main.forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet
-from main.models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArcheologicalContext
 from django.utils.translation import ugettext as _
+
+from .forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet
+from .models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArchaeologicalContext
 
 from mosaic_prj.base_views import IAAUIMixin
 
@@ -53,56 +52,17 @@ class HomeView(IAAUIMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['popular_sites'] = self.getFeaturedContext()
-        context['popular_sites_sub'] = self.getSubFeaturedContext()
-        context['tags'] = self.getTagsContext()
-        context['archeological_context'] = self.getArcheologicalContext()
+        mosaic_items = MosaicItem.objects.filter(mosaic_site__featured=True).distinct('mosaic_site_id')
+        context['popular_sites'] = mosaic_items[:3]
+        context['popular_sites_sub'] = mosaic_items[3:5]
+        context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).distinct('tags__tag_he')
+        context['archaeological_context'] = [
+            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).first() for x in
+            ArchaeologicalContext.CHOICES if
+            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exists()
+        ]
         # context['map_context'] = self.getMapDataContext()
         return context
-
-    def getFeaturedContext(self):
-        result = []
-        for site in MosaicSite.objects.filter(featured=True)[:3]:
-            item = MosaicItem.objects.filter(mosaic_site=site)[:1]
-            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=item, is_cover=True)[:1]
-            if (picture.count() > 0):
-                result.append({"site":site, "picture":picture})
-        return result;
-
-    def getSubFeaturedContext(self):
-        result = []
-        for site in MosaicSite.objects.filter(featured=True)[3:5]:
-            item = MosaicItem.objects.filter(mosaic_site=site)[:1]
-            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=item, is_cover=True)[:1]
-            if (picture.count() > 0):
-                result.append({"site":site, "picture":picture})
-        return result;
-
-    def getTagsContext(self):
-        result = []
-        for tag in Tag.objects.all() :
-            itemByTag = MosaicItem.objects.filter(tags=tag)[:1]
-            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(tags=tag, mosaic=itemByTag)[:1]
-            if picture.count() == 0:
-                picture = MosaicPicture.objects.extra(order_by=['order_priority']).filter(mosaic=itemByTag,
-                                                                                          is_cover=True)[:1]
-            if (picture.count() > 0):
-                result.append({"tag": tag, "item":itemByTag, "picture": picture})
-        return result
-
-
-    def getArcheologicalContext(self):
-        result = []
-        for arc_contxt in ArcheologicalContext.CHOICES:
-            site = MosaicSite.objects.filter(archeological_context=arc_contxt[0])[:1]
-            item = MosaicItem.objects.filter(mosaic_site=site)[:1]
-            picture = MosaicPicture.objects.extra(order_by = ['order_priority']).filter(mosaic=item, is_cover=True)[:1]
-            if (picture.count() > 0):
-                result.append({"arc_context": arc_contxt, "item":item, "picture": picture})
-        return result
-
-    def getMapDataContext(self):
-        pass
 
 
 class MosaicView(DetailView):
@@ -223,9 +183,12 @@ class MosaicItemUpdateView(SuccessMessageMixin, IAAUIMixin, UpdateView):
     page_name = 'mosaic_item_update'
 
     def get_initial(self):
-        return {
-            'materials': tuple(self.object.materials)
-        }
+        d = {}
+
+        if self.object.materials:
+            d['materials'] = tuple(self.object.materials)
+
+        return d
 
     def get_success_url(self):
         return reverse_lazy('main:item_list')
@@ -317,10 +280,22 @@ def mosaic_map(request):
     )
     marker_cluster = MarkerCluster().add_to(m)
     for point in mosaics:
-        folium.Marker(
-            location=[point.dimen_width, point.dimen_length],
-            popup=point.title
-        ).add_to(marker_cluster)
+        if point.length and point.width:
+            folium.Marker(
+                location=[point.width, point.length],
+                popup=point.mosaic_site.title_he
+            ).add_to(marker_cluster)
     m.save("main/templates/map.html")
 
     return render(request, "map_page.html")
+
+
+class SiteListView(ListView):
+    model = MosaicSite
+    template_name = 'main/site_list.html'
+    context_object_name = 'site_list'
+
+    def get_queryset(self):
+        lang = translation.get_language()[:2]
+        title = 'title_he' if lang == 'he' else 'title_en'
+        return MosaicSite.objects.order_by(title)

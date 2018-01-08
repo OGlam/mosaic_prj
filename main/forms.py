@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from .models import Tag, MosaicSite, ArcheologicalContext, MosaicItem, Materials, MosaicPicture, PictureType
+from .models import Tag, MosaicSite, ArchaeologicalContext, MosaicItem, Materials, MosaicPicture, PictureType
 
 
 class TagForm(forms.ModelForm):
@@ -37,8 +37,8 @@ class MosaicSiteForm(forms.ModelForm):
             'origin_en': forms.TextInput(attrs={'class': 'form-control', 'dir': 'ltr'}),
             'story_he': forms.Textarea(attrs={'class': 'form-control', 'dir': 'rtl'}),
             'story_en': forms.Textarea(attrs={'class': 'form-control', 'dir': 'ltr'}),
-            'archeological_context': forms.Select(attrs={'class': 'form-control'},
-                                                  choices=ArcheologicalContext.CHOICES),
+            'archaeological_context': forms.Select(attrs={'class': 'form-control'},
+                                                   choices=ArchaeologicalContext.CHOICES),
             'period': forms.TextInput(attrs={'class': 'form-control'}),
             'video_id': forms.TextInput(attrs={'class': 'form-control'}),
             'comments': forms.TextInput(attrs={'class': 'form-control'}),
