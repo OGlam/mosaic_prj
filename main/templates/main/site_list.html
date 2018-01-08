@@ -13,8 +13,10 @@
                 <ul class="table-row">
             {% endifchanged %}
             <li class="table-cel">
-                <img src="{{ mosaic.get_site_cover_image_url }}" alt="{{ mosaic|bd:'title' }}"/>
-                <span>{{ mosaic|bd:'title' }}</span>
+                <a href="{% url 'main:site' mosaic.id %}">
+                    <img src="{{ mosaic.get_site_cover_image_url }}" alt="{{ mosaic|bd:'title' }}"/>
+                    <span>{{ mosaic|bd:'title' }}</span>
+                </a>
             </li>
         {% endfor %}
     </ul>
