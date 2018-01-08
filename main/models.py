@@ -54,11 +54,13 @@ class ArchaeologicalContext(object):
     CHURCH = _('Church')
     SYNAGOGUE = _('Synagogue')
     PUBLIC_BUILDING = _('Public building')
+    PRIVATE_BUILDING = _('Private building')
 
     CHOICES = (
         ('church', CHURCH),
         ('synagogue', SYNAGOGUE),
         ('public', PUBLIC_BUILDING),
+        ('private', PRIVATE_BUILDING),
     )
 
 

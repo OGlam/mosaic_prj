@@ -34,6 +34,10 @@
                                     {{ field.help_text|safe }}
                                 </small>
                             {% endif %}
+                            {% if field|is_file and field.value %}
+                                <span class="current-image" style="background-image: url({{ field.value.url }});">
+                                </span>
+                            {% endif %}
                     {% endif %}
                     {% if field.errors %}
                         <div class="invalid-feedback">{{ field.errors.as_text }}</div>
