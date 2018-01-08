@@ -3,21 +3,57 @@
 
 {% block content %}
     <h2>{% trans 'Site List' %}</h2>
-    <ul class="table-row">
+
+    <ul class="nav nav-tabs capital-letter" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#all" role="tab">ALL</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#am" role="tab">A-M</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#nz" role="tab">N-Z</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="all" role="tabpanel">
+          <ul class="table-row">
         {% for mosaic in site_list %}
-            {% ifchanged mosaic|bd_first_letter:'title' %}
-                </ul>
-                <h2 class="capital-letter">
-                    {{ mosaic|bd_first_letter:'title' }}
-                </h2>
-                <ul class="table-row">
-            {% endifchanged %}
             <li class="table-cel">
                 <a href="{% url 'main:site' mosaic.id %}">
-                    <img src="{{ mosaic.get_site_cover_image_url }}" alt="{{ mosaic|bd:'title' }}"/>
-                    <span>{{ mosaic|bd:'title' }}</span>
+                    <span class="site_image" style="background-image: url({{ mosaic.get_site_cover_image_url }});"></span>
+                    <span class="site_title">{{ mosaic|bd:'title' }}</span>
                 </a>
             </li>
         {% endfor %}
-    </ul>
+        </ul>
+      </div>
+
+      <div class="tab-pane" id="am" role="tabpanel">
+          <ul class="table-row">
+        {% for mosaic in am_list %}
+            <li class="table-cel">
+                <a href="{% url 'main:site' mosaic.id %}">
+                    <span class="site_image" style="background-image: url({{ mosaic.get_site_cover_image_url }});"></span>
+                    <span class="site_title">{{ mosaic|bd:'title' }}</span>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+      </div>
+
+      <div class="tab-pane" id="nz" role="tabpanel">
+          <ul class="table-row">
+        {% for mosaic in nz_list %}
+            <li class="table-cel">
+                <a href="{% url 'main:site' mosaic.id %}">
+                    <span class="site_image" style="background-image: url({{ mosaic.get_site_cover_image_url }});"></span>
+                    <span class="site_title">{{ mosaic|bd:'title' }}</span>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
 {% endblock %}
