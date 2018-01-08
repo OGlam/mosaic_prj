@@ -185,15 +185,14 @@ def strip_spaces(string):
 
 def create_photo(mosaic, photoname, xlphotos):
     photo_row = xlphotos.loc[xlphotos['name'] == photoname]
-
-    if photo_row.empty:
-        return False
-
-    link = photo_row.iloc[0]['download_link']
-    photo_full_name = photo_row.iloc[0]['name_orig']
-
-    # We always have 'download_link' & 'name_orig'?
-    filename = download_pic(link, photo_full_name)
+    if not photo_row.empty:
+        link = photo_row.iloc[0]['download_link']
+        photo_full_name = photo_row.iloc[0]['name_orig']
+        filename = os.path.join(settings.BASE_DIR,  'images_to_upload/{}'.format(photo_full_name))
+        if not (os.path.exists(filename) and os.path.isfile(filename)):
+            filename = download_pic(link, photo_full_name)
+    else:
+        return
 
     new_pic = MosaicPicture()
     new_pic.is_cover = random.choice([True, False])
@@ -218,7 +217,7 @@ def download_pic(link, photo_name):
     if not os.path.exists(os.path.join(settings.BASE_DIR, 'images_to_upload')):
         os.makedirs(os.path.join(settings.BASE_DIR, 'images_to_upload'))
     filename = os.path.join(
-        settings.BASE_DIR, f'images_to_upload/{photo_name}'
+        settings.BASE_DIR, 'images_to_upload/{}'.format(photo_name)
     )
     with open(filename, 'wb') as fd:
         for chunk in res.iter_content(chunk_size=128):

@@ -74,5 +74,7 @@ def bd(instance, field):
 
 @register.filter
 def bd_first_letter(instance, field):
+
     lang = translation.get_language()[:2]
-    return getattr(instance, field + "_" + lang).upper()[0]
+    res =  getattr(instance, field + "_" + lang).upper()
+    return res[0] if res else ''
