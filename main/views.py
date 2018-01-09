@@ -1,3 +1,5 @@
+import re
+
 import folium
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
@@ -281,3 +283,12 @@ class SiteListView(ListView):
         lang = translation.get_language()[:2]
         title = 'title_he' if lang == 'he' else 'title_en'
         return MosaicSite.objects.order_by(title)
+
+    def get_context_data(self, **kwargs):
+        d = super().get_context_data(**kwargs)
+        am_l = [x.id for x in self.get_queryset() if re.match('[a-mA-M]', x.title_he) or re.match('[a-mA-M]', x.title_en)]
+        d['am_list'] = self.get_queryset().filter(id__in=am_l)
+        nz_l = [x.id for x in self.get_queryset() if re.match('[n-zN-Z]', x.title_he) or re.match('[n-zN-Z]', x.title_en)]
+        d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
+        return d
+

@@ -193,7 +193,6 @@ def create_photo(mosaic, photoname, xlphotos):
             filename = download_pic(link, photo_full_name)
     else:
         return
-
     new_pic = MosaicPicture()
     new_pic.is_cover = random.choice([True, False])
     new_pic.mosaic = mosaic

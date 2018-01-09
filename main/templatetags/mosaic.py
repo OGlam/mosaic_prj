@@ -3,6 +3,7 @@ from django.forms import CheckboxInput, FileInput, RadioSelect, CheckboxSelectMu
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
+import re
 
 register = template.Library()
 
@@ -74,7 +75,23 @@ def bd(instance, field):
 
 @register.filter
 def bd_first_letter(instance, field):
-
     lang = translation.get_language()[:2]
-    res =  getattr(instance, field + "_" + lang).upper()
-    return res[0] if res else ''
+    res = getattr(instance, field + "_" + lang).upper()
+    first_letter = res[0] if res else ''
+    match = re.match('[a-mA-M]', first_letter)
+    if match:
+        return 'A-M'
+    else:
+        return 'N-Z'
+
+
+def bd_first_letter_am(instance, field):
+    lang = translation.get_language()[:2]
+    res = getattr(instance, field + "_" + lang).upper()
+    first_letter = res[0] if res else ''
+    match = re.match('[a-mA-M]', first_letter)
+    if match:
+        return True
+    else:
+        return False
+

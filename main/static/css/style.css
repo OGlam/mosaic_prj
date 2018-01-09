@@ -246,15 +246,26 @@ body {
     padding: 0;
 }
 
+
+
 .table-cel {
     margin: .5em;
-    background: #fff;
     display: inline-block;
     vertical-align: top;
     list-style: none;
+    background-color: #f2f2f2;
 }
 
-.table-cel span {
+
+.table-cel .site_image {
+    display: block;
+    width: 201px;
+    height: 160px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.table-cel .site_title {
     display: block;
     padding: 0 1em;
     background: #fff;
