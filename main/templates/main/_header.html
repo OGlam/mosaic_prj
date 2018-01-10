@@ -50,6 +50,13 @@
                         {% trans 'MAP' %}
                     </a>
                 </li>
+                {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}">
+                            {% trans 'LOGIN' %}
+                        </a>
+                    </li>
+                {% endif %}
                 {% if request.user.is_admin %}
                     <li class="nav-item dropdown">
                         <a class="nav-link btn btn-sm align-middle btn-primary text-white dropdown-toggle" href="#" id="adminMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

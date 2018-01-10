@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth import (
     authenticate, get_user_model, password_validation,
 )
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -310,3 +311,30 @@ class PasswordChangeForm(SetPasswordForm):
                 code='password_incorrect',
             )
         return old_password
+
+
+class MosaicLoginForm(AuthenticationForm):
+    def __init__(self, request=None, *args, **kwargs):
+        super(MosaicLoginForm, self).__init__(request, *args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget.attrs['class'] = 'form-control'
+
+        if self.errors:
+            for field in self.fields:
+                if field in self.errors:
+                    classes = self.fields[field].widget.attrs.get('class', '')
+                    classes += ' is-invalid'
+                    self.fields[field].widget.attrs['class'] = classes
+
+
+class MosaicPasswordResetForm(PasswordResetForm):
+    def __init__(self, request=None, *args, **kwargs):
+        super(MosaicPasswordResetForm, self).__init__(request, *args, **kwargs)
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+
+        if self.errors:
+            for field in self.fields:
+                if field in self.errors:
+                    classes = self.fields[field].widget.attrs.get('class', '')
+                    classes += ' is-invalid'
+                    self.fields[field].widget.attrs['class'] = classes
