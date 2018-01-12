@@ -64,13 +64,65 @@ header {
     margin-bottom: 0.5rem;
 }
 
+.user-menu-btn {
+    position: absolute;
+    right: 1rem;
+}
+
+#user_menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 200px !important;
+    background-color: #ccc;
+    z-index: 1;
+}
+
+#user_menu.collapse {
+    transition: all 0.1s !important;
+    width: 200px;
+}
+
+#user_menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    border: 1px solid #999;
+}
+
+#user_menu ul li .nav-link {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.close-user-menu {
+    display: block;
+    position: relative;
+    right: 41px;
+    top: 0;
+    height: 41px;
+    line-height: 41px;
+    width: 41px;
+    text-align: center;
+    background-color: #666;
+    cursor: pointer;
+    float: left;
+}
+
+.close-user-menu .fa {
+    color: #fff;
+    vertical-align: sub;
+}
+
 .bg-white {
     background-color: #fff !important;
 }
 
 .navbar-brand {
     font-size: 0.9rem;
-    margin: 0;
+    margin: 0 4rem 0 0;
     line-height: 60px;
 }
 
@@ -213,8 +265,7 @@ header {
 
 /* Main */
 main {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    min-height: calc(100vh - 144px);
 }
 
 /* Site */
@@ -250,25 +301,38 @@ body {
 
 .table-cel {
     margin: .5em;
-    background: #fff;
     display: inline-block;
     vertical-align: top;
     list-style: none;
+    background-color: #f2f2f2;
 }
 
-.table-cel span {
+.table-cel a {
     display: block;
-    padding: 0 1em;
+}
+
+.table-cel .site_image {
+    display: block;
+    width: 201px;
+    height: 160px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.table-cel .site_title {
+    display: block;
+    padding: 0 0.25rem;
     background: #fff;
     text-align: center;
-    line-height: 2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
     font-family: 'David Libre', serif;
-    font-size: 1.6em;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    height: 3rem;
     font-weight: 500;
     color: #3E3E3E;
+    max-width: 201px;
 }
 
 .table-cel img {
@@ -299,6 +363,106 @@ body {
 .desc {
     padding: 15px;
     text-align: center;
+}
+
+#page {
+    max-width: 1220px;
+    margin: 0 auto 40px auto
+}
+
+#page header h1 {
+    margin: 0 0 1em 0;
+    font-size: 3.2em;
+    font-weight: 700;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px 15px 0px 0px;
+}
+
+a.btn {
+    font-size: 1.2em;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 4px 15px;
+    transition: background-color 0.5s;
+}
+
+a.btn:hover {
+    background-color: rgba(87, 80, 91, 0.85);
+}
+
+#page header {
+    height: 430px;
+    background: #cfceb4 no-repeat center bottom;
+    position: relative;
+}
+
+#page header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+#page header img {
+    flex-shrink: 0;
+    min-width: 100%;
+    max-width: 105%;
+    min-height: 100%
+}
+
+header div.hero {
+    position: absolute;
+    width: 32%;
+    top: 160px;
+    right: 35%;
+}
+
+header div.hero h1 {
+    line-height: 0.9em;
+    margin: 0 0 30px 0;
+    color: white /*color: antiquewhite;*/
+}
+
+.gallery-item {
+    padding: 2px 0px 55px 0px;
+    box-sizing: border-box;
+    height: 260px;
+    overflow: hidden;
+}
+
+.gallery-item .frame {
+    height: 205px;
+    max-width: 96%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #666;
+    box-shadow: 0 1px 10px #666;
+}
+
+.frame img {
+    flex-shrink: 0;
+    min-height: 100%;
+    max-height: 100%;
+    transform-origin: center center;
+    transform: scale(1.6);
+}
+
+.misp_rashut {
+    height: 90px;
+    text-align-last: center;
+}
+
+/* Forms */
+.current-image {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* Responsive */
