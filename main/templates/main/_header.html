@@ -1,6 +1,9 @@
 {% load i18n static mosaic %}
 
 <nav class="navbar navbar-light bg-light bg-white justify-content-between">
+    <button class="user-menu-btn navbar-toggler" type="button" data-toggle="collapse" data-target="#user_menu" aria-controls="user_menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
     <a class="navbar-brand" href="{% url 'home' %}">
         <img src="{% static 'images/logo.png' %}" width="112" height="60" class="d-inline-block align-top"
              alt="{% trans 'Antiquities Authoroty' %}">
@@ -17,6 +20,43 @@
             </div>
         </div>
     </form>
+    <div id="user_menu" class="collapse">
+        <span class="close-user-menu">
+            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+        </span>
+        <ul>
+            {% if request.user.is_admin %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:tag_create' %}">
+                        {% trans 'Tags' %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:site_create' %}">
+                        {% trans 'Sites' %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:item_list' %}">
+                        {% trans 'Items' %}
+                    </a>
+                </li>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:logout' %}">
+                        {% trans 'Logout' %}
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:login' %}">
+                        {% trans 'Login' %}
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
 </nav>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white justify-content-between pr-md-0 pl-md-0">
@@ -50,24 +90,6 @@
                         {% trans 'MAP' %}
                     </a>
                 </li>
-                {% if request.user.is_admin %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link btn btn-sm align-middle btn-primary text-white dropdown-toggle" href="#" id="adminMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {% trans 'Admin menu' %}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="adminMenuLink">
-                            <a class="dropdown-item" href="{% url 'main:tag_create' %}">
-                                {% trans 'Tags' %}
-                            </a>
-                            <a class="dropdown-item" href="{% url 'main:site_create' %}">
-                                {% trans 'Sites' %}
-                            </a>
-                            <a class="dropdown-item" href="{% url 'main:item_list' %}">
-                                {% trans 'Items' %}
-                            </a>
-                        </div>
-                    </li>
-                {% endif %}
             </ul>
             <form id="lang-form" class="form-inline my-2 my-lg-0" action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <input name="next" type="hidden" value="{{ redirect_to }}"/>

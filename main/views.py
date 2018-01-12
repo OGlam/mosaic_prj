@@ -140,13 +140,7 @@ class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
             mosaic_picture_formset.save()
             return super().form_valid(form)
 
-        return self.render_to_response(
-            self.get_context_data(
-                form=form,
-                mosaic_picture_formset=mosaic_picture_formset
-            )
-        )
-        # return super().form_invalid(form)
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         d = super(MosaicItemCreateView, self).get_context_data(**kwargs)

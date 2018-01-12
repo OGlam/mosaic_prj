@@ -21,6 +21,7 @@ urlpatterns += i18n_patterns(
     path('tags/', views.tags, name='tags'),
     path('map/', views.mosaic_map, name='map'),
     path('main/', include('main.urls')),
+    path('account/', include('users.urls')),
     path('tag/<int:tagid>/', views.tag_page, name='tag-url'),
     path('jsi18n/', JavaScriptCatalog.as_view(packages=['main']), name='javascript-catalog'),
     path('i18n/', include('django.conf.urls.i18n')),
