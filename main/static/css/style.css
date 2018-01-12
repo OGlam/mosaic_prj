@@ -454,6 +454,10 @@ header div.hero h1 {
 }
 
 /* Forms */
+.form-control-file.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
 .current-image {
     display: block;
     width: 50px;
