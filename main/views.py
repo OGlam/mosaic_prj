@@ -39,7 +39,7 @@ class HomeView(IAAUIMixin, TemplateView):
         mosaic_items = MosaicItem.objects.filter(mosaic_site__featured=True).distinct('mosaic_site_id')
         context['popular_sites'] = mosaic_items[:3]
         context['popular_sites_sub'] = mosaic_items[3:5]
-        context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).distinct('tags__tag_he')
+        context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).exclude(mosaic__mosaic_site__featured=False).distinct('tags__tag_he')
         context['archaeological_context'] = [
             MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).first() for x in
             ArchaeologicalContext.CHOICES if

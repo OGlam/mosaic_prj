@@ -11,6 +11,7 @@ class TagForm(forms.ModelForm):
         widgets = {
             'tag_he': forms.TextInput(attrs={'class': 'form-control', 'dir': 'rtl'}),
             'tag_en': forms.TextInput(attrs={'class': 'form-control', 'dir': 'ltr'}),
+            'featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
     def __init__(self, *args, **kwargs):
