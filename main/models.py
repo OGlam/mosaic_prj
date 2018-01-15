@@ -72,6 +72,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag_he if settings.LANGUAGE_CODE == 'he' else self.tag_en
 
+    def get_sites(self):
+        return MosaicSite.objects.filter(id__in=[x.mosaic_site_id for x in self.mosaic_items.all().distinct()])
+
 
 class MosaicSite(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)

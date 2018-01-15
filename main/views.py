@@ -286,3 +286,16 @@ class SiteListView(ListView):
         d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
         return d
 
+
+class SubjectView(ListView):
+    model = Tag
+    template_name = 'main/subject.html'
+    context_object_name = 'tags'
+
+    def get_queryset(self):
+        tags = MosaicPicture.objects.filter(tags__isnull=False).values_list('tags', flat=True).distinct()
+        return Tag.objects.filter(id__in=[t for t in tags]).distinct()
+
+    def get_context_data(self, **kwargs):
+        d = super().get_context_data(**kwargs)
+        return d

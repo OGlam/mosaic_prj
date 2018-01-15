@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% load static i18n mosaic %}
+
+{% block content %}
+    <div class="subjects">
+        {% for tag in tags %}
+            <h3 class="text-center mb-4">{{ tag|bd:'tag' }}</h3>
+            <div class="row">
+                {% for site in tag.get_sites %}
+                   <div class="tag-item col-12 col-sm-3">
+                        <a href="{% url 'main:detail' site.id %}">
+                            <span style="background-image: url({{ site.get_site_cover_image_url }});"></span>
+                            <h4 class="text-white">
+                                {{ site|bd:'title' }}
+                            </h4>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
