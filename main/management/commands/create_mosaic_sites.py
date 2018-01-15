@@ -18,11 +18,16 @@ class Command(BaseCommand):
     def handle(self, n, **options):
         # Create 5 tags
         Tag.objects.bulk_create([
-            Tag(tag_he=silly.title(), tag_en=silly.title()),
-            Tag(tag_he=silly.title(), tag_en=silly.title()),
-            Tag(tag_he=silly.title(), tag_en=silly.title()),
-            Tag(tag_he=silly.title(), tag_en=silly.title()),
-            Tag(tag_he=silly.title(), tag_en=silly.title()),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=True),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=True),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=True),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=True),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=True),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=False),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=False),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=False),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=False),
+            Tag(tag_he=silly.title(), tag_en=silly.title(), featured=False),
         ])
 
         for i in range(n):

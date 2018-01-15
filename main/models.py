@@ -67,6 +67,7 @@ class ArchaeologicalContext(object):
 class Tag(models.Model):
     tag_he = models.CharField(max_length=100)
     tag_en = models.CharField(max_length=100)
+    featured = models.BooleanField(_('Is featured?'), default=True)
 
     def __str__(self):
         return self.tag_he if settings.LANGUAGE_CODE == 'he' else self.tag_en
