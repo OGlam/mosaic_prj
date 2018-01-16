@@ -2,20 +2,25 @@
 {% load static i18n mosaic %}
 
 {% block content %}
-    <h2>{% trans 'Site List' %}</h2>
+<br>
     <ul class="nav nav-tabs capital-letter" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#all" role="tab">
+            <span class="nav-link-sites">
+                {% trans 'Sites' %}
+            </span>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link-sites active" data-toggle="tab" href="#all" role="tab">
                 {% trans 'ALL' %}
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#am" role="tab">
+            <a class="nav-link-sites" data-toggle="tab" href="#am" role="tab">
                 {% trans 'A-M' %}
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#nz" role="tab">
+            <a class="nav-link-sites" data-toggle="tab" href="#nz" role="tab">
                 {% trans 'N-Z' %}
             </a>
         </li>

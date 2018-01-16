@@ -280,9 +280,20 @@ class SiteListView(ListView):
 
     def get_context_data(self, **kwargs):
         d = super().get_context_data(**kwargs)
-        am_l = [x.id for x in self.get_queryset() if re.match('[a-mA-M]', x.title_he) or re.match('[a-mA-M]', x.title_en)]
-        d['am_list'] = self.get_queryset().filter(id__in=am_l)
-        nz_l = [x.id for x in self.get_queryset() if re.match('[n-zN-Z]', x.title_he) or re.match('[n-zN-Z]', x.title_en)]
-        d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
+        lang = translation.get_language()[:2]
+        if lang == 'he':
+            am_l = [x.id for x in self.get_queryset() if re.match('[אבגדהוזחטיכלמ]', x.title_he)]
+            d['am_list'] = self.get_queryset().filter(id__in=am_l)
+            nz_l = [x.id for x in self.get_queryset() if re.match('[נסעפצקרשת]', x.title_he)]
+            d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
+        else:
+            am_l = [x.id for x in self.get_queryset() if re.match('[a-mA-M]', x.title_en)]
+            d['am_list'] = self.get_queryset().filter(id__in=am_l)
+            nz_l = [x.id for x in self.get_queryset() if re.match('[n-zN-Z]', x.title_en)]
+            d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
+        # am_l = [x.id for x in self.get_queryset() if re.match('[אבגדהוזחטיכלמ]', x.title_he) or re.match('[a-mA-M]', x.title_en)]
+        # d['am_list'] = self.get_queryset().filter(id__in=am_l)
+        # nz_l = [x.id for x in self.get_queryset() if re.match('[נסעפצקרשת]', x.title_he) or re.match('[n-zN-Z]', x.title_en)]
+        # d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
         return d
 
