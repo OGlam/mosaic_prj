@@ -47,7 +47,7 @@ def boolean_to_icon(arg):
 
 
 @register.simple_tag
-def svg_icon(icon_name, class_name='', from_upload=False, rtl=False):
+def svg_icon(icon_name, class_name='', simple=False, from_upload=False, rtl=False):
     if icon_name is None:
         return ''
     result = '<span class="svg-icon {}">'.format(class_name)
@@ -55,6 +55,8 @@ def svg_icon(icon_name, class_name='', from_upload=False, rtl=False):
         file = open(icon_name, 'r')
         result += file.read()
         file.close()
+    elif simple:
+        result += render_to_string('svgs/{}.svg'.format(icon_name))
     else:
         result += render_to_string('svgs/{}{}.svg'.format(icon_name, '_he' if rtl else '_en'))
     result += '</span>'

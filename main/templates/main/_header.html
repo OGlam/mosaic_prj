@@ -1,8 +1,8 @@
 {% load i18n static mosaic %}
 
 <nav class="navbar navbar-light bg-light bg-white justify-content-between">
-    <button class="user-menu-btn navbar-toggler" type="button" data-toggle="collapse" data-target="#user_menu" aria-controls="user_menu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <button class="user-menu-btn navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#user_menu" aria-controls="user_menu" aria-expanded="false" aria-label="Toggle navigation">
+        {% svg_icon 'menu' 'menu_icon' True %}
     </button>
     <a class="navbar-brand" href="{% url 'home' %}">
         <img src="{% static 'images/logo.png' %}" width="112" height="60" class="d-inline-block align-top"
@@ -65,29 +65,29 @@
         </button>
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">
-                        {% trans 'HOME PAGE' %} <span class="sr-only">(current)</span>
+                <li class="nav-item{% if page_name == 'home' %} active{% endif %}">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        {% trans 'HOME PAGE' %}{% if page_name == 'home' %} <span class="sr-only">(current)</span>{% endif %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item{% if page_name == 'sites' %} active{% endif %}">
                     <a class="nav-link" href="{% url 'main:site_list' %}">
-                        {% trans 'SITES' %}
+                        {% trans 'SITES' %}{% if page_name == 'sites' %} <span class="sr-only">(current)</span>{% endif %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item{% if page_name == 'subject' %} active{% endif %}">
                     <a class="nav-link" href="{% url 'main:subject' %}">
-                        {% trans 'SUBJECT' %}
+                        {% trans 'SUBJECT' %}{% if page_name == 'subject' %} <span class="sr-only">(current)</span>{% endif %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item{% if page_name == 'period' %} active{% endif %}">
                     <a class="nav-link" href="#">
-                        {% trans 'PERIOD' %}
+                        {% trans 'PERIOD' %}{% if page_name == 'period' %} <span class="sr-only">(current)</span>{% endif %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item{% if page_name == 'map' %} active{% endif %}">
                     <a class="nav-link" href="#">
-                        {% trans 'MAP' %}
+                        {% trans 'MAP' %}{% if page_name == 'map' %} <span class="sr-only">(current)</span>{% endif %}
                     </a>
                 </li>
             </ul>

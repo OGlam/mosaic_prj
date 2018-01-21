@@ -1,5 +1,4 @@
 import re
-
 import folium
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
@@ -39,13 +38,19 @@ class HomeView(IAAUIMixin, TemplateView):
         mosaic_items = MosaicItem.objects.filter(mosaic_site__featured=True).distinct('mosaic_site_id')
         context['popular_sites'] = mosaic_items[:3]
         context['popular_sites_sub'] = mosaic_items[3:5]
-        context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).exclude(mosaic__mosaic_site__featured=False).distinct('tags__tag_he')
+        context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).exclude(
+            mosaic__mosaic_site__featured=False).distinct('tags__tag_he')
         context['archaeological_context'] = [
             MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).first() for x in
             ArchaeologicalContext.CHOICES if
             MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exists()
         ]
-        # context['map_context'] = self.getMapDataContext()
+        lang = translation.get_language()[:2]
+        context['map_lang'] = 'iw' if lang == 'he' else 'en'
+        context['map_markers'] = [
+            [u'{}'.format(getattr(x, "title_" + lang)), x.latitude, x.longitude, x.id] for x in
+            MosaicSite.objects.filter(latitude__isnull=False, longitude__isnull=False)
+        ]
         return context
 
 
@@ -115,6 +120,8 @@ class MosaicSiteDeleteView(IAAUIMixin, DeleteView):
 
 class MosaicItemListView(IAAUIMixin, ListView):
     model = MosaicItem
+    page_name = 'items'
+    page_title = 'Items'
     template_name = 'main/mosaic_item_list.html'
     context_object_name = 'items'
 
@@ -268,10 +275,12 @@ def mosaic_map(request):
     return render(request, "map_page.html")
 
 
-class SiteListView(ListView):
+class SiteListView(IAAUIMixin, ListView):
     model = MosaicSite
     template_name = 'main/site_list.html'
     context_object_name = 'site_list'
+    page_name = 'sites'
+    page_title = 'Sites'
 
     def get_queryset(self):
         lang = translation.get_language()[:2]
@@ -282,14 +291,14 @@ class SiteListView(ListView):
         d = super().get_context_data(**kwargs)
         lang = translation.get_language()[:2]
         if lang == 'he':
-            am_l = [x.id for x in self.get_queryset() if re.match('[אבגדהוזחטיכלמ]', x.title_he)]
+            am_l = [x.id for x in self.get_queryset() if re.match('[אבגדהוזחטיכלמ]', x.title_he[0])]
             d['am_list'] = self.get_queryset().filter(id__in=am_l)
-            nz_l = [x.id for x in self.get_queryset() if re.match('[נסעפצקרשת]', x.title_he)]
+            nz_l = [x.id for x in self.get_queryset() if re.match('[נסעפצקרשת]', x.title_he[0])]
             d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
         else:
-            am_l = [x.id for x in self.get_queryset() if re.match('[a-mA-M]', x.title_en)]
+            am_l = [x.id for x in self.get_queryset() if re.match('[a-mA-M]', x.title_en[0])]
             d['am_list'] = self.get_queryset().filter(id__in=am_l)
-            nz_l = [x.id for x in self.get_queryset() if re.match('[n-zN-Z]', x.title_en)]
+            nz_l = [x.id for x in self.get_queryset() if re.match('[n-zN-Z]', x.title_en[0])]
             d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
         # am_l = [x.id for x in self.get_queryset() if re.match('[אבגדהוזחטיכלמ]', x.title_he) or re.match('[a-mA-M]', x.title_en)]
         # d['am_list'] = self.get_queryset().filter(id__in=am_l)
@@ -298,10 +307,12 @@ class SiteListView(ListView):
         return d
 
 
-class SubjectView(ListView):
+class SubjectView(IAAUIMixin, ListView):
     model = Tag
     template_name = 'main/subject.html'
     context_object_name = 'tags'
+    page_name = 'subject'
+    page_title = 'Subject'
 
     def get_queryset(self):
         tags = MosaicPicture.objects.filter(tags__isnull=False).values_list('tags', flat=True).distinct()
