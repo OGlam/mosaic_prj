@@ -340,9 +340,32 @@ body {
 
 .capital-letter {
     font-family: 'Assistant', sans-serif;
-    font-size: 2em;
-    font-weight: 300;
+    font-size: 1em;
+    font-weight: 400;
     color: #484848;
+}
+
+.nav-tabs .nav-item{
+    line-height: 30px;
+}
+
+.nav-link-sites {
+    display: block;
+    padding: 1rem 1rem 0;
+}
+
+.nav-tabs a.nav-link-sites {
+    color: #868e96;
+}
+
+.nav-tabs span.nav-link-sites {
+    font-size: 1.7em;
+}
+
+.nav-tabs .nav-link-sites.active, .nav-tabs .nav-item.show .nav-link-sites {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
 }
 
 .gallery {

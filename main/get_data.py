@@ -223,3 +223,33 @@ def download_pic(link, photo_name):
             fd.write(chunk)
 
     return filename
+
+
+
+
+
+def add_info_to_pictures():
+    picture_rows = pd.ExcelFile("imports/רשימת חפצים ונגטיבים עם מידע על הנגטיבים (1).xlsx").parse("גיליון1")
+    picture_names = picture_rows.neg_misp.unique()
+    pictures_in_db = MosaicPicture.objects.filter(negative_id__in=picture_names)
+    for picture in pictures_in_db:
+        picture_info = picture_rows.loc[picture_rows['neg_misp'] == picture.negative_id]
+        date = picture_info.iloc[0].neg_date
+        photographer_eng = picture_info.iloc[0].photographer_en
+        photographer_he = picture_info.iloc[0].photographer_he
+        # print (date, type(date), pd.to_datetime(date), photographer_eng, photographer_he)
+        picture.taken_date = parse_date(date)
+        picture.photographer_name_en = parse_name(photographer_eng)
+        picture.photographer_name_he = parse_name(photographer_he)
+        picture.save()
+
+
+def parse_date(date):
+    if date:
+        return pd.to_datetime(date)
+    return None
+
+def parse_name(photographer):
+    if "unknown" in photographer.lower() or "לא ידוע" in photographer or not photographer:
+        return ""
+    return photographer
