@@ -3,15 +3,15 @@
 
 {% block content %}
     <div class="subjects">
-        {% for tag in tags %}
-            <h3 class="text-center mb-4">{{ tag|bd:'tag' }}</h3>
+        {% for tag, pictures in tags.items %}
+            <h3 class="mb-4 mt-4">{{ tag|bd:'tag' }}</h3>
             <div class="row">
-                {% for site in tag.get_sites %}
+                {% for picture in pictures %}
                    <div class="tag-item col-12 col-sm-3">
-                        <a href="{% url 'main:detail' site.id %}">
-                            <span style="background-image: url({{ site.get_site_cover_image_url }});"></span>
+                        <a href="{% url 'main:detail' picture.mosaic.id %}">
+                            <span style="background-image: url({{ picture.picture.url }});"></span>
                             <h4 class="text-white">
-                                {{ site|bd:'title' }}
+                                {{ picture.mosaic.mosaic_site|bd:'title' }}
                             </h4>
                         </a>
                     </div>

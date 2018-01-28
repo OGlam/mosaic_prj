@@ -1,4 +1,6 @@
 import re
+from collections import OrderedDict
+
 import folium
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
@@ -308,15 +310,22 @@ class SiteListView(IAAUIMixin, ListView):
 
 
 class SubjectView(IAAUIMixin, ListView):
-    model = Tag
+    model = MosaicSite
     template_name = 'main/subject.html'
     context_object_name = 'tags'
     page_name = 'subject'
-    page_title = 'Subject'
+    page_title = _('Subject')
 
     def get_queryset(self):
-        tags = MosaicPicture.objects.filter(tags__isnull=False).values_list('tags', flat=True).distinct()
-        return Tag.objects.filter(id__in=[t for t in tags]).distinct()
+        lang = translation.get_language()[:2]
+        tags_list = MosaicPicture.objects.filter(tags__isnull=False).values_list('tags', flat=True).distinct()
+        order_by = 'tag_he' if lang == 'he' else 'tag_en'
+        tags = Tag.objects.filter(id__in=[t for t in tags_list]).distinct().order_by(order_by)
+        d = OrderedDict()
+        for tag in tags:
+            d[tag] = [x for x in MosaicPicture.objects.filter(tags__in=[tag.id])]
+
+        return d
 
     def get_context_data(self, **kwargs):
         d = super().get_context_data(**kwargs)
