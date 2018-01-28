@@ -64,6 +64,12 @@ def svg_icon(icon_name, class_name='', simple=False, from_upload=False, rtl=Fals
 
 
 @register.simple_tag
+def get_tags(tags):
+    lang = translation.get_language()[:2]
+    return ",".join([getattr(x, "tag_" + lang) for x in tags.all()])
+
+
+@register.simple_tag
 def bidi(instance, field):
     lang = translation.get_language()[:2]
     return getattr(instance, field + "_" + lang)

@@ -131,6 +131,9 @@ class MosaicItem(models.Model):
     def __str__(self):
         return self.misp_rashut
 
+    def get_materials(self):
+        return ",".join(self.materials)
+
     def get_highest_cover(self):
         res = self.pictures.filter(is_cover=True).order_by('order_priority').first()
         if res:
