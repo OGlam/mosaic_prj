@@ -7,6 +7,7 @@ from django.urls import path
 from django.views.i18n import JavaScriptCatalog
 
 from main import views
+from users import views as users_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,6 +21,7 @@ urlpatterns += i18n_patterns(
     path('', views.HomeView.as_view(), name='home'),
     path('about/', views.AboutView.as_view(), name='about'),
     path('about-edit/', views.AboutEditView.as_view(), name='about_edit'),
+    path('contact', users_views.ContactView.as_view(), name='contact'),
     path('', include('main.urls')),
     path('tags/', views.tags, name='tags'),
     path('map/', views.mosaic_map, name='map'),
