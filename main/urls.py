@@ -5,7 +5,8 @@ from . import views
 app_name = 'main'
 urlpatterns = [
     path('sites/', views.SiteListView.as_view(), name='site_list'),
-    path('subject/', views.SubjectView.as_view(), name='subject'),
+    path('subjects/', views.SubjectsView.as_view(), name='subjects'),
+    path('subject/<int:tag_id>/', views.SubjectView.as_view(), name='subject'),
     path('mosaic/<int:pk>/', views.MosaicView.as_view(), name='detail'),
     path('tag/create/', views.TagCreateView.as_view(), name='tag_create'),
     path('tag/update/<int:pk>/', views.TagUpdateView.as_view(), name='tag_update'),

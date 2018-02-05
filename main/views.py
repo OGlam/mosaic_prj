@@ -344,12 +344,12 @@ class SiteListView(IAAUIMixin, ListView):
         return d
 
 
-class SubjectView(IAAUIMixin, ListView):
+class SubjectsView(IAAUIMixin, ListView):
     model = MosaicSite
-    template_name = 'main/subject.html'
+    template_name = 'main/subjects.html'
     context_object_name = 'tags'
-    page_name = 'subject'
-    page_title = _('Subject')
+    page_name = 'subjects'
+    page_title = _('Subjects')
 
     def get_queryset(self):
         lang = translation.get_language()[:2]
@@ -364,4 +364,20 @@ class SubjectView(IAAUIMixin, ListView):
 
     def get_context_data(self, **kwargs):
         d = super().get_context_data(**kwargs)
+        return d
+
+
+class SubjectView(IAAUIMixin, ListView):
+    model = MosaicPicture
+    template_name = 'main/subject.html'
+    context_object_name = 'pictures'
+    page_name = 'subject'
+    page_title = _('Subject')
+
+    def get_queryset(self):
+        return super().get_queryset().filter(tags=int(self.kwargs['tag_id']))
+
+    def get_context_data(self, **kwargs):
+        d = super().get_context_data(**kwargs)
+        d['tag'] = Tag.objects.get(pk=int(self.kwargs['tag_id']))
         return d

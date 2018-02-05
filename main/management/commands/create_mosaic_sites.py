@@ -71,7 +71,7 @@ class Command(BaseCommand):
                     mp.is_cover = random.choice([True, False])
                     mp.order_priority = random.randint(1, 100)
                     filename = os.path.join(
-                        settings.BASE_DIR, f'mosaic_images/{random.randint(1, 12)}.jpg'
+                        settings.BASE_DIR, 'mosaic_images/{}.jpg'.format(random.randint(1, 12))
                     )
                     mp.picture = UploadedFile(open(filename, "br"))
                     mp.negative_id = silly.number()

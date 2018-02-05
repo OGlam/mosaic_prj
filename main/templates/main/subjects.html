@@ -2,13 +2,14 @@
 {% load static i18n mosaic %}
 
 {% block content %}
-        <div class="subjects">
+    <div class="subjects">
+        {% for tag, pictures in tags.items %}
             <h3 class="mb-4 mt-4">{{ tag|bd:'tag' }}</h3>
             <div class="row">
                 {% for picture in pictures %}
                    <div class="tag-item col-12 col-sm-3">
                         <a href="{% url 'main:detail' picture.mosaic.id %}">
-                           <span style="background-image: url({{ picture.picture.url }});"></span>
+                            <span style="background-image: url({{ picture.picture.url }});"></span>
                             <h4 class="text-white">
                                 {{ picture.mosaic.mosaic_site|bd:'title' }}
                             </h4>
@@ -16,5 +17,6 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

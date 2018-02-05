@@ -26,7 +26,7 @@
                 {% for tag in tags %}
                     {% for t in tag.tags.all %}
                         <div class="tag-item item">
-                            <a href="{% url 'tag-url' t.id %}">
+                            <a href="{% url 'main:subject' t.id %}">
                                 <span style="background-image: url({{ tag.get_image }});"></span>
                                 <h4 class="text-white">
                                     {{ t|bd:'tag'|title }}
