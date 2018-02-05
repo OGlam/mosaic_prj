@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-05 22:04+0200\n"
-"PO-Revision-Date: 2018-02-05 22:06+0200\n"
+"POT-Creation-Date: 2018-02-05 22:12+0200\n"
+"PO-Revision-Date: 2018-02-05 22:13+0200\n"
 "Last-Translator: Yaniv Mirel <yanivmirel@gmail.com>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -347,8 +347,8 @@ msgid "SITES"
 msgstr "אתרים"
 
 #: templates/main/_header.html:85
-msgid "SUBJECT"
-msgstr "נושא"
+msgid "SUBJECTS"
+msgstr "נושאים"
 
 #: templates/main/_header.html:90
 msgid "PERIOD"
@@ -374,7 +374,7 @@ msgstr "שמור"
 msgid "Israel Antiquities Authority"
 msgstr "רשות העתיקות של ישראל"
 
-#: templates/main/home.html:24
+#: templates/main/home.html:24 views.py:352
 msgid "Subjects"
 msgstr "נושאים"
 
@@ -563,7 +563,7 @@ msgstr "אתר פסיפס עודכן"
 msgid "Mosaic item deleted successfully"
 msgstr "פריט פסיפס נמחק בהצלחה"
 
-#: views.py:352
+#: views.py:375
 msgid "Subject"
 msgstr "נושאים"
 

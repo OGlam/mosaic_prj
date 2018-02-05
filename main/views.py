@@ -10,7 +10,7 @@ from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from .forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet, AboutForm
 from .models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArchaeologicalContext, GeneralSettings

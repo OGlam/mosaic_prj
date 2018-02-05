@@ -6,7 +6,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.text import get_valid_filename
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from main.solo_models import SingletonModel
 
