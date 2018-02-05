@@ -5,15 +5,15 @@ import folium
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils import translation
-from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView, FormView
 from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
-from .forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet
-from .models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArchaeologicalContext
+from .forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet, AboutForm
+from .models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArchaeologicalContext, GeneralSettings
 
 from mosaic_prj.base_views import IAAUIMixin
 
@@ -26,7 +26,7 @@ class SiteView(IAAUIMixin, DetailView):
     context_object_name = 'mosaic'
 
     def get_context_data(self, **kwargs):
-        context = super(SiteView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         return context
 
 
@@ -36,7 +36,7 @@ class HomeView(IAAUIMixin, TemplateView):
     page_name = 'home'
 
     def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         mosaic_items = MosaicItem.objects.filter(mosaic_site__featured=True).distinct('mosaic_site_id')
         context['popular_sites'] = mosaic_items[:3]
         context['popular_sites_sub'] = mosaic_items[3:5]
@@ -54,6 +54,41 @@ class HomeView(IAAUIMixin, TemplateView):
             MosaicSite.objects.filter(latitude__isnull=False, longitude__isnull=False)
         ]
         return context
+
+
+class AboutView(IAAUIMixin, TemplateView):
+    template_name = 'main/about.html'
+    page_title = _('About page')
+    page_name = 'about'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        general_settings = GeneralSettings.get_solo()
+        lang = translation.get_language()[:2]
+        context['content'] = getattr(general_settings, "about_" + lang)
+        return context
+
+
+class AboutEditView(IAAUIMixin, FormView):
+    template_name = 'main/about_form.html'
+    form_class = AboutForm
+    success_url = reverse_lazy('about_edit')
+    page_title = _('About edit page')
+    page_name = 'about_edit'
+
+    def get_initial(self):
+        general_settings = GeneralSettings.get_solo()
+        return {
+            'content_he': general_settings.about_he,
+            'content_en': general_settings.about_en
+        }
+
+    def form_valid(self, form):
+        obj = GeneralSettings.get_solo()
+        obj.about_he = form.cleaned_data['content_he']
+        obj.about_en = form.cleaned_data['content_en']
+        obj.save()
+        return super().form_valid(form)
 
 
 class MosaicView(DetailView):

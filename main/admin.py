@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from main.get_data import get_data
-from .models import Tag, MosaicPicture, MosaicItem, MosaicSite
+from .models import Tag, MosaicPicture, MosaicItem, MosaicSite, GeneralSettings
 
 
 class MosaicSiteAdmin(admin.ModelAdmin):
@@ -25,8 +25,13 @@ class PictureAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
 
+try:
+    from .solo_admin import *
+except ImportError:
+    pass
+
 admin.site.register(Tag)
 admin.site.register(MosaicSite, MosaicSiteAdmin)
 admin.site.register(MosaicItem, MosaicItemAdmin)
 admin.site.register(MosaicPicture, PictureAdmin)
-
+admin.site.register(GeneralSettings, SingletonModelAdmin)

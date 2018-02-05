@@ -18,6 +18,8 @@ if settings.DEBUG:
 
 urlpatterns += i18n_patterns(
     path('', views.HomeView.as_view(), name='home'),
+    path('about/', views.AboutView.as_view(), name='about'),
+    path('about-edit/', views.AboutEditView.as_view(), name='about_edit'),
     path('', include('main.urls')),
     path('tags/', views.tags, name='tags'),
     path('map/', views.mosaic_map, name='map'),

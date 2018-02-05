@@ -8,6 +8,8 @@ from django.utils.safestring import mark_safe
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext as _
 
+from main.solo_models import SingletonModel
+
 
 def mosaic_dir(instance, filename):
     # name, ext = os.path.splitext(filename)
@@ -172,3 +174,24 @@ class MosaicPicture(models.Model):
             return '-'
 
     image_tag.short_description = 'Image'
+
+
+class GeneralSettings(SingletonModel):
+    logo = models.FileField(_('Logo'), blank=True, null=True)
+    site_name_he = models.CharField(verbose_name=_('Site name Hebrew'), max_length=255, blank=True)
+    site_name_en = models.CharField(verbose_name=_('Site name English'), max_length=255, blank=True)
+    admin_email_from = models.CharField(verbose_name=_('Admin email from'), max_length=255, blank=True)
+    admin_email_to = models.EmailField(verbose_name=_('Admin email to'), max_length=255, blank=True)
+    about_he = models.TextField(verbose_name=_('About Hebrew'), blank=True, null=True)
+    about_en = models.TextField(verbose_name=_('About English'), blank=True, null=True)
+
+    def __str__(self):
+        return u"{}".format(_('General settings'))
+
+    class Meta:
+        verbose_name = _("General settings")
+
+    def get_logo(self):
+        if self.logo:
+            return self.logo.url
+        return ''
