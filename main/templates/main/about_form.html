@@ -3,11 +3,11 @@
 
 {% block content %}
     <div class="row justify-content-md-center">
-        <div class="col col-md-8">
+        <div class="col-12 col-md-8">
             <h1>{{ page_title }}</h1>
         </div>
         {% if messages %}
-            <div class="col col-md-8">
+            <div class="col-12 col-md-8">
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }}">
                         {{ message }}
@@ -15,7 +15,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <div class="col col-md-8">
+        <div class="col-12 col-md-8">
             {% include '_base_form.html' with form=form with_files=False with_formset=False submit_text=_('Save') labels=True %}
         </div>
     </div>

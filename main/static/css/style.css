@@ -44,6 +44,13 @@
     color: #fff;
 }
 
+.svg-icon.menu_list_icon svg {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 1.5rem;
+}
+
 /* Carousel */
 .carousel-indicators li {
     width: 10px;
@@ -64,58 +71,6 @@ header {
     margin-bottom: 0.5rem;
 }
 
-.user-menu-btn {
-    position: absolute;
-    left: 1rem;
-}
-
-#user_menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 200px !important;
-    background-color: #ccc;
-    z-index: 1;
-}
-
-#user_menu.collapse {
-    transition: all 0.1s !important;
-    width: 200px;
-}
-
-#user_menu ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    border: 1px solid #999;
-}
-
-#user_menu ul li .nav-link {
-    color: #fff;
-    border-bottom: 1px solid #fff;
-}
-
-.close-user-menu {
-    display: block;
-    position: relative;
-    left: 41px;
-    top: 0;
-    height: 41px;
-    line-height: 41px;
-    width: 41px;
-    text-align: center;
-    background-color: #666;
-    cursor: pointer;
-    float: right;
-}
-
-.close-user-menu .fa {
-    color: #fff;
-    vertical-align: sub;
-}
-
 .bg-white {
     background-color: #fff !important;
 }
@@ -128,11 +83,135 @@ header {
 
 .navbar-brand img {
     margin-right: 2rem;
+    height: 70px;
+    width: auto;
+}
+
+/* Nav */
+.nav-toggle {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    height: 2rem;
+    left: 2rem;
+    position: absolute;
+    top: 2rem;
+    width: 2rem;
+    z-index: 17;
+}
+
+.nav-toggle .nav-toggle-bar,
+.nav-toggle .nav-toggle-bar::after,
+.nav-toggle .nav-toggle-bar::before {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    background: #000;
+    content: '';
+    height: 0.1rem;
+    width: 100%;
+}
+
+.nav-toggle .nav-toggle-bar {
+    margin-top: 0;
+}
+
+.nav-toggle .nav-toggle-bar::after {
+    margin-top: 0.3rem;
+}
+
+.nav-toggle .nav-toggle-bar::before {
+    margin-top: -0.3rem;
+}
+
+.nav-toggle.expanded .nav-toggle-bar {
+    background: transparent;
+}
+
+.nav-toggle.expanded .nav-toggle-bar::after,
+.nav-toggle.expanded .nav-toggle-bar::before {
+    background: #000;
+    margin-top: 0;
+}
+
+.nav-toggle.expanded .nav-toggle-bar::after {
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.nav-toggle.expanded .nav-toggle-bar::before {
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+#user_menu {
+    -webkit-transition: left 0.5s ease;
+    -moz-transition: left 0.5s ease;
+    -ms-transition: left 0.5s ease;
+    -o-transition: left 0.5s ease;
+    transition: left 0.5s ease;
+    background: #fff;
+    border-right: 1px solid #ccc;
+    cursor: pointer;
+    height: 100vh;
+    left: -20rem;
+    padding: 6rem 0 0;
+    position: fixed;
+    top: 0;
+    width: 20rem;
+    z-index: 16;
+}
+
+#user_menu.expanded {
+    left: 0;
+}
+
+#user_menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+}
+
+#user_menu ul li:hover {
+    background-color: #eee;
+}
+
+#user_menu ul li .nav-link {
+    color: #000;
+    padding: 0.5rem 2rem;
+}
+
+#user_menu ul li .nav-link.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.menu_list_icon {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.navbar-light #main_navbar .navbar-nav .show > .nav-link,
+.navbar-light #main_navbar .navbar-nav .active > .nav-link,
+.navbar-light #main_navbar .navbar-nav .nav-link.show,
+.navbar-light #main_navbar .navbar-nav .nav-link.active {
+    border-bottom: 1px solid #000;
 }
 
 /* Home */
 .sub-featured {
-    background-color: #fff;
     padding: 4rem 0;
 }
 
@@ -353,7 +432,7 @@ body {
     color: #484848;
 }
 
-.nav-tabs .nav-item{
+.nav-tabs .nav-item {
     line-height: 30px;
 }
 
