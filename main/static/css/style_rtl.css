@@ -263,6 +263,14 @@ header {
     height: 200px;
 }
 
+.map {
+    padding: 4rem 0;
+}
+
+#map {
+    height: 500px;
+}
+
 /* Main */
 main {
     min-height: calc(100vh - 144px);

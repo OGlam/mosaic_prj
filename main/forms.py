@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-
+from django.utils.translation import ugettext_lazy as _
 from .models import Tag, MosaicSite, ArchaeologicalContext, MosaicItem, Materials, MosaicPicture, PictureType
 
 
@@ -146,3 +146,10 @@ MosaicPictureFormSet = inlineformset_factory(
     extra=2,
     can_delete=False
 )
+
+
+class AboutForm(forms.Form):
+    content_he = forms.CharField(label=_('Content Hebrew'),
+                                 widget=forms.Textarea(attrs={'rows': 10, 'class': 'form-control'}))
+    content_en = forms.CharField(label=_('Content English'),
+                                 widget=forms.Textarea(attrs={'rows': 10, 'class': 'form-control'}))

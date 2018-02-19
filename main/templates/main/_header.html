@@ -1,30 +1,93 @@
 {% load i18n static mosaic %}
 
-<nav class="navbar navbar-light bg-light bg-white justify-content-between">
-    <button class="user-menu-btn navbar-toggler" type="button" data-toggle="collapse" data-target="#user_menu" aria-controls="user_menu" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light bg-white justify-content-between">
+    {% comment %}
+    <button class="user-menu-btn border-0" type="button">
+        {% svg_icon 'menu' 'menu_icon' True %}
+    </button>
+    {% endcomment %}
+    <div class="nav-toggle">
+        <div class="nav-toggle-bar"></div>
+    </div>
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'images/logo-2.png' %}" class="d-inline-block align-top img-fluid" alt="{% trans 'Antiquities Authoroty' %}">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_navbar" aria-controls="main_navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="{% url 'home' %}">
-        <img src="{% static 'images/logo.png' %}" width="112" height="60" class="d-inline-block align-top"
-             alt="{% trans 'Antiquities Authoroty' %}">
-        {% trans 'Mosaics website of Israel' %}
-    </a>
-    <form id="main-search-form" class="form-inline">
-        <div class="input-group">
-            <input class="form-control" type="search" placeholder="{% trans 'Search' %}"
-                   aria-describedby="main-search" aria-label="Search">
-            <div class="input-group-append">
-                <span class="input-group-text" id="main-search">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </span>
+    <div class="collapse navbar-collapse" id="main_navbar">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item{% if page_name == 'home' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'home' %}">
+                    {% trans 'HOME PAGE' %}{% if page_name == 'home' %} <span class="sr-only">(current)</span>{% endif %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'sites' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'main:site_list' %}">
+                    {% trans 'SITES' %}{% if page_name == 'sites' %} <span class="sr-only">(current)</span>{% endif %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'subjects' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'main:subjects' %}">
+                    {% trans 'SUBJECTS' %}{% if page_name == 'subjects' %} <span class="sr-only">(current)</span>{% endif %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'period' %} active{% endif %}">
+                <a class="nav-link" href="#">
+                    {% trans 'PERIOD' %}{% if page_name == 'period' %} <span class="sr-only">(current)</span>{% endif %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'map' %} active{% endif %}">
+                <a class="nav-link" href="#">
+                    {% trans 'MAP' %}{% if page_name == 'map' %} <span class="sr-only">(current)</span>{% endif %}
+                </a>
+            </li>
+        </ul>
+        <form id="main-search-form" class="form-inline">
+            <div class="input-group">
+                <input class="form-control" type="search" placeholder="{% trans 'Search' %}"
+                       aria-describedby="main-search" aria-label="Search">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="main-search">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </span>
+                </div>
             </div>
-        </div>
-    </form>
-    <div id="user_menu" class="collapse">
-        <span class="close-user-menu">
-            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
-        </span>
+        </form>
+    </div>
+    <div id="user_menu">
         <ul>
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <li class="nav-item">
+                    <form id="lang-form" class="form-inline my-2 my-lg-0" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                        <input name="language" type="hidden" value="{{ language.code }}"/>
+                        <button type="submit" class="nav-link no-btn text-left w-100{% if language.code == LANGUAGE_CODE %} disabled{% endif %}"{% if language.code == LANGUAGE_CODE %} disabled{% endif %}>
+                            {% svg_icon 'about' 'menu_list_icon' True %} {{ language.name_local }}
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+            <div class="dropdown-divider"></div>
+            <li class="nav-item{% if page_name == 'about' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'about' %}">
+                    {% svg_icon 'about' 'menu_list_icon' True %} {% trans 'About' %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'contact_us' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'contact' %}">
+                    {% svg_icon 'email' 'menu_list_icon' True %} {% trans 'Contact' %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    {% svg_icon 'feedback' 'menu_list_icon' True %} {% trans 'Feedback' %}
+                </a>
+            </li>
+            <div class="dropdown-divider"></div>
             {% if request.user.is_admin %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'main:tag_create' %}">
@@ -41,7 +104,24 @@
                         {% trans 'Items' %}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_edit' %}">
+                        {% trans 'Edit about' %}
+                    </a>
+                </li>
             {% endif %}
+            <div class="dropdown-divider"></div>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    {% svg_icon 'facebook' 'menu_list_icon' True %} {% trans 'Share to Facebook' %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    {% svg_icon 'twitter' 'menu_list_icon' True %} {% trans 'Share to Twitter' %}
+                </a>
+            </li>
+            <div class="dropdown-divider"></div>
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'users:logout' %}">
@@ -58,52 +138,3 @@
         </ul>
     </div>
 </nav>
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white justify-content-between pr-md-0 pl-md-0">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa fa-bars" aria-hidden="true"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="main-navbar">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">
-                        {% trans 'HOME PAGE' %} <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:site_list' %}">
-                        {% trans 'SITES' %}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        {% trans 'SUBJECT' %}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        {% trans 'PERIOD' %}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        {% trans 'MAP' %}
-                    </a>
-                </li>
-            </ul>
-            <form id="lang-form" class="form-inline my-2 my-lg-0" action="{% url 'set_language' %}" method="post">{% csrf_token %}
-                <input name="next" type="hidden" value="{{ redirect_to }}"/>
-                <select id="lang-switcher" class="form-control" name="language">
-                    {% get_current_language as LANGUAGE_CODE %}
-                    {% get_available_languages as LANGUAGES %}
-                    {% get_language_info_list for LANGUAGES as languages %}
-                    {% for language in languages %}
-                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                            {{ language.name_local }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </form>
-        </div>
-    </nav>
-</div>

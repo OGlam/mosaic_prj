@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-12 10:06+0200\n"
-"PO-Revision-Date: 2018-01-12 10:22+0200\n"
+"POT-Creation-Date: 2018-02-05 22:12+0200\n"
+"PO-Revision-Date: 2018-02-05 22:08+0200\n"
+"Last-Translator: Yaniv Mirel <yanivmirel@gmail.com>\n"
+"Language-Team: \n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: Yaniv Mirel <yanivmirel@gmail.com>\n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: admin.py:11 forms.py:35 forms.py:96
+#: admin.py:11 forms.py:38 forms.py:99
 msgid "Password"
 msgstr "סיסמא"
 
-#: admin.py:12 forms.py:41
+#: admin.py:12 forms.py:44
 msgid "Password confirmation"
 msgstr "אימות סיסמא"
 
@@ -30,46 +30,50 @@ msgstr "אימות סיסמא"
 msgid "Passwords don't match"
 msgstr "סיסמאות לא תואמות"
 
-#: forms.py:32 forms.py:249
+#: forms.py:35 forms.py:252
 msgid "The two password fields didn't match."
 msgstr "שני הסיסמאות לא תואמות."
 
-#: forms.py:44
+#: forms.py:47
 msgid "Enter the same password as before, for verification."
 msgstr "הקלד אותה סיסמא שוב, לאימות."
 
-#: forms.py:103
+#: forms.py:106
 #, python-format
 msgid ""
 "Please enter a correct %(username)s and password. Note that both fields may "
 "be case-sensitive."
 msgstr ""
-"נא להזין  %(username)s וסיסמה נכונים. נא לשים לב כי שני השדות רגישים "
-"לאותיות גדולות/קטנות."
+"נא להזין  %(username)s וסיסמה נכונים. נא לשים לב כי שני השדות רגישים לאותיות "
+"גדולות/קטנות."
 
-#: forms.py:106
+#: forms.py:109
 msgid "This account is inactive."
 msgstr "חשבון זה אינו פעיל."
 
-#: forms.py:176
+#: forms.py:179 models.py:62
 msgid "Email"
 msgstr "אימייל"
 
-#: forms.py:252
+#: forms.py:255
 msgid "New password"
 msgstr "סיסמא חדשה"
 
-#: forms.py:258
+#: forms.py:261
 msgid "New password confirmation"
 msgstr "אימות סיסמה חדשה"
 
-#: forms.py:293
+#: forms.py:296
 msgid "Your old password was entered incorrectly. Please enter it again."
 msgstr "סיסמתך הישנה הוזנה בצורה שגויה. נא להזינה שוב."
 
-#: forms.py:296
+#: forms.py:299
 msgid "Old password"
 msgstr "סיסמה ישנה"
+
+#: forms.py:362
+msgid "IAA contact form"
+msgstr "יצירת קשר מרשות העתיקות - פסיפסים"
 
 #: models.py:11
 msgid "Users must have an email address"
@@ -78,6 +82,22 @@ msgstr "למשתמש חייב להיות כתובת אימייל"
 #: models.py:33
 msgid "email address"
 msgstr "כתובת אימייל"
+
+#: models.py:61
+msgid "Name"
+msgstr "שם"
+
+#: models.py:63
+msgid "Phone"
+msgstr "טלפון"
+
+#: models.py:64
+msgid "Message"
+msgstr "הודעה"
+
+#: templates/users/contact_form.html:19 views.py:26
+msgid "Contact us"
+msgstr "צור קשר"
 
 #: templates/users/logged_out.html:7
 msgid "Logout"
@@ -104,3 +124,7 @@ msgstr "שכחת סיסמא? הכנס את כתובת המייל שלך ונשל
 #: templates/users/password_reset_form.html:10
 msgid "Reset my password"
 msgstr "אפס את הסיסמא שלי"
+
+#: views.py:29
+msgid "Thank you, we will contact you shortly"
+msgstr "תודה, ניצור איתך קשר בהקדם"

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class IAAUserManager(BaseUserManager):
@@ -54,3 +54,14 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+
+class IAAContact(models.Model):
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(_('Name'), max_length=250)
+    email = models.EmailField(_('Email'), max_length=250)
+    phone = models.CharField(_('Phone'), max_length=250)
+    message = models.TextField(_('Message'), blank=True, null=True)
+
+    def __str__(self):
+        return u'{}: {}'.format(self.submitted_at, self.name)

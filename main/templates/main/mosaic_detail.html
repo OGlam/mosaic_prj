@@ -2,43 +2,39 @@
 {% load static mosaic i18n %}
 
 {% block content %}
-    <h1 align="center">{% bidi mosaic 'origin' %} - {% bidi mosaic 'title' %}</h1>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    <br><br>
+    <h1 class="text-center">
+        {% bidi mosaic.mosaic_site 'origin' %} - {% bidi mosaic.mosaic_site 'title' %}
+    </h1>
     <ul>
-        <li>{% trans 'Story' %}: {{ mosaic.story|bd|linebreaks }}</li>
-        <li>{% trans 'IAA ID' %}: {{ mosaic.iaa_id }}</li>
-        <li>{% trans 'IAA permission code' %}: {{ mosaic.iaa_permission_code }}</li>
-        <li>{% trans 'Period' %}:{{ mosaic.period }}</li>
+        <li>{% trans 'Story' %}: {{ mosaic.mosaic_site|bd:'story'|linebreaks }}</li>
+        <li>{% trans 'IAA ID' %}: {{ mosaic.site_id }}</li>
+        <li>{% trans 'Period' %}:{{ mosaic.mosaic_site.period }}</li>
         <li>{% trans 'Displayed at' %}: {{ mosaic.displayed_at }}</li>
 
-        <li>{% trans 'Tags' %}:
-            {% for tag in mosaic.tags.all %}
-                {{ tag }}{% if not forloop.last %},{% endif %}
-            {% endfor %}
+        <li>
+            {% trans 'Tags' %}: {% get_tags mosaic.tags %}
         </li>
-        <li>{% trans 'Material' %}: {{ mosaic.material }}</li>
-        <li>{% trans 'Dimensions' %}: {{ mosaic.dimen_length }}L
-            X {{ mosaic.dimen_width }}W, {% trans 'Area' %}: {{ mosaic.dimen_area }}   </li>
+        <li>{% trans 'Material' %}: {{ mosaic.get_materials }}</li>
+        <li>{% trans 'Dimensions' %}: {{ mosaic.length|default_if_none:'' }}L
+            X {{ mosaic.width|default_if_none:'' }}W, {% trans 'Area' %}: {{ mosaic.area|default_if_none:'' }}   </li>
         <br>
         <li>
             {% trans 'Location Found' %}:
             <ul>
-                <li>{% trans 'Name' %}: {{ mosaic.place_name }}</li>
-                <li>{% trans 'Address' %}: {{ mosaic }}</li>
+                <li>{% trans 'Address' %}: {{ mosaic.mosaic_site|bd:'origin' }}</li>
             </ul>
         </li>
 
-        <li>{% trans 'Comments' %}: {{ mosaic.comments|linebreaks }}</li>
-        <li>{% trans 'Bibliography' %}: {{ mosaic.bibliography|linebreaks }}</li>
-        <li>{% trans 'Publications' %}: {{ mosaic.publications|linebreaks }}</li>
+        <li>{% trans 'Comments' %}: {{ mosaic.mosaic_site.comments|linebreaks }}</li>
+        <li>{% trans 'Bibliography' %}: {{ mosaic|bd:'bibliography'|linebreaks }}</li>
 
         <li>{% trans 'Images' %}:<br>
             {% for img in mosaic.pictures.all|dictsort:"order_priority" %}
                 <div class="responsive">
                     <div class="gallery">
                         <a target="_blank" href="{{ img.picture.url }}">
-                            <img width="600" height="400" src="{{ img.picture.url }}" alt="{{ mosaic.title }}">
+                            <img width="600" height="400" src="{{ img.picture.url }}" alt="{{ mosaic.mosaic_site|bd:'title' }}">
+                            <img width="600" height="400" src="{{ img.picture.url }}" alt="{{ mosaic.mosaic_site|bd:'title' }}">
                         </a>
                         <div class="desc">
                             {{ img.taken_date }} - {{ img.taken_at }} - {{ img.photographer_name }}

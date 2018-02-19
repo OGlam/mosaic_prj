@@ -143,9 +143,9 @@ def get_mosaic(misp_rashut, xl_mosaics):
     new_mos.materials = (mosaic_info.iloc[0]['MATERIAL_OBJ_E']).split(",")
     if isinstance(new_mos.rishayon, str) and '/' in new_mos.rishayon:
         new_mos.year = (new_mos.rishayon.split('/', 1)[1])
-    if (isinstance(mosaic_info.iloc[0]['BIBE'], str)):  # TODO
+    if isinstance(mosaic_info.iloc[0]['BIBE'], str):  # TODO
         new_mos.bibliography_he = mosaic_info.iloc[0]['BIBE']
-    if (isinstance(mosaic_info.iloc[0]['BIBH'], str)):  # TODO
+    if isinstance(mosaic_info.iloc[0]['BIBH'], str):  # TODO
         new_mos.bibliography_en = mosaic_info.iloc[0]['BIBH']
 
     tagscol_en = split_if_needed(mosaic_info.iloc[0]['TIPUS_E'])
@@ -188,7 +188,7 @@ def create_photo(mosaic, photoname, xlphotos):
     if not photo_row.empty:
         link = photo_row.iloc[0]['download_link']
         photo_full_name = photo_row.iloc[0]['name_orig']
-        filename = os.path.join(settings.BASE_DIR,  'images_to_upload/{}'.format(photo_full_name))
+        filename = os.path.join(settings.BASE_DIR, 'images_to_upload/{}'.format(photo_full_name))
         if not (os.path.exists(filename) and os.path.isfile(filename)):
             filename = download_pic(link, photo_full_name)
     else:
@@ -225,9 +225,6 @@ def download_pic(link, photo_name):
     return filename
 
 
-
-
-
 def add_info_to_pictures():
     picture_rows = pd.ExcelFile("imports/רשימת חפצים ונגטיבים עם מידע על הנגטיבים (1).xlsx").parse("גיליון1")
     picture_names = picture_rows.neg_misp.unique()
@@ -248,6 +245,7 @@ def parse_date(date):
     if date:
         return pd.to_datetime(date)
     return None
+
 
 def parse_name(photographer):
     if "unknown" in photographer.lower() or "לא ידוע" in photographer or not photographer:

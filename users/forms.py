@@ -8,12 +8,15 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.template import loader
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
+
+from main.models import GeneralSettings
+from users.models import IAAContact
 
 UserModel = get_user_model()
 
@@ -338,3 +341,30 @@ class MosaicPasswordResetForm(PasswordResetForm):
                     classes = self.fields[field].widget.attrs.get('class', '')
                     classes += ' is-invalid'
                     self.fields[field].widget.attrs['class'] = classes
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = IAAContact
+        exclude = ['submitted_at', ]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'message': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+    def send_email(self):
+        data = self.cleaned_data
+        general_settings = GeneralSettings.get_solo()
+
+        return send_mail(
+            _('IAA contact form'),
+            f'Name: {data["name"]}\n'
+            f'Email: {data["email"]}\n'
+            f'Phone: {data["phone"]}\n'
+            f'Message: {data["message"]}\n',
+            data['email'],
+            [general_settings.admin_email_to if general_settings.admin_email_to else 'yanivmirel@gmail.com'],
+            fail_silently=False,
+        )

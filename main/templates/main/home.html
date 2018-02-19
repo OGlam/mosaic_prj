@@ -26,7 +26,7 @@
                 {% for tag in tags %}
                     {% for t in tag.tags.all %}
                         <div class="tag-item item">
-                            <a href="{% url 'tag-url' t.id %}">
+                            <a href="{% url 'main:subject' t.id %}">
                                 <span style="background-image: url({{ tag.get_image }});"></span>
                                 <h4 class="text-white">
                                     {{ t|bd:'tag'|title }}
@@ -59,9 +59,13 @@
             {% endif %}
         </div>
     </div>
+    <div class="map">
+        <div id="map"></div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB62OF89NPnsuYWKkt6E1Y4gVz8y7hlm1I&region=il&language={{ map_lang }}&callback=initMap"></script>
 <script>
     let navText = (is_rtl) ? [
                 '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
@@ -92,5 +96,42 @@
             }
         })
     })
+</script>
+<script>
+    const markers = {{ map_markers|safe }};
+    const siteUrl = "{% url 'main:site' 0 %}";
+
+    function siteTitle(site) {
+        return '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h3 id="firstHeading" class="firstHeading">' + site[0] + '</h3>'+
+        '<div id="bodyContent">'+
+        '<p class="text-center"><a href="' + siteUrl.replace('0', site[3]) + '">'+
+        'Go to site</a> '+
+        '</div>'+
+        '</div>';
+    }
+
+    function initMap() {
+        let IAABase = {lat: 31.7843505, lng: 35.2358804};
+        let map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: IAABase
+        });
+        for (var i = 0; i < markers.length; i++) {
+            var site = markers[i];
+            var marker = new google.maps.Marker({
+                position: {lat: site[1], lng: site[2]},
+                title: site[0],
+                map: map
+            });
+            marker.addListener('click', function() {
+                var infowindow = new google.maps.InfoWindow({
+                    content: siteTitle(site)
+                }).open(map, marker);
+            });
+        }
+      }
 </script>
 {% endblock %}
