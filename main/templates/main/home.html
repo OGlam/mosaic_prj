@@ -50,7 +50,7 @@
                     {% for arc_context in archaeological_context %}
                         <div class="col-4">
                             <div class="card">
-                                <img src="{{ arc_context.get_image }}" class="img-fluid" />
+                                <img src="{{ arc_context.get_image }}" class="img-fluid"/>
                                 <h4 class="gray-card-text text-center">
                                     {{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}
                                 </h4>
@@ -61,79 +61,98 @@
             {% endif %}
         </div>
     </div>
-    <div class="map">
-        <div id="map"></div>
+    <div class="map bg-white">
+        <div class="row">
+            <div class="col-sm-3">
+                <ul class="list-unstyled">
+                    {% for site in sites %}
+                        <div class="media site-map-item">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">
+                                    {{ site|bd:'title' }}
+                                </h5>
+                            </div>
+                            <img class="ml-3" src="{{ site.get_site_cover_image_url }}" alt="{{ site|bd:'title' }}">
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm-9">
+                <div id="map"></div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB62OF89NPnsuYWKkt6E1Y4gVz8y7hlm1I&region=il&language={{ map_lang }}&callback=initMap"></script>
-<script>
-    let navText = (is_rtl) ? [
-                '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
-                '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>'
-            ] : [
-                '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>',
-                '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
-            ];
-    $(function () {
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: true,
-            center: true,
-            rtl: is_rtl,
-            dots: false,
-            navText: navText,
-            responsive:{
-                0: {
-                    items: 1
-                },
-                768: {
-                    items: 3
-                },
-                1200: {
-                    items: 5
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB62OF89NPnsuYWKkt6E1Y4gVz8y7hlm1I&region=il&language={{ map_lang }}&callback=initMap"></script>
+    <script>
+        let navText = (is_rtl) ? [
+            '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
+            '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>'
+        ] : [
+            '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>',
+            '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
+        ];
+        $(function () {
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                center: true,
+                rtl: is_rtl,
+                dots: false,
+                navText: navText,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    768: {
+                        items: 3
+                    },
+                    1200: {
+                        items: 5
+                    }
                 }
-            }
+            })
         })
-    })
-</script>
-<script>
-    const markers = {{ map_markers|safe }};
-    const siteUrl = "{% url 'main:site' 0 %}";
+    </script>
+    <script>
+        const markers = {{ map_markers|safe }};
+        const siteUrl = "{% url 'main:site' 0 %}";
 
-    function siteTitle(site) {
-        return '<div id="content">'+
-        '<div id="siteNotice">'+
-        '</div>'+
-        '<h3 id="firstHeading" class="firstHeading">' + site[0] + '</h3>'+
-        '<div id="bodyContent">'+
-        '<p class="text-center"><a href="' + siteUrl.replace('0', site[3]) + '">'+
-        'Go to site</a> '+
-        '</div>'+
-        '</div>';
-    }
-
-    function initMap() {
-        let IAABase = {lat: 31.7843505, lng: 35.2358804};
-        let map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 10,
-          center: IAABase
-        });
-        for (var i = 0; i < markers.length; i++) {
-            var site = markers[i];
-            var marker = new google.maps.Marker({
-                position: {lat: site[1], lng: site[2]},
-                title: site[0],
-                map: map
-            });
-            marker.addListener('click', function() {
-                var infowindow = new google.maps.InfoWindow({
-                    content: siteTitle(site)
-                }).open(map, marker);
-            });
+        function siteTitle(site) {
+            return '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h3 id="firstHeading" class="firstHeading">' + site[0] + '</h3>' +
+                '<div id="bodyContent">' +
+                '<p class="text-center"><a href="' + siteUrl.replace('0', site[3]) + '">' +
+                'Go to site</a> ' +
+                '</div>' +
+                '</div>';
         }
-      }
-</script>
+
+        function initMap() {
+            let IAABase = {lat: 31.7843505, lng: 35.2358804};
+            let map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: IAABase
+            });
+            for (var i = 0; i < markers.length; i++) {
+                var site = markers[i];
+                var marker = new google.maps.Marker({
+                    position: {lat: site[1], lng: site[2]},
+                    title: site[0],
+                    map: map
+                });
+                marker.addListener('click', function () {
+                    var infowindow = new google.maps.InfoWindow({
+                        content: siteTitle(site)
+                    }).open(map, marker);
+                });
+            }
+        }
+    </script>
 {% endblock %}

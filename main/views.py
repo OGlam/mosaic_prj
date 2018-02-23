@@ -40,15 +40,18 @@ class HomeView(IAAUIMixin, TemplateView):
         cover_pictures = MosaicPicture.objects.filter(is_cover=True).exclude(mosaic__mosaic_site__featured=False)
         mosaic_item_ids = [x.mosaic.id for x in cover_pictures]
 
-        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site__id').distinct('mosaic_site__id')
+        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site__id').distinct(
+            'mosaic_site__id')
         context['popular_sites'] = mosaic_items[:3]
         context['popular_sites_sub'] = mosaic_items[3:5]
         context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).exclude(
             mosaic__mosaic_site__featured=False).distinct('tags__tag_he')
         context['archaeological_context'] = [
-            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).first() for x in
+            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exclude(
+                picture__isnull=True).first() for x in
             ArchaeologicalContext.CHOICES if
-            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exists()
+            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exclude(
+                picture__isnull=True).exists()
         ]
         lang = translation.get_language()[:2]
         context['map_lang'] = 'iw' if lang == 'he' else 'en'
@@ -56,6 +59,7 @@ class HomeView(IAAUIMixin, TemplateView):
             [u'{}'.format(getattr(x, "title_" + lang)), x.latitude, x.longitude, x.id] for x in
             MosaicSite.objects.filter(latitude__isnull=False, longitude__isnull=False)
         ]
+        context['sites'] = MosaicSite.objects.filter(latitude__isnull=False, longitude__isnull=False)
         return context
 
 
