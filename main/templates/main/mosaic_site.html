@@ -18,14 +18,15 @@
             {% for picture in mosaic.get_site_pictures %}
                 {% if picture.picture %}
                     <div class="col-2 gallery-item">
-                                    <a href="{% url 'main:detail' picture.mosaic.id %}">
+                        <a href="{% url 'main:detail' picture.mosaic.id %}">
 
-                        <div class="frame">
-                            <img src="{{ picture.picture.url }}">
-                        </div>
-                        <div class="misp_rashut">
-                            {{ picture.mosaic.misp_rashut }}
-                        </div>
+                            <div class="frame">
+                                <img src="{{ picture.picture.url }}">
+                            </div>
+                            <div class="misp_rashut">
+                                {{ picture.mosaic.misp_rashut }}
+                            </div>
+                        </a>
                     </div>
                     <!-- if last column in row -->
                     {% if forloop.counter|divisibleby:"6" and not forloop.last %}
