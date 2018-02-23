@@ -360,10 +360,10 @@ class ContactForm(forms.ModelForm):
 
         return send_mail(
             _('IAA contact form'),
-            f'Name: {data["name"]}\n'
-            f'Email: {data["email"]}\n'
-            f'Phone: {data["phone"]}\n'
-            f'Message: {data["message"]}\n',
+            'Name: {}\n'.format(data["name"]) +
+            'Email: {}\n'.format(data["email"]) +
+            'Phone: {}\n'.format(data["phone"]) +
+            'Message: {}\n'.format(data["message"]),
             data['email'],
             [general_settings.admin_email_to if general_settings.admin_email_to else 'yanivmirel@gmail.com'],
             fail_silently=False,
