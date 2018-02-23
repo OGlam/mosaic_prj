@@ -3,6 +3,10 @@
     color: #fff;
 }
 
+.bg-white {
+    background-color: #fff;
+}
+
 .no-btn {
     border: 0;
     cursor: pointer;
@@ -316,7 +320,7 @@ header {
 
 .arc-context {
     padding: 2rem 0;
-    background-color: #fff;
+    /*background-color: #fff;*/
 }
 
 .arc-context .card img {
@@ -324,8 +328,18 @@ header {
     height: 200px;
 }
 
+.site-map-item {
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.site-map-item img {
+    width: 48px;
+    height: 48px;
+}
+
 .map {
-    padding: 4rem 0;
+    /*padding: 4rem 0;*/
 }
 
 #map {
