@@ -567,3 +567,10 @@ header div.hero h1 {
         top: -42px;
     }
 }
+
+.cover-img {
+    background-size:cover;
+    width:100%;
+    background-repeat: repeat;
+    min-height: 300px;
+}
