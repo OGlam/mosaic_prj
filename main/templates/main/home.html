@@ -10,7 +10,8 @@
                     <div class="col-6">
                         <a href="{% url 'main:site' site.mosaic_site.id %}">
                             <div class="card">
-                                <div class="cover-img" style="background-image: url({{ site.get_highest_cover }});"></div>
+                                <div class="cover-img"
+                                     style="background-image: url({{ site.get_highest_cover }});"></div>
                                 <h5 class="card-title text-center">
                                     {{ site.mosaic_site|bd:'title'|title }}
                                 </h5>
@@ -141,16 +142,17 @@
                 center: IAABase
             });
             for (var i = 0; i < markers.length; i++) {
-                var site = markers[i];
-                var marker = new google.maps.Marker({
+                let site = markers[i];
+                let infowindow = new google.maps.InfoWindow({
+                    content: siteTitle(site)
+                });
+                let marker = new google.maps.Marker({
                     position: {lat: site[1], lng: site[2]},
                     title: site[0],
                     map: map
                 });
                 marker.addListener('click', function () {
-                    var infowindow = new google.maps.InfoWindow({
-                        content: siteTitle(site)
-                    }).open(map, marker);
+                    infowindow.open(map, marker);
                 });
             }
         }
