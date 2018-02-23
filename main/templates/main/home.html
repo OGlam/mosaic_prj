@@ -8,12 +8,14 @@
             <div class="row">
                 {% for site in popular_sites_sub %}
                     <div class="col-6">
-                        <div class="card">
-                            <img class="card-img-top" src="{{ site.get_highest_cover }}" alt="Card image cap">
-                            <h5 class="card-title text-center">
-                                {{ site.mosaic_site|bd:'title'|title }}
-                            </h5>
-                        </div>
+                        <a href="{% url 'main:site' site.mosaic_site.id %}">
+                            <div class="card">
+                                <div class="cover-img" style="background-image: url({{ site.get_highest_cover }});"></div>
+                                <h5 class="card-title text-center">
+                                    {{ site.mosaic_site|bd:'title'|title }}
+                                </h5>
+                            </div>
+                        </a>
                     </div>
                 {% endfor %}
             </div>
