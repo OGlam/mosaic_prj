@@ -21,7 +21,8 @@
         <link href="{% static 'vendors/OwlCarousel2-2.2.1/dist/assets/owl.carousel.min.css' %}" rel="stylesheet">
         {% block extrahead %}{% endblock %}
         <link href="{% static 'css/bootstrap' %}{% if LANGUAGE_BIDI %}_rtl{% endif %}.css" rel="stylesheet">
-        <link href="{% static 'css/style' %}{% if LANGUAGE_BIDI %}_rtl{% endif %}.css" rel="stylesheet">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/' %}{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}.css" rel="stylesheet">
         {% block extracss %}{% endblock %}
     </head>
     <body>
