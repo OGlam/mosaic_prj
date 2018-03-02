@@ -22,3 +22,4 @@ man/
 pip-selfcheck.json
 local/
 images_to_upload/*
+/backups/

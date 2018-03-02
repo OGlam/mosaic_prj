@@ -1,6 +1,4 @@
 from django.contrib import admin
-
-from main.get_data import get_data
 from .models import Tag, MosaicPicture, MosaicItem, MosaicSite, GeneralSettings
 
 

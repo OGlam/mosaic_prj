@@ -169,9 +169,9 @@ class MosaicPicture(models.Model):
 
     def image_tag(self):
         if self.picture:
-            return mark_safe('<img src="{}" height="100%" width="auto" />'.format(self.picture.url))
+            return mark_safe('<img src="{}" height="100" width="auto" />'.format(self.picture.url))
         else:
-            return '-'
+            return mark_safe('<img src="/static/images/empty-image.png" height="100" width="auto" />')
 
     image_tag.short_description = 'Image'
 
