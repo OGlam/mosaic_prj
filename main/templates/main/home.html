@@ -10,8 +10,7 @@
                     <div class="col-6">
                         <a href="{% url 'main:site' site.mosaic_site.id %}">
                             <div class="card">
-                                <div class="cover-img"
-                                     style="background-image: url({{ site.get_highest_cover }});"></div>
+                                <div class="cover-img" style="background-image: url({{ site.get_highest_cover }});"></div>
                                 <h5 class="card-title text-center">
                                     {{ site.mosaic_site|bd:'title'|title }}
                                 </h5>
@@ -51,7 +50,7 @@
                     {% for arc_context in archaeological_context %}
                         <div class="col-4">
                             <div class="card">
-                                <img src="{{ arc_context.get_image }}" class="img-fluid"/>
+                                <img src="{{ arc_context.get_image }}" class="img-fluid" />
                                 <h4 class="gray-card-text text-center">
                                     {{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}
                                 </h4>
