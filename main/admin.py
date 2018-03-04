@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from .models import Tag, MosaicPicture, MosaicItem, MosaicSite, GeneralSettings
 
 
@@ -19,8 +20,14 @@ class MosaicItemAdmin(admin.ModelAdmin):
 
 
 class PictureAdmin(admin.ModelAdmin):
-    fields = ('image_tag',)
-    readonly_fields = ('image_tag',)
+    list_display = ('site_id', 'mosaic', 'is_cover', 'image_tag', 'negative_id')
+
+    # fields = ('image_tag',)
+    # readonly_fields = ('image_tag',)
+    def site_id(self, obj):
+        return "{}".format(obj.mosaic.mosaic_site.site_id)
+
+    site_id.short_description = _('Site ID')
 
 
 try:

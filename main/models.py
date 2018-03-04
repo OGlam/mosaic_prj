@@ -162,6 +162,9 @@ class MosaicPicture(models.Model):
     def __str__(self):
         return self.negative_id
 
+    class Meta:
+        ordering = ['mosaic__misp_rashut']
+
     def get_image(self):
         if self.picture:
             return self.picture.url
