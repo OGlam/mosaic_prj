@@ -133,6 +133,9 @@ class MosaicItem(models.Model):
     def __str__(self):
         return self.misp_rashut
 
+    class Meta:
+        ordering = ['misp_rashut']
+
     def get_materials(self):
         return ",".join(self.materials)
 
