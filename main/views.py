@@ -40,12 +40,11 @@ class HomeView(IAAUIMixin, TemplateView):
         cover_pictures = MosaicPicture.objects.filter(is_cover=True).exclude(mosaic__mosaic_site__featured=False)
         mosaic_item_ids = [x.mosaic.id for x in cover_pictures]
 
-        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site__id').distinct(
-            'mosaic_site__id')
+        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site__id')
         context['popular_sites'] = mosaic_items[:3]
         context['popular_sites_sub'] = mosaic_items[3:5]
         context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).exclude(
-            mosaic__mosaic_site__featured=False).distinct('tags__tag_he')
+            mosaic__mosaic_site__featured=False)
         context['archaeological_context'] = [
             MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exclude(
                 picture__isnull=True).first() for x in
@@ -360,9 +359,9 @@ class SubjectsView(IAAUIMixin, ListView):
 
     def get_queryset(self):
         lang = translation.get_language()[:2]
-        tags_list = MosaicPicture.objects.filter(tags__isnull=False).values_list('tags', flat=True).distinct()
+        tags_list = MosaicPicture.objects.filter(tags__isnull=False).values_list('tags', flat=True)
         order_by = 'tag_he' if lang == 'he' else 'tag_en'
-        tags = Tag.objects.filter(id__in=[t for t in tags_list]).distinct().order_by(order_by)
+        tags = Tag.objects.filter(id__in=[t for t in tags_list]).order_by(order_by)
         d = OrderedDict()
         for tag in tags:
             d[tag] = [x for x in MosaicPicture.objects.filter(tags__in=[tag.id])]
