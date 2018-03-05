@@ -8,7 +8,7 @@ class MosaicSiteAdmin(admin.ModelAdmin):
     list_display_links = ('site_id', 'title_he', 'title_en', 'origin_he', 'origin_en')
 
 
-class PictureInline(admin.TabularInline):
+class PictureInline(admin.StackedInline):
     model = MosaicPicture
     extra = 1
     list_display = ('image_tag', 'product',)
