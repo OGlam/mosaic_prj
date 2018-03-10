@@ -100,14 +100,14 @@ class MosaicSite(models.Model):
         return u'[{}] {}'.format(self.site_id, self.title_he if settings.LANGUAGE_CODE == 'he' else self.title_en)
 
     def get_site_cover_image(self):
-        return MosaicPicture.objects.filter(mosaic__mosaic_site=self, is_cover=True).order_by('?')
+        return self.get_site_pictures().filter(is_cover=True).order_by('?').first()
 
     def get_site_pictures(self):
-        return MosaicPicture.objects.filter(mosaic__mosaic_site_id=self.id).order_by('mosaic')
+        return MosaicPicture.objects.filter(mosaic__mosaic_site=self)
 
     def get_site_cover_image_url(self):
         if self.get_site_cover_image():
-            return self.get_site_cover_image()[0].picture.url
+            return self.get_site_cover_image().picture.url
         return "{}images/empty-image.png".format(settings.STATIC_URL)
 
 

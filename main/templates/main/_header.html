@@ -32,9 +32,9 @@
                     {% trans 'SUBJECTS' %}{% if page_name == 'subjects' %} <span class="sr-only">(current)</span>{% endif %}
                 </a>
             </li>
-            <li class="nav-item{% if page_name == 'period' %} active{% endif %}">
-                <a class="nav-link" href="#">
-                    {% trans 'PERIOD' %}{% if page_name == 'period' %} <span class="sr-only">(current)</span>{% endif %}
+            <li class="nav-item{% if page_name == 'periods' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'main:periods' %}">
+                    {% trans 'PERIOD' %}{% if page_name == 'periods' %} <span class="sr-only">(current)</span>{% endif %}
                 </a>
             </li>
             <li class="nav-item{% if page_name == 'map' %} active{% endif %}">

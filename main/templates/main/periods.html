@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+{% load static i18n mosaic %}
+
+{% block content %}
+    <div class="subjects">
+        {% for site in sites %}
+            {% ifchanged site.period %}
+                <h3 class="mb-4 mt-4">{{ site.get_period_display }}</h3>
+                <div class="row">
+                    {% if not forloop.first %}</div>{% endif %}
+            {% endifchanged %}
+            <div class="tag-item col-12 col-sm-3">
+                <a href="{% url 'main:site' site.id %}">
+                    <span style="background-image: url({{ site.get_site_cover_image_url }});"></span>
+                    <h4 class="text-white">
+                        {{ site|bd:'title' }}
+                    </h4>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

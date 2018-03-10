@@ -40,7 +40,7 @@ class HomeView(IAAUIMixin, TemplateView):
         cover_pictures = MosaicPicture.objects.filter(is_cover=True).exclude(mosaic__mosaic_site__featured=False)
         mosaic_item_ids = [x.mosaic.id for x in cover_pictures]
 
-        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site__id')
+        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site')
         context['popular_sites'] = mosaic_items[:3]
         context['popular_sites_sub'] = mosaic_items[3:5]
         context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).exclude(
@@ -367,6 +367,21 @@ class SubjectsView(IAAUIMixin, ListView):
             d[tag] = [x for x in MosaicPicture.objects.filter(tags__in=[tag.id])]
 
         return d
+
+    def get_context_data(self, **kwargs):
+        d = super().get_context_data(**kwargs)
+        return d
+
+
+class PeriodsView(IAAUIMixin, ListView):
+    model = MosaicSite
+    template_name = 'main/periods.html'
+    context_object_name = 'sites'
+    page_name = 'periods'
+    page_title = _('Periods')
+
+    def get_queryset(self):
+        return super().get_queryset().order_by('period')
 
     def get_context_data(self, **kwargs):
         d = super().get_context_data(**kwargs)
