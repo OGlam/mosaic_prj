@@ -65,6 +65,12 @@ header div.hero {
     right: 35%;
 }
 
+/* Mosaic detail page */
+.images .img-item {
+    float: right;
+    margin-left: 10px;
+}
+
 /* Responsive */
 @media only screen and (max-width: 767px) {
     #main-search-form {

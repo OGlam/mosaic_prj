@@ -71,6 +71,12 @@ def get_tags(tags):
     return ",".join([getattr(x, "tag_" + lang) for x in tags.all()])
 
 
+@register.filter
+def get_tags_list(tags):
+    lang = translation.get_language()[:2]
+    return [getattr(x, "tag_" + lang) for x in tags.all()]
+
+
 @register.simple_tag
 def bidi(instance, field):
     lang = translation.get_language()[:2]

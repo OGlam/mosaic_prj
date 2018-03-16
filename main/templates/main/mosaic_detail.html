@@ -1,57 +1,63 @@
 {% extends 'main/base.html' %}
 {% load static mosaic i18n %}
 
-{% block content %}
-    <h1 class="text-center">
-        {% bidi mosaic.mosaic_site 'origin' %} - {% bidi mosaic.mosaic_site 'title' %}
-    </h1>
-    <ul>
-        <li>{% trans 'Story' %}: {{ mosaic.mosaic_site|bd:'story'|linebreaks }}</li>
-        <li>{% trans 'IAA ID' %}: {{ mosaic.site_id }}</li>
-        <li>{% trans 'Period' %}:{{ mosaic.mosaic_site.period }}</li>
-        <li>{% trans 'Displayed at' %}: {{ mosaic.displayed_at }}</li>
-
-        <li>
-            {% trans 'Tags' %}: {% get_tags mosaic.tags %}
-        </li>
-        <li>{% trans 'Material' %}: {{ mosaic.get_materials }}</li>
-        <li>{% trans 'Dimensions' %}: {{ mosaic.length|default_if_none:'' }}L
-            X {{ mosaic.width|default_if_none:'' }}W, {% trans 'Area' %}: {{ mosaic.area|default_if_none:'' }}   </li>
-        <br>
-        <li>
-            {% trans 'Location Found' %}:
-            <ul>
-                <li>{% trans 'Address' %}: {{ mosaic.mosaic_site|bd:'origin' }}</li>
-            </ul>
-        </li>
-
-        <li>{% trans 'Comments' %}: {{ mosaic.mosaic_site.comments|linebreaks }}</li>
-        <li>{% trans 'Bibliography' %}: {{ mosaic|bd:'bibliography'|linebreaks }}</li>
-
-        <li>{% trans 'Images' %}:<br>
-            {% for img in mosaic.pictures.all|dictsort:"order_priority" %}
-                <div class="responsive">
-                    <div class="gallery">
-                        <a target="_blank" href="{{ img.picture.url }}">
-                            <img width="600" height="400" src="{{ img.picture.url }}" alt="{{ mosaic.mosaic_site|bd:'title' }}">
-                            <img width="600" height="400" src="{{ img.picture.url }}" alt="{{ mosaic.mosaic_site|bd:'title' }}">
-                        </a>
-                        <div class="desc">
-                            {{ img.taken_date }} - {{ img.taken_at }} - {{ img.photographer_name }}
+{% block main %}
+    <div class="container-fluid">
+        <div class="cover-image" style="background-image: url({{ mosaic.get_highest_cover }})">
+            <h1>
+                {% bidi mosaic.mosaic_site 'title' %}
+            </h1>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="col-12">
+                    <div class="container mb-3 mt-4">
+                        <h4 class="mb-2">{% trans 'Subjects' %}</h4>
+                        {% for t in mosaic.tags|get_tags_list %}
+                            <span class="badge badge-pill badge-secondary">{{ t }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="container">
+                        <div class="images clearfix">
+                            <h4 class="mb-2">{% trans 'Site Album' %}</h4>
+                            {% for img in mosaic.pictures.all %}
+                                <div class="img-item item">
+                                    <span style="background-image: url({{ img.picture.url }});"></span>
+                                    <h4 class="text-white">
+                                        {{ mosaic.misp_rashut }}
+                                    </h4>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </li>
-    </ul>
-
-    {#    date = models.DateField()#}
-    {#    # media =#}
-    {#    # gps_longitude#}
-    {#    # gps_latitude#}
-
-    {#{% for choice in question.choice_set.all %}#}
-    {#    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />#}
-    {#    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />#}
-    {#{% endfor %}#}
+            </div>
+        </div>
+        <div class="row bg-white">
+            <div class="col-12 info">
+                <div class="container">
+                    <h4 class="mb-2 mt-3">{% trans 'Details' %}</h4>
+                    <ul>
+                        <li><b>{% trans 'Story' %}:</b> {{ mosaic.mosaic_site|bd:'story'|linebreaks }}</li>
+                        <li><b>{% trans 'IAA ID' %}:</b> {{ mosaic.site_id }}</li>
+                        <li><b>{% trans 'Period' %}:</b> {{ mosaic.mosaic_site.period }}</li>
+                        <li><b>{% trans 'Displayed at' %}:</b> {{ mosaic.displayed_at }}</li>
+                        <li><b>{% trans 'Material' %}:</b> {{ mosaic.get_materials }}</li>
+                        <li><b>{% trans 'Dimensions' %}:</b> {{ mosaic.length|default_if_none:'' }}L
+                            X {{ mosaic.width|default_if_none:'' }}W, {% trans 'Area' %}: {{ mosaic.area|default_if_none:'' }}   </li>
+                        <li>
+                            <b>{% trans 'Location Found' %}:</b>
+                            <ul>
+                                <li><b>{% trans 'Address' %}:</b> {{ mosaic.mosaic_site|bd:'origin' }}</li>
+                            </ul>
+                        </li>
+                        <li><b>{% trans 'Comments' %}:</b> {{ mosaic.mosaic_site.comments|linebreaks }}</li>
+                        <li><b>{% trans 'Bibliography' %}:</b> {{ mosaic|bd:'bibliography'|linebreaks }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
