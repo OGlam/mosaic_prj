@@ -48,9 +48,9 @@
             {% if archaeological_context %}
                 <div class="row">
                     {% for arc_context in archaeological_context %}
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="card">
-                                <img src="{{ arc_context.get_image }}" class="img-fluid" />
+                                <span style="background-image: url({{ arc_context.get_image }});"></span>
                                 <h4 class="gray-card-text text-center">
                                     {{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}
                                 </h4>
@@ -61,9 +61,9 @@
             {% endif %}
         </div>
     </div>
-    <div class="map bg-white">
+    <div class="map bg-white col-12">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 p-0">
                 <ul class="list-unstyled">
                     {% for site in sites %}
                         <div class="media site-map-item">
@@ -77,7 +77,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-9 p-0">
                 <div id="map"></div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 db.sqlite3
-.idea/
+/.idea/
 main/__pycache__/
 main/migrations/__pycache__/
 mosaic_prj/__pycache__/

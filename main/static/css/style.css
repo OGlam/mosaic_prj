@@ -240,6 +240,15 @@ header {
     background-size: cover;
 }
 
+.arc-context .card span {
+    display: block;
+    width: 100%;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
 .subjects .tag-item a h4 {
     margin: 0;
     text-align: center;
@@ -583,8 +592,8 @@ header div.hero h1 {
 }
 
 .cover-img {
-    background-size:cover;
-    width:100%;
+    background-size: cover;
+    width: 100%;
     background-repeat: repeat;
     min-height: 300px;
 }
