@@ -65,10 +65,15 @@ class ArchaeologicalContext(object):
         ('private', PRIVATE_BUILDING),
     )
 
+class TagCategory(models.Model):
+    tag_category_he = models.CharField(_('Tag category hebrew'), max_length=100)
+    tag_category_en = models.CharField(_('Tag category english'), max_length=100)
+
 
 class Tag(models.Model):
-    tag_he = models.CharField(max_length=100)
-    tag_en = models.CharField(max_length=100)
+    tag_he = models.CharField(_('Tag hebrew'), max_length=100)
+    tag_en = models.CharField(_('Tag english'), max_length=100)
+    tag_category = models.ForeignKey(TagCategory, verbose_name=_('Tag category'), on_delete=models.CASCADE, related_name='tags', blank=True, null=True)
     featured = models.BooleanField(_('Is featured?'), default=True)
 
     def __str__(self):
