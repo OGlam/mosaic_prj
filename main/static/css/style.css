@@ -2,6 +2,9 @@
     change #212121
      with #212121
 */
+h5 {
+  --caption-font-size: 1.125rem;
+}
 
 /* Generic */
 .text-white {
@@ -232,14 +235,14 @@ header {
 
 .subjects .tag-item a {
     display: block;
-    width: 201px;
-    height: 201px;
+    width: 200px;
+    /*height: 201px;*/
 }
 
 .subjects .tag-item a span {
     display: block;
-    width: 201px;
-    height: 160px;
+    width: 200px;
+    height: 170px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -254,14 +257,25 @@ header {
     background-size: cover;
 }
 
-.subjects .tag-item a h4 {
+.carouselCaptionBox {
+    padding: 12px;
+    background-color: #fff;
+}
+.subjects .tag-item a h5 {
     margin: 0;
     text-align: center;
-    background-color: #fff;
+    /*background-color: #fff;*/
     color: #212121 !important;
-    padding: 0.6rem 0;
-    font-weight: bold;
-    font-size: 1.125rem;
+    /*padding: 0.4rem 0.1rem;*/
+    /*font-weight: bold;*/
+    font-size: var(--caption-font-size);
+}
+
+.carouselCaptionText {
+    min-height: 40px;
+    /*height: 300px;
+     style="height: 300px; overflow: auto; color: red;"
+    */
 }
 
 .subjects .owl-nav {
@@ -291,6 +305,7 @@ header {
 
 .carousel-inner {
     max-height: 500px;
+    max-width: 500px;
 }
 
 .carousel-caption {
@@ -308,9 +323,10 @@ header {
     color: #212121;
     padding: 10px 20px;
     display: inline-block;
-    background-color: #fff;
+    background-color: red;
     font-size: 40px;
     font-weight: bold;
+    /*overflow: visible;*/
 }
 
 .head {
@@ -326,10 +342,11 @@ header {
 }
 
 .gray-card-text {
-    background-color: #f2f2f2;
+    background-color: white;
     color: #212121;
     margin: 0;
     padding: 0.5rem 0;
+    font-size: var(--caption-font-size);
 }
 
 .arc-context {
@@ -517,7 +534,7 @@ a.btn:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden
+    overflow: hidden;
 }
 
 #page header img {
@@ -610,7 +627,7 @@ header div.hero h1 {
     color: #212121 !important;
     padding: 0.6rem 0;
     font-weight: bold;
-    font-size: 1.125rem;
+    font-size: var(--caption-font-size);
 }
 
 .cover-img {
