@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 {% for site in popular_sites_sub %}
-                    <div class="col-6">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                         <a href="{% url 'main:site' site.mosaic_site.id %}">
                             <div class="card">
                                 <div class="cover-img" style="background-image: url({{ site.get_highest_cover }});"></div>

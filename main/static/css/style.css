@@ -1,3 +1,8 @@
+/*
+    change #212121
+     with #212121
+*/
+
 /* Generic */
 .text-white {
     color: #fff;
@@ -61,7 +66,7 @@
 }
 
 .carousel-indicators .active {
-    background-color: #e7685a;
+    background-color: #212121;
 }
 
 /* Header */
@@ -216,8 +221,8 @@ header {
 .sub-featured .card-title {
     font-size: 2.5rem;
     line-height: 5rem;
-    border-bottom: 0.5rem solid #e7685a;
-    color: #e7685a;
+    border-bottom: 0.5rem solid #212121;
+    color: #212121;
 }
 
 .subjects {
@@ -253,7 +258,7 @@ header {
     margin: 0;
     text-align: center;
     background-color: #fff;
-    color: #e7685a !important;
+    color: #212121 !important;
     padding: 0.6rem 0;
     font-weight: bold;
     font-size: 1.125rem;
@@ -274,7 +279,7 @@ header {
 }
 
 .white-card-text {
-    color: #e7685a;
+    color: #212121;
     background-color: #fff;
     margin: 0;
     padding-bottom: 5px;
@@ -296,11 +301,11 @@ header {
 .carousel-control-next-icon {
     height: 100px;
     width: 60px;
-    color: #e7685a;
+    color: #212121;
 }
 
 .carousel-caption h5 {
-    color: #e7685a;
+    color: #212121;
     padding: 10px 20px;
     display: inline-block;
     background-color: #fff;
@@ -322,7 +327,7 @@ header {
 
 .gray-card-text {
     background-color: #f2f2f2;
-    color: #e7685a;
+    color: #212121;
     margin: 0;
     padding: 0.5rem 0;
 }
@@ -602,7 +607,7 @@ header div.hero h1 {
     margin: 0;
     text-align: center;
     background-color: #fff;
-    color: #e7685a !important;
+    color: #212121 !important;
     padding: 0.6rem 0;
     font-weight: bold;
     font-size: 1.125rem;
