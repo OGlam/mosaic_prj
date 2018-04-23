@@ -216,8 +216,9 @@ header {
 .sub-featured .card-title {
     font-size: 2.5rem;
     line-height: 5rem;
-    border-bottom: 0.5rem solid #e7685a;
-    color: #e7685a;
+    border-bottom: 0.4rem solid #999;
+    color: #444;
+    margin-bottom: 0;
 }
 
 .subjects {
@@ -228,7 +229,7 @@ header {
 .subjects .tag-item a {
     display: block;
     width: 201px;
-    height: 201px;
+    height: 207px;
 }
 
 .subjects .tag-item a span {
@@ -253,10 +254,11 @@ header {
     margin: 0;
     text-align: center;
     background-color: #fff;
-    color: #e7685a !important;
-    padding: 0.6rem 0;
+    color: #444 !important;
+    padding: 0.8rem 0;
     font-weight: bold;
-    font-size: 1.125rem;
+    font-size: 1rem;
+    border-bottom: 2px solid #999;
 }
 
 .subjects .owl-nav {
@@ -289,7 +291,7 @@ header {
 }
 
 .carousel-caption {
-    top: 5%;
+    top: 0;
 }
 
 .carousel-control-prev-icon,
@@ -300,12 +302,12 @@ header {
 }
 
 .carousel-caption h5 {
-    color: #e7685a;
-    padding: 10px 20px;
+    color: #fff;
+    padding-top: 11rem;
     display: inline-block;
-    background-color: #fff;
-    font-size: 40px;
+    font-size: 6rem;
     font-weight: bold;
+    text-shadow: 1px 3px #000;
 }
 
 .head {
@@ -321,10 +323,11 @@ header {
 }
 
 .gray-card-text {
-    background-color: #f2f2f2;
-    color: #e7685a;
+    background-color: #fff;
+    color: #444;
     margin: 0;
-    padding: 0.5rem 0;
+    padding: 1rem 0;
+    border-bottom: 1px solid #999;
 }
 
 .arc-context {
@@ -340,6 +343,10 @@ header {
 .site-map-item {
     padding: 0.5rem;
     border-bottom: 1px solid #eee;
+}
+
+.site-map-item h5 {
+    cursor: pointer;
 }
 
 .site-map-item img {

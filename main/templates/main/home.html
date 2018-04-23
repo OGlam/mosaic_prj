@@ -21,34 +21,17 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="subjects">
-            <h3 class="text-center mb-4">{% trans 'Subjects' %}</h3>
-            <div class="owl-carousel owl-theme">
-                {% for tag in tags %}
-                    {% for t in tag.tags.all %}
-                        <div class="tag-item item">
-                            <a href="{% url 'main:subject' t.id %}">
-                                <span style="background-image: url({{ tag.get_image }});"></span>
-                                <h4 class="text-white">
-                                    {{ t|bd:'tag'|title }}
-                                </h4>
-                            </a>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
     <div class="arc-context">
         <div class="container">
+            {% comment %}
             <h3 class="text-center">
                 {% trans 'Archaeological Context' %}
             </h3>
+            {% endcomment %}
             {% if archaeological_context %}
                 <div class="row">
                     {% for arc_context in archaeological_context %}
-                        <div class="col-3">
+                        <div class="col-12 col-md-4">
                             <div class="card">
                                 <span style="background-image: url({{ arc_context.get_image }});"></span>
                                 <h4 class="gray-card-text text-center">
@@ -61,6 +44,25 @@
             {% endif %}
         </div>
     </div>
+    <div class="container">
+        <div class="subjects">
+            {% comment %}<h3 class="text-center mb-4">{% trans 'Subjects' %}</h3>{% endcomment %}
+            <div class="owl-carousel owl-theme">
+                {% for tag in tags %}
+                    {% for t in tag.tags.all %}
+                        <div class="tag-item item">
+                            <a href="{% url 'main:subject' t.id %}">
+                                <span style="background-image: url({{ tag.get_image }});"></span>
+                                <h4>
+                                    {{ t|bd:'tag'|title }}
+                                </h4>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
     <div class="map bg-white col-12">
         <div class="row">
             <div class="col-sm-3 p-0">
@@ -68,7 +70,7 @@
                     {% for site in sites %}
                         <div class="media site-map-item">
                             <div class="media-body">
-                                <h5 class="mt-0 mb-1">
+                                <h5 class="mt-0 mb-1" data-marker="{{ forloop.counter0 }}">
                                     {{ site|bd:'title' }}
                                 </h5>
                             </div>
@@ -135,12 +137,13 @@
         }
 
         function initMap() {
+            let siteMarkers = [];
             let IAABase = {lat: 31.7843505, lng: 35.2358804};
             let map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 10,
                 center: IAABase
             });
-            for (var i = 0; i < markers.length; i++) {
+            for (let i = 0; i < markers.length; i++) {
                 let site = markers[i];
                 let infowindow = new google.maps.InfoWindow({
                     content: siteTitle(site)
@@ -150,10 +153,14 @@
                     title: site[0],
                     map: map
                 });
+                siteMarkers.push(marker);
                 marker.addListener('click', function () {
                     infowindow.open(map, marker);
                 });
             }
+            $('.site-map-item h5').on('click', function () {
+                google.maps.event.trigger(siteMarkers[$(this).attr('data-marker')], 'click');
+            });
         }
     </script>
 {% endblock %}
