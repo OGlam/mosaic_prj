@@ -358,6 +358,12 @@ header {
     /*padding: 4rem 0;*/
 }
 
+.map ul {
+    max-height: 500px;
+    overflow: auto;
+    margin: 0;
+}
+
 #map {
     height: 500px;
 }
