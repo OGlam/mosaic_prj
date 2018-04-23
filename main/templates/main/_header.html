@@ -68,7 +68,7 @@
                         <input name="next" type="hidden" value="{{ redirect_to }}"/>
                         <input name="language" type="hidden" value="{{ language.code }}"/>
                         <button type="submit" class="nav-link no-btn text-left w-100{% if language.code == LANGUAGE_CODE %} disabled{% endif %}"{% if language.code == LANGUAGE_CODE %} disabled{% endif %}>
-                            {% svg_icon 'about' 'menu_list_icon' True %} {{ language.name_local }}
+                            {% svg_icon language.code 'menu_list_icon' True %} {{ language.name_local }}
                         </button>
                     </form>
                 </li>

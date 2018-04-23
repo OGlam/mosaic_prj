@@ -46,7 +46,7 @@ body {
 }
 
 #page header h1 {
-    padding: 30px 0 0 15px;
+    /*padding: 30px 0 0 15px;*/
 }
 
 .subjects .owl-prev {
@@ -66,7 +66,7 @@ header div.hero {
 }
 
 /* Home */
-.tag-item {
+.home-tags .tag-item {
     float: right;
     margin-left: 10px;
 }

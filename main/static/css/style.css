@@ -516,9 +516,11 @@ body {
 
 #page header h1 {
     margin: 0 0 1em 0;
-    font-size: 3.2em;
+    font-size: 5em;
     font-weight: 700;
-    background-color: rgba(0, 0, 0, 0.6);
+    text-shadow: 0 3px #000;
+    text-align: center;
+    /*background-color: rgba(0, 0, 0, 0.6);*/
 }
 
 a.btn {
