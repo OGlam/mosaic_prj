@@ -21,9 +21,11 @@ def mosaic_dir(instance, filename):
 
 class Periods(object):
     BYZANTINE = _('Byzantine')
+    ROMAN = _('Roman')
 
     CHOICES = (
         ('byzantine', BYZANTINE),
+        ('roman', ROMAN),
         # todo: increase list.
     )
 
