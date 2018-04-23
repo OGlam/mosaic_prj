@@ -1,7 +1,16 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from .models import Tag, MosaicPicture, MosaicItem, MosaicSite, GeneralSettings
+from .models import Tag, MosaicPicture, MosaicItem, MosaicSite, GeneralSettings, TagCategory
 
+
+class TagCategoryAdmin(admin.ModelAdmin):
+    list_display = ('tag_category_he', 'tag_category_en')
+    list_display_links = ('tag_category_he', 'tag_category_en')
+
+
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('tag_he', 'tag_en', 'tag_category', 'featured')
+    list_display_links = ('tag_he', 'tag_en', 'tag_category', 'featured')
 
 class MosaicSiteAdmin(admin.ModelAdmin):
     list_display = ('site_id', 'title_he', 'title_en', 'origin_he', 'origin_en')
@@ -35,7 +44,8 @@ try:
 except ImportError:
     pass
 
-admin.site.register(Tag)
+admin.site.register(TagCategory, TagCategoryAdmin)
+admin.site.register(Tag, TagAdmin)
 admin.site.register(MosaicSite, MosaicSiteAdmin)
 admin.site.register(MosaicItem, MosaicItemAdmin)
 admin.site.register(MosaicPicture, PictureAdmin)

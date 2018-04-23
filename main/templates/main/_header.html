@@ -43,6 +43,7 @@
                 </a>
             </li>
         </ul>
+        {% comment %}
         <form id="main-search-form" class="form-inline">
             <div class="input-group">
                 <input class="form-control" type="search" placeholder="{% trans 'Search' %}"
@@ -54,6 +55,7 @@
                 </div>
             </div>
         </form>
+        {% endcomment %}
     </div>
     <div id="user_menu">
         <ul>
@@ -66,7 +68,7 @@
                         <input name="next" type="hidden" value="{{ redirect_to }}"/>
                         <input name="language" type="hidden" value="{{ language.code }}"/>
                         <button type="submit" class="nav-link no-btn text-left w-100{% if language.code == LANGUAGE_CODE %} disabled{% endif %}"{% if language.code == LANGUAGE_CODE %} disabled{% endif %}>
-                            {% svg_icon 'about' 'menu_list_icon' True %} {{ language.name_local }}
+                            {% svg_icon language.code 'menu_list_icon' True %} {{ language.name_local }}
                         </button>
                     </form>
                 </li>
@@ -82,13 +84,15 @@
                     {% svg_icon 'email' 'menu_list_icon' True %} {% trans 'Contact' %}
                 </a>
             </li>
+            {% comment %}
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     {% svg_icon 'feedback' 'menu_list_icon' True %} {% trans 'Feedback' %}
                 </a>
             </li>
-            <div class="dropdown-divider"></div>
+            {% endcomment %}
             {% if request.user.is_admin %}
+                <div class="dropdown-divider"></div>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'main:tag_create' %}">
                         {% trans 'Tags' %}
@@ -110,6 +114,7 @@
                     </a>
                 </li>
             {% endif %}
+            {% comment %}
             <div class="dropdown-divider"></div>
             <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -121,6 +126,7 @@
                     {% svg_icon 'twitter' 'menu_list_icon' True %} {% trans 'Share to Twitter' %}
                 </a>
             </li>
+            {% endcomment %}
             <div class="dropdown-divider"></div>
             {% if request.user.is_authenticated %}
                 <li class="nav-item">

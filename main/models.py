@@ -11,6 +11,21 @@ from django.utils.translation import ugettext_lazy as _
 from main.solo_models import SingletonModel
 
 
+HOME_BANNERS = [
+    {
+        'title': _("Bet She'an, Synagogue"),
+        'image': f'{settings.STATIC_URL}images/banner1.jpg'
+    },
+    {
+        'title': _("Nirim"),
+        'image': f'{settings.STATIC_URL}images/banner2.jpg'
+    },
+    {
+        'title': _("Be'er Shema"),
+        'image': f'{settings.STATIC_URL}images/banner3.jpg'
+    },
+]
+
 def mosaic_dir(instance, filename):
     # name, ext = os.path.splitext(filename)
     # num = instance.pk if instance.pk else uuid4().hex[:15]
@@ -21,9 +36,11 @@ def mosaic_dir(instance, filename):
 
 class Periods(object):
     BYZANTINE = _('Byzantine')
+    ROMAN = _('Roman')
 
     CHOICES = (
         ('byzantine', BYZANTINE),
+        ('roman', ROMAN),
         # todo: increase list.
     )
 
@@ -66,9 +83,16 @@ class ArchaeologicalContext(object):
     )
 
 
+class TagCategory(models.Model):
+    tag_category_he = models.CharField(_('Tag category hebrew'), max_length=100)
+    tag_category_en = models.CharField(_('Tag category english'), max_length=100)
+
+
 class Tag(models.Model):
-    tag_he = models.CharField(max_length=100)
-    tag_en = models.CharField(max_length=100)
+    tag_he = models.CharField(_('Tag hebrew'), max_length=100)
+    tag_en = models.CharField(_('Tag english'), max_length=100)
+    tag_category = models.ForeignKey(TagCategory, verbose_name=_('Tag category'), on_delete=models.CASCADE,
+                                     related_name='tags', blank=True, null=True)
     featured = models.BooleanField(_('Is featured?'), default=True)
 
     def __str__(self):
@@ -172,6 +196,9 @@ class MosaicPicture(models.Model):
         if self.picture:
             return self.picture.url
         return '{}images/empty-image.png'.format(settings.STATIC_URL)
+
+    def get_random_tag(self):
+        return self.tags.all().order_by('?').first()
 
     def image_tag(self):
         if self.picture:

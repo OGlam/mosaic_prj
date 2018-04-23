@@ -46,7 +46,7 @@ body {
 }
 
 #page header h1 {
-    padding: 30px 0 0 15px;
+    /*padding: 30px 0 0 15px;*/
 }
 
 .subjects .owl-prev {
@@ -63,6 +63,12 @@ body {
 
 header div.hero {
     right: 35%;
+}
+
+/* Home */
+.home-tags .tag-item {
+    float: right;
+    margin-left: 10px;
 }
 
 /* Mosaic detail page */

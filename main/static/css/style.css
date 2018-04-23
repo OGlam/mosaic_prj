@@ -76,8 +76,6 @@ h5 {
 header {
     background-color: #fff;
     border-bottom: 2px solid #666;
-    box-shadow: 0 1px 10px #666;
-    margin-bottom: 0.5rem;
 }
 
 .bg-white {
@@ -207,6 +205,27 @@ header {
 }
 
 /* Home */
+.top-banner {
+    width: 100%;
+    height: calc(100vw / 2.732);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.banner-title {
+    color: #fff;
+    font-size: 5rem;
+    font-weight: bold;
+    text-shadow: 1px 3px #000;
+    text-align: center;
+    line-height: calc(100vw / 2.732);
+}
+
+.tag-item {
+    width: calc(20% - 10px);
+}
+
 .sub-featured {
     padding: 4rem 0;
 }
@@ -226,6 +245,7 @@ header {
     line-height: 5rem;
     border-bottom: 0.5rem solid #212121;
     color: #212121;
+    margin-bottom: 0;
 }
 
 .subjects {
@@ -235,8 +255,8 @@ header {
 
 .subjects .tag-item a {
     display: block;
-    width: 200px;
-    /*height: 201px;*/
+    width: 201px;
+    height: 207px;
 }
 
 .subjects .tag-item a span {
@@ -264,18 +284,12 @@ header {
 .subjects .tag-item a h5 {
     margin: 0;
     text-align: center;
-    /*background-color: #fff;*/
-    color: #212121 !important;
-    /*padding: 0.4rem 0.1rem;*/
-    /*font-weight: bold;*/
-    font-size: var(--caption-font-size);
-}
-
-.carouselCaptionText {
-    min-height: 40px;
-    /*height: 300px;
-     style="height: 300px; overflow: auto; color: red;"
-    */
+    background-color: #fff;
+    color: #444 !important;
+    padding: 0.8rem 0;
+    font-weight: bold;
+    font-size: 1rem;
+    border-bottom: 2px solid #999;
 }
 
 .subjects .owl-nav {
@@ -309,7 +323,7 @@ header {
 }
 
 .carousel-caption {
-    top: 5%;
+    top: 0;
 }
 
 .carousel-control-prev-icon,
@@ -320,13 +334,12 @@ header {
 }
 
 .carousel-caption h5 {
-    color: #212121;
-    padding: 10px 20px;
+    color: #fff;
+    padding-top: 11rem;
     display: inline-block;
-    background-color: red;
-    font-size: 40px;
+    font-size: 6rem;
     font-weight: bold;
-    /*overflow: visible;*/
+    text-shadow: 1px 3px #000;
 }
 
 .head {
@@ -342,11 +355,11 @@ header {
 }
 
 .gray-card-text {
-    background-color: white;
-    color: #212121;
+    background-color: #fff;
+    color: #444;
     margin: 0;
-    padding: 0.5rem 0;
-    font-size: var(--caption-font-size);
+    padding: 1rem 0;
+    border-bottom: 1px solid #999;
 }
 
 .arc-context {
@@ -364,6 +377,10 @@ header {
     border-bottom: 1px solid #eee;
 }
 
+.site-map-item h5 {
+    cursor: pointer;
+}
+
 .site-map-item img {
     width: 48px;
     height: 48px;
@@ -371,6 +388,12 @@ header {
 
 .map {
     /*padding: 4rem 0;*/
+}
+
+.map ul {
+    max-height: 500px;
+    overflow: auto;
+    margin: 0;
 }
 
 #map {
@@ -506,9 +529,11 @@ body {
 
 #page header h1 {
     margin: 0 0 1em 0;
-    font-size: 3.2em;
+    font-size: 5em;
     font-weight: 700;
-    background-color: rgba(0, 0, 0, 0.6);
+    text-shadow: 0 3px #000;
+    text-align: center;
+    /*background-color: rgba(0, 0, 0, 0.6);*/
 }
 
 a.btn {
