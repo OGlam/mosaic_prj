@@ -1,3 +1,4 @@
+import random
 import re
 from collections import OrderedDict
 
@@ -13,7 +14,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
 from .forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet, AboutForm
-from .models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArchaeologicalContext, GeneralSettings
+from .models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArchaeologicalContext, GeneralSettings, HOME_BANNERS
 
 from mosaic_prj.base_views import IAAUIMixin
 
@@ -40,11 +41,17 @@ class HomeView(IAAUIMixin, TemplateView):
         cover_pictures = MosaicPicture.objects.filter(is_cover=True).exclude(mosaic__mosaic_site__featured=False)
         mosaic_item_ids = [x.mosaic.id for x in cover_pictures]
 
-        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site')
-        context['popular_sites'] = mosaic_items[:3]
-        context['popular_sites_sub'] = mosaic_items[3:5]
-        context['tags'] = MosaicPicture.objects.filter(tags__isnull=False).exclude(
-            mosaic__mosaic_site__featured=False)
+        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('?')
+        # mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site')
+        # context['popular_sites'] = mosaic_items[:3]
+        context['popular_site'] = HOME_BANNERS[random.randint(0, 2)]
+        context['popular_sites_sub'] = mosaic_items[:2]
+        # context['popular_sites_sub'] = mosaic_items[3:5]
+        tags = Tag.objects.filter(featured=True)
+        tag_pic_ids = []
+        for tag in tags:
+            tag_pic_ids.extend(tag.mosaic_pictures.values_list('id', flat=True))
+        context['tags'] = MosaicPicture.objects.filter(id__in=tag_pic_ids).order_by('?')[:5]
         context['archaeological_context'] = [
             MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exclude(
                 picture__isnull=True).first() for x in

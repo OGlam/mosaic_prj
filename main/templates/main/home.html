@@ -2,7 +2,12 @@
 {% load static i18n mosaic %}
 
 {% block main %}
+    {% comment %}
     {% include 'main/_carousel.html' with id='mosaic' controler=True indicators=True popular_sites=popular_sites %}
+    {% endcomment %}
+    <div class="top-banner" style="background-image: url({{ popular_site.image }})">
+        <div class="banner-title">{{ popular_site.title }}</div>
+    </div>
     <div class="sub-featured">
         <div class="container">
             <div class="row">
@@ -23,15 +28,13 @@
     </div>
     <div class="arc-context">
         <div class="container">
-            {% comment %}
             <h3 class="text-center">
                 {% trans 'Archaeological Context' %}
             </h3>
-            {% endcomment %}
             {% if archaeological_context %}
                 <div class="row">
                     {% for arc_context in archaeological_context %}
-                        <div class="col-12 col-md-4">
+                        <div class="col-12 col-md-3">
                             <div class="card">
                                 <span style="background-image: url({{ arc_context.get_image }});"></span>
                                 <h4 class="gray-card-text text-center">
@@ -46,19 +49,18 @@
     </div>
     <div class="container">
         <div class="subjects">
-            {% comment %}<h3 class="text-center mb-4">{% trans 'Subjects' %}</h3>{% endcomment %}
-            <div class="owl-carousel owl-theme">
+            <h3 class="text-center mb-4">{% trans 'Subjects' %}</h3>
+            {% comment %}<div class="owl-carousel owl-theme">{% endcomment %}
+            <div class="home-tags clearfix">
                 {% for tag in tags %}
-                    {% for t in tag.tags.all %}
-                        <div class="tag-item item">
-                            <a href="{% url 'main:subject' t.id %}">
-                                <span style="background-image: url({{ tag.get_image }});"></span>
-                                <h4>
-                                    {{ t|bd:'tag'|title }}
-                                </h4>
-                            </a>
-                        </div>
-                    {% endfor %}
+                    <div class="tag-item item">
+                        <a href="{% url 'main:subject' tag.id %}">
+                            <span style="background-image: url({{ tag.get_image }});"></span>
+                            <h4>
+                                {{ tag.get_random_tag|bd:'tag'|title }}
+                            </h4>
+                        </a>
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -89,6 +91,7 @@
 {% block scripts %}
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB62OF89NPnsuYWKkt6E1Y4gVz8y7hlm1I&region=il&language={{ map_lang }}&callback=initMap"></script>
+    {% comment %}
     <script>
         let navText = (is_rtl) ? [
             '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
@@ -120,9 +123,10 @@
             })
         })
     </script>
+    {% endcomment %}
     <script>
-        const markers = {{ map_markers|safe }};
-        const siteUrl = "{% url 'main:site' 0 %}";
+        let markers = {{ map_markers|safe }};
+        let siteUrl = "{% url 'main:site' 0 %}";
 
         function siteTitle(site) {
             return '<div id="content">' +
@@ -160,6 +164,8 @@
             }
             $('.site-map-item h5').on('click', function () {
                 google.maps.event.trigger(siteMarkers[$(this).attr('data-marker')], 'click');
+                google.maps.event.trigger(map, "resize");
+                map.panTo(siteMarkers[$(this).attr('data-marker')].getPosition());
             });
         }
     </script>

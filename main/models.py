@@ -11,6 +11,21 @@ from django.utils.translation import ugettext_lazy as _
 from main.solo_models import SingletonModel
 
 
+HOME_BANNERS = [
+    {
+        'title': _("Bet She'an, Synagogue"),
+        'image': f'{settings.STATIC_URL}images/banner1.jpg'
+    },
+    {
+        'title': _("Nirim"),
+        'image': f'{settings.STATIC_URL}images/banner2.jpg'
+    },
+    {
+        'title': _("Be'er Shema"),
+        'image': f'{settings.STATIC_URL}images/banner3.jpg'
+    },
+]
+
 def mosaic_dir(instance, filename):
     # name, ext = os.path.splitext(filename)
     # num = instance.pk if instance.pk else uuid4().hex[:15]
@@ -181,6 +196,9 @@ class MosaicPicture(models.Model):
         if self.picture:
             return self.picture.url
         return '{}images/empty-image.png'.format(settings.STATIC_URL)
+
+    def get_random_tag(self):
+        return self.tags.all().order_by('?').first()
 
     def image_tag(self):
         if self.picture:

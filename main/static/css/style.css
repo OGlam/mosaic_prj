@@ -68,8 +68,6 @@
 header {
     background-color: #fff;
     border-bottom: 2px solid #666;
-    box-shadow: 0 1px 10px #666;
-    margin-bottom: 0.5rem;
 }
 
 .bg-white {
@@ -199,6 +197,27 @@ header {
 }
 
 /* Home */
+.top-banner {
+    width: 100%;
+    height: calc(100vw / 2.732);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.banner-title {
+    color: #fff;
+    font-size: 5rem;
+    font-weight: bold;
+    text-shadow: 1px 3px #000;
+    text-align: center;
+    line-height: calc(100vw / 2.732);
+}
+
+.tag-item {
+    width: calc(20% - 10px);
+}
+
 .sub-featured {
     padding: 4rem 0;
 }

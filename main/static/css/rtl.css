@@ -65,6 +65,12 @@ header div.hero {
     right: 35%;
 }
 
+/* Home */
+.tag-item {
+    float: right;
+    margin-left: 10px;
+}
+
 /* Mosaic detail page */
 .images .img-item {
     float: right;

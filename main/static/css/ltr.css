@@ -66,6 +66,12 @@ header div.hero {
     margin-right: 10px;
 }
 
+/* Home */
+.tag-item {
+    float: left;
+    margin-right: 10px;
+}
+
 /* Responsive */
 @media only screen and (max-width: 767px) {
     #main-search-form {
