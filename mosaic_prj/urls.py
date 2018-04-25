@@ -24,7 +24,6 @@ urlpatterns += i18n_patterns(
     path('contact', users_views.ContactView.as_view(), name='contact'),
     path('', include('main.urls')),
     path('tags/', views.tags, name='tags'),
-    path('map/', views.mosaic_map, name='map'),
     path('account/', include('users.urls')),
     path('tag/<int:tagid>/', views.tag_page, name='tag-url'),
     path('jsi18n/', JavaScriptCatalog.as_view(packages=['main']), name='javascript-catalog'),

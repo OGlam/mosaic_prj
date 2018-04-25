@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-25 11:00+0300\n"
-"PO-Revision-Date: 2018-04-25 11:01+0300\n"
+"POT-Creation-Date: 2018-04-25 12:55+0300\n"
+"PO-Revision-Date: 2018-04-25 12:55+0300\n"
 "Last-Translator: Yaniv Mirel <yanivmirel@gmail.com>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -16,591 +16,443 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: admin.py:39 models.py:107 templates/main/mosaic_site_form.html:26
 msgid "Site ID"
 msgstr "מספר אתר"
 
-#: forms.py:152
 msgid "Content Hebrew"
 msgstr "תוכן בעברית"
 
-#: forms.py:154
 msgid "Content English"
 msgstr "תוכן באנגלית"
 
-#: models.py:16
 msgid "Bet She'an, Synagogue"
 msgstr "בית שאן, בית הכנסת"
 
-#: models.py:20
 msgid "Nirim"
 msgstr "מעון, ח'"
 
-#: models.py:24
 msgid "Be'er Shema"
 msgstr "חורבת באר שמע"
 
-#: models.py:38
 msgid "Byzantine"
 msgstr "ביזנטי"
 
-#: models.py:39
 msgid "Roman"
 msgstr "רומית"
 
-#: models.py:49
 msgid "Stone"
 msgstr "אבן"
 
-#: models.py:50
 msgid "Glass"
 msgstr "זכוכית"
 
-#: models.py:60
 msgid "Excavation"
 msgstr "חפירה"
 
-#: models.py:61
 msgid "Post Excavation"
 msgstr "אחרי החפירה"
 
-#: models.py:62
 msgid "Preservation"
 msgstr "שימור"
 
-#: models.py:73
 msgid "Church"
 msgstr "כנסייה"
 
-#: models.py:74
 msgid "Synagogue"
 msgstr "בית כנסת"
 
-#: models.py:75
 msgid "Public building"
 msgstr "מבנה ציבורי"
 
-#: models.py:76
 msgid "Private building"
 msgstr "מבנה פרטי"
 
-#: models.py:87
 msgid "Tag category hebrew"
 msgstr "כותרת קטגוריה בעברית"
 
-#: models.py:88
 msgid "Tag category english"
 msgstr "כותרת קטגוריה באנגלית"
 
-#: models.py:92
 msgid "Tag hebrew"
 msgstr "כותרת בעברית"
 
-#: models.py:93
 msgid "Tag english"
 msgstr "כותרת באנגלית"
 
-#: models.py:94
 msgid "Tag category"
 msgstr "קטגוריית תגית"
 
-#: models.py:96 models.py:119
 msgid "Is featured?"
 msgstr "מודגש?"
 
-#: models.py:106 models.py:139 models.py:174
 msgid "Created at"
 msgstr "נוצר בתאריך"
 
-#: models.py:108
 msgid "Title hebrew"
 msgstr "כותרת בעברית"
 
-#: models.py:109
 msgid "Title english"
 msgstr "כותרת באנגלית"
 
-#: models.py:110
 msgid "Origin hebrew"
 msgstr "מקור בעברית"
 
-#: models.py:111
 msgid "Origin english"
 msgstr "מקור באנגלית"
 
-#: models.py:112
 msgid "Story hebrew"
 msgstr "סיפור בעברית"
 
-#: models.py:113
 msgid "Story english"
 msgstr "סיפור באנגלית"
 
-#: models.py:114
 msgid "Archaeological context"
 msgstr "הקשר ארכיאולוגי"
 
-#: models.py:116 templates/main/mosaic_detail.html:45
-#: templates/main/mosaic_site.html:52
 msgid "Period"
 msgstr "תקופה"
 
-#: models.py:117
 msgid "Youtube video ID"
 msgstr "מזהה סירטון יוטיוב"
 
-#: models.py:118 templates/main/mosaic_detail.html:56
 msgid "Comments"
 msgstr "הערות"
 
-#: models.py:120
 msgid "Latitude"
 msgstr "קו אורך"
 
-#: models.py:121
 msgid "Longitude"
 msgstr "קו רוחב"
 
-#: models.py:140 templates/main/mosaic_item_list.html:13
 msgid "Mosaic site"
 msgstr "אתר פסיפס"
 
-#: models.py:142
 msgid "Rashut number"
 msgstr "מספר רשות"
 
-#: models.py:143
 msgid "Description hebrew"
 msgstr "תיאור בעברית"
 
-#: models.py:144
 msgid "Description english"
 msgstr "תיאור באנגלית"
 
-#: models.py:145 models.py:176 templates/main/_header.html:101
 msgid "Tags"
 msgstr "תגיות"
 
-#: models.py:146
 msgid "Length"
 msgstr "אורך"
 
-#: models.py:147
 msgid "Width"
 msgstr "רוחב"
 
-#: models.py:148 templates/main/mosaic_detail.html:49
 msgid "Area"
 msgstr "שטח"
 
-#: models.py:149 templates/main/mosaic_item_list.html:15
 msgid "Rishayon"
 msgstr "רישיון"
 
-#: models.py:150 templates/main/mosaic_detail.html:47
 msgid "Material"
 msgstr "חומר"
 
-#: models.py:152
 msgid "Year"
 msgstr "שנה"
 
-#: models.py:153 templates/main/mosaic_detail.html:46
 msgid "Displayed at"
 msgstr "מוצג ב"
 
-#: models.py:154
 msgid "Bibliography hebrew"
 msgstr "בִּיבּלִיוֹגְרָפִיָה בעברית"
 
-#: models.py:155
 msgid "Bibliography english"
 msgstr "בִּיבּלִיוֹגְרָפִיָה באנגלית"
 
-#: models.py:175
 msgid "Mosaic"
 msgstr "פסיפס"
 
-#: models.py:177
 msgid "Cover image"
 msgstr "תמונת שער"
 
-#: models.py:178
 msgid "Order priority"
 msgstr "סדר הצגה"
 
-#: models.py:179
 msgid "Picture"
 msgstr "תמונה"
 
-#: models.py:180
 msgid "Negative ID"
 msgstr "מספר נגטיב"
 
-#: models.py:181
 msgid "Photographer name hebrew"
 msgstr "שם הצלם בעברית"
 
-#: models.py:182
 msgid "Photographer name english"
 msgstr "שם הצלם באנגלית"
 
-#: models.py:183
 msgid "Taken at"
 msgstr "צולם ב"
 
-#: models.py:184
 msgid "Picture type"
 msgstr "סוג תמונה"
 
-#: models.py:185
 msgid "Taken date"
 msgstr "צולם בתאריך"
 
-#: models.py:186
 msgid "Comments hebrew"
 msgstr "הערות בעברית"
 
-#: models.py:187
 msgid "Comments english"
 msgstr "הערות באנגלית"
 
-#: models.py:213
 msgid "Logo"
 msgstr "לוגו"
 
-#: models.py:214
 msgid "Site name Hebrew"
 msgstr "שם אתר בעברית"
 
-#: models.py:215
 msgid "Site name English"
 msgstr "שם אתר באנגלית"
 
-#: models.py:216
 msgid "Admin email from"
 msgstr "מייל דואר יוצא"
 
-#: models.py:217
 msgid "Admin email to"
 msgstr "מייל לקבלת הודעות"
 
-#: models.py:218
 msgid "About Hebrew"
 msgstr "אודות עברית"
 
-#: models.py:219
 msgid "About English"
 msgstr "אודות אנגלית"
 
-#: models.py:222 models.py:225
 msgid "General settings"
 msgstr "הגדרות כלליות"
 
-#: solo_admin.py:42
 #, python-format
 msgid "%(obj)s was changed successfully."
 msgstr "%(obj)s  נוצר בהצלחה"
 
-#: solo_admin.py:44
 msgid "You may edit it again below."
 msgstr "ניתן לערוך את זה שוב למטה."
 
-#: templates/_base_form.html:47
+msgid "404 Not Found"
+msgstr "404 הדף לא קיים"
+
 msgid "Submit"
 msgstr "שלח"
 
-#: templates/_base_form.html:51
 msgid "Forgot password"
 msgstr "שכחתי סיסמא"
 
-#: templates/_base_formset.html:5
 msgid "Upload pictures"
 msgstr "העלה תמונות"
 
-#: templates/admin/solo/change_form.html:7
-#: templates/admin/solo/object_history.html:6
 msgid "Home"
 msgstr "דף הבית"
 
-#: templates/admin/solo/change_form.html:14
-#: templates/admin/solo/object_history.html:9
 msgid "History"
 msgstr "היסטוריה"
 
-#: templates/admin/solo/change_form.html:17
 msgid "View on site"
 msgstr "צפה באתר"
 
-#: templates/main/_carousel.html:26
 msgid "Previous"
 msgstr "הקודם"
 
-#: templates/main/_carousel.html:30
 msgid "Next"
 msgstr "הבא"
 
-#: templates/main/_header.html:14
 msgid "Antiquities Authoroty"
 msgstr "רשות העתיקות"
 
-#: templates/main/_header.html:23
 msgid "HOME PAGE"
 msgstr "דף הבית"
 
-#: templates/main/_header.html:28
 msgid "SITES"
 msgstr "אתרים"
 
-#: templates/main/_header.html:33
 msgid "SUBJECTS"
 msgstr "נושאים"
 
-#: templates/main/_header.html:38
 msgid "PERIOD"
 msgstr "תקופה"
 
-#: templates/main/_header.html:43
 msgid "MAP"
 msgstr "מפה"
 
-#: templates/main/_header.html:81
 msgid "About"
 msgstr "אודותינו"
 
-#: templates/main/_header.html:86
 msgid "Contact"
 msgstr "צור קשר"
 
-#: templates/main/_header.html:106 templates/main/site_list.html:9
 msgid "Sites"
 msgstr "אתרים"
 
-#: templates/main/_header.html:111
 msgid "Items"
 msgstr "פריטים"
 
-#: templates/main/_header.html:116
 msgid "Edit about"
 msgstr "עריכת אודות"
 
-#: templates/main/_header.html:138
 msgid "Logout"
 msgstr "התנתק"
 
-#: templates/main/_header.html:144
 msgid "Login"
 msgstr "כניסה"
 
-#: templates/main/about_form.html:19
 msgid "Save"
 msgstr "שמור"
 
-#: templates/main/base.html:15
 msgid "Israel Antiquities Authority"
 msgstr "רשות העתיקות של ישראל"
 
-#: templates/main/home.html:33
 msgid "Archaeological Context"
 msgstr "הקשר ארכיאולוגי"
 
-#: templates/main/home.html:53 templates/main/mosaic_detail.html:15
-#: views.py:365
 msgid "Subjects"
 msgstr "נושאים"
 
-#: templates/main/mosaic_detail.html:24 templates/main/mosaic_site.html:16
 msgid "Site Album"
 msgstr "אלבום אתר"
 
-#: templates/main/mosaic_detail.html:41 templates/main/mosaic_site.html:41
 msgid "Details"
 msgstr "פרטים"
 
-#: templates/main/mosaic_detail.html:43 templates/main/mosaic_site.html:51
 msgid "Story"
 msgstr "סיפור"
 
-#: templates/main/mosaic_detail.html:44
 msgid "IAA ID"
-msgstr ""
+msgstr "מזהה רשות העתיקות"
 
-#: templates/main/mosaic_detail.html:48
 msgid "Dimensions"
 msgstr "מידות"
 
-#: templates/main/mosaic_detail.html:51
 msgid "Location Found"
 msgstr "מיקום שנמצא"
 
-#: templates/main/mosaic_detail.html:53
 msgid "Address"
 msgstr "כתובת"
 
-#: templates/main/mosaic_detail.html:57
 msgid "Bibliography"
 msgstr "בִּיבּלִיוֹגְרָפִיָה"
 
-#: templates/main/mosaic_item_form.html:19
-#: templates/main/mosaic_site_form.html:19 templates/main/tag_form.html:10
 msgid "Update,Save"
 msgstr "עידכון,שמירה"
 
-#: templates/main/mosaic_item_form.html:31
 msgid "Add another picture"
 msgstr "הוסף תמונה"
 
-#: templates/main/mosaic_item_form.html:32
 msgid "Delete picture"
 msgstr "מחק תמונה"
 
-#: templates/main/mosaic_item_list.html:14
 msgid "Misp rashut"
 msgstr "מספר רשות"
 
-#: templates/main/mosaic_item_list.html:16
-#: templates/main/mosaic_site_form.html:30 templates/main/tag_form.html:20
 msgid "Actions"
 msgstr "פעולות"
 
-#: templates/main/mosaic_item_list.html:27
-#: templates/main/mosaic_site_form.html:42 templates/main/tag_form.html:31
 msgid "Edit"
 msgstr "עריכה"
 
-#: templates/main/mosaic_item_list.html:32
-#: templates/main/mosaic_site_form.html:47 templates/main/tag_form.html:36
 msgid "Delete"
 msgstr "מחיקה"
 
-#: templates/main/mosaic_item_list.html:40
 msgid "No items found"
 msgstr "לא נמצאו פריטים"
 
-#: templates/main/mosaic_site.html:44
 msgid "Motsa"
 msgstr "מוצא"
 
-#: templates/main/mosaic_site.html:45 templates/main/mosaic_site_form.html:27
 msgid "Title"
 msgstr "כותרת"
 
-#: templates/main/mosaic_site.html:46 templates/main/mosaic_site_form.html:28
 msgid "Origin"
 msgstr "מקור"
 
-#: templates/main/mosaic_site_form.html:29
 msgid "Featured"
 msgstr "מודגש"
 
-#: templates/main/mosaic_site_form.html:55
 msgid "No sites found"
 msgstr "לא נמצאו אתרים"
 
-#: templates/main/site_list.html:14
 msgid "ALL"
 msgstr "הכל"
 
-#: templates/main/site_list.html:19
 msgid "A-M"
 msgstr "א-מ"
 
-#: templates/main/site_list.html:24
 msgid "N-Z"
 msgstr "נ-ת"
 
-#: templates/main/tag_form.html:18
 msgid "Hebrew"
 msgstr "עברית"
 
-#: templates/main/tag_form.html:19
 msgid "English"
 msgstr "אנגלית"
 
-#: templates/main/tag_form.html:44
 msgid "No tags found"
 msgstr "לא נמצאו תגיות"
 
-#: templatetags/mosaic.py:122
 #, python-format
 msgid ""
 "Templatetag requires the model dotted path: 'app_label.ModelName'. Received "
 "'%s'."
 msgstr ""
 
-#: templatetags/mosaic.py:128
 #, python-format
 msgid ""
 "Could not get the model name '%(model)s' from the application named '%(app)s'"
 msgstr ""
 
-#: views.py:24
 msgid "Mosaic Site"
 msgstr "אתר פסיפס"
 
-#: views.py:36
 msgid "Home page"
 msgstr "דף הבית"
 
-#: views.py:74
 msgid "About page"
 msgstr "אודותינו"
 
-#: views.py:89
 msgid "About edit page"
 msgstr "עריכת אודות"
 
-#: views.py:118
 msgid "Tag create"
 msgstr "יצירת תגית"
 
-#: views.py:132
 msgid "Tag update"
 msgstr "עידכון תגית"
 
-#: views.py:146
 msgid "Mosaic site created successfully"
 msgstr "אתר פסיפס נוצר בהצלחה"
 
-#: views.py:147
 msgid "Mosaic site create"
 msgstr "אתר פסיפס נוצר"
 
-#: views.py:161
 msgid "Mosaic site updated successfully"
 msgstr "אתר פסיפס עודכן בהצלחה"
 
-#: views.py:162
 msgid "Mosaic site update"
 msgstr "אתר פסיפס עודכן"
 
-#: views.py:183
 msgid "Mosaic item created successfully"
 msgstr "פריט פסיפס נוצר בהצלחה"
 
-#: views.py:184
 msgid "Mosaic item create"
 msgstr "פריט פסיפס נוצר"
 
-#: views.py:216
 msgid "Mosaic item updated successfully"
 msgstr "פריט פסיפס עודכן בהצלחה"
 
-#: views.py:217
 msgid "Mosaic item update"
 msgstr "אתר פסיפס עודכן"
 
-#: views.py:267
 msgid "Mosaic item deleted successfully"
 msgstr "פריט פסיפס נמחק בהצלחה"
 
-#: views.py:388
 msgid "Periods"
 msgstr "תקופות"
 
-#: views.py:403
 msgid "Subject"
 msgstr "נושאים"
 

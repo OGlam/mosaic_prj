@@ -2,21 +2,21 @@ import random
 import re
 from collections import OrderedDict
 
-import folium
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from django.utils import translation
-from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView, FormView
-from folium.plugins import MarkerCluster
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
-
-from .forms import TagForm, MosaicSiteForm, MosaicItemForm, MosaicItemUpdateForm, MosaicPictureFormSet, AboutForm
-from .models import Tag, MosaicItem, MosaicPicture, MosaicSite, ArchaeologicalContext, GeneralSettings, HOME_BANNERS
+from django.views.generic import TemplateView, DetailView, ListView, \
+    CreateView, UpdateView, DeleteView, FormView
 
 from mosaic_prj.base_views import IAAUIMixin
+from .forms import TagForm, MosaicSiteForm, MosaicItemForm, \
+    MosaicItemUpdateForm, MosaicPictureFormSet, AboutForm
+from .models import Tag, MosaicItem, MosaicPicture, MosaicSite, \
+    ArchaeologicalContext, GeneralSettings, HOME_BANNERS
 
 
 class SiteView(IAAUIMixin, DetailView):
@@ -38,10 +38,12 @@ class HomeView(IAAUIMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        cover_pictures = MosaicPicture.objects.filter(is_cover=True).exclude(mosaic__mosaic_site__featured=False)
+        cover_pictures = MosaicPicture.objects.filter(is_cover=True).exclude(
+            mosaic__mosaic_site__featured=False)
         mosaic_item_ids = [x.mosaic.id for x in cover_pictures]
 
-        mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('?')
+        mosaic_items = MosaicItem.objects.filter(
+            id__in=mosaic_item_ids).order_by('?')
         # mosaic_items = MosaicItem.objects.filter(id__in=mosaic_item_ids).order_by('mosaic_site')
         # context['popular_sites'] = mosaic_items[:3]
         context['popular_site'] = HOME_BANNERS[random.randint(0, 2)]
@@ -50,22 +52,29 @@ class HomeView(IAAUIMixin, TemplateView):
         tags = Tag.objects.filter(featured=True)
         tag_pic_ids = []
         for tag in tags:
-            tag_pic_ids.extend(tag.mosaic_pictures.values_list('id', flat=True))
-        context['tags'] = MosaicPicture.objects.filter(id__in=tag_pic_ids).order_by('?')[:5]
+            tag_pic_ids.extend(
+                tag.mosaic_pictures.values_list('id', flat=True))
+        context['tags'] = MosaicPicture.objects.filter(
+            id__in=tag_pic_ids).order_by('?')[:5]
         context['archaeological_context'] = [
-            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exclude(
+            MosaicPicture.objects.filter(
+                mosaic__mosaic_site__archaeological_context=x[0]).exclude(
                 picture__isnull=True).first() for x in
             ArchaeologicalContext.CHOICES if
-            MosaicPicture.objects.filter(mosaic__mosaic_site__archaeological_context=x[0]).exclude(
+            MosaicPicture.objects.filter(
+                mosaic__mosaic_site__archaeological_context=x[0]).exclude(
                 picture__isnull=True).exists()
         ]
         lang = translation.get_language()[:2]
         context['map_lang'] = 'iw' if lang == 'he' else 'en'
         context['map_markers'] = [
-            [u'{}'.format(getattr(x, "title_" + lang)), x.latitude, x.longitude, x.id] for x in
-            MosaicSite.objects.filter(latitude__isnull=False, longitude__isnull=False)
+            [u'{}'.format(getattr(x, "title_" + lang)), x.latitude,
+             x.longitude, x.id] for x in
+            MosaicSite.objects.filter(latitude__isnull=False,
+                                      longitude__isnull=False)
         ]
-        context['sites'] = MosaicSite.objects.filter(latitude__isnull=False, longitude__isnull=False)
+        context['sites'] = MosaicSite.objects.filter(latitude__isnull=False,
+                                                     longitude__isnull=False)
         return context
 
 
@@ -202,10 +211,12 @@ class MosaicItemCreateView(SuccessMessageMixin, IAAUIMixin, CreateView):
     def get_context_data(self, **kwargs):
         d = super(MosaicItemCreateView, self).get_context_data(**kwargs)
         if self.request.POST:
-            d['mosaic_picture_formset'] = MosaicPictureFormSet(self.request.POST, self.request.FILES,
-                                                               prefix='mosaic_picture_formset')
+            d['mosaic_picture_formset'] = MosaicPictureFormSet(
+                self.request.POST, self.request.FILES,
+                prefix='mosaic_picture_formset')
         else:
-            d['mosaic_picture_formset'] = MosaicPictureFormSet(prefix='mosaic_picture_formset')
+            d['mosaic_picture_formset'] = MosaicPictureFormSet(
+                prefix='mosaic_picture_formset')
         return d
 
 
@@ -295,7 +306,8 @@ def tag_page(request, tagid):
         return HttpResponseNotFound('<h1>No Mosaics with this tag</h1>')
 
     for mosaic in mosaics:
-        pictures = MosaicPicture.objects.filter(mosaic=mosaic).order_by('order_priority')
+        pictures = MosaicPicture.objects.filter(mosaic=mosaic).order_by(
+            'order_priority')
         mosaic_pics.append(pictures[0])
 
     d = {
@@ -304,25 +316,6 @@ def tag_page(request, tagid):
     }
 
     return render(request, "tag_page.html", d)
-
-
-def mosaic_map(request):
-    mosaics = MosaicItem.objects.all()
-    m = folium.Map(
-        location=[31.781959, 35.2137],
-        tiles='Stamen Toner',
-        zoom_start=12
-    )
-    marker_cluster = MarkerCluster().add_to(m)
-    for point in mosaics:
-        if point.length and point.width:
-            folium.Marker(
-                location=[point.width, point.length],
-                popup=point.mosaic_site.title_he
-            ).add_to(marker_cluster)
-    m.save("main/templates/map.html")
-
-    return render(request, "map_page.html")
 
 
 class SiteListView(IAAUIMixin, ListView):
@@ -341,14 +334,18 @@ class SiteListView(IAAUIMixin, ListView):
         d = super().get_context_data(**kwargs)
         lang = translation.get_language()[:2]
         if lang == 'he':
-            am_l = [x.id for x in self.get_queryset() if re.match('[אבגדהוזחטיכלמ]', x.title_he[0])]
+            am_l = [x.id for x in self.get_queryset() if
+                    re.match('[אבגדהוזחטיכלמ]', x.title_he[0])]
             d['am_list'] = self.get_queryset().filter(id__in=am_l)
-            nz_l = [x.id for x in self.get_queryset() if re.match('[נסעפצקרשת]', x.title_he[0])]
+            nz_l = [x.id for x in self.get_queryset() if
+                    re.match('[נסעפצקרשת]', x.title_he[0])]
             d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
         else:
-            am_l = [x.id for x in self.get_queryset() if re.match('[a-mA-M]', x.title_en[0])]
+            am_l = [x.id for x in self.get_queryset() if
+                    re.match('[a-mA-M]', x.title_en[0])]
             d['am_list'] = self.get_queryset().filter(id__in=am_l)
-            nz_l = [x.id for x in self.get_queryset() if re.match('[n-zN-Z]', x.title_en[0])]
+            nz_l = [x.id for x in self.get_queryset() if
+                    re.match('[n-zN-Z]', x.title_en[0])]
             d['nz_list'] = self.get_queryset().filter(id__in=nz_l)
         # am_l = [x.id for x in self.get_queryset() if re.match('[אבגדהוזחטיכלמ]', x.title_he) or re.match('[a-mA-M]', x.title_en)]
         # d['am_list'] = self.get_queryset().filter(id__in=am_l)
@@ -366,12 +363,15 @@ class SubjectsView(IAAUIMixin, ListView):
 
     def get_queryset(self):
         lang = translation.get_language()[:2]
-        tags_list = MosaicPicture.objects.filter(tags__isnull=False).values_list('tags', flat=True)
+        tags_list = MosaicPicture.objects.filter(
+            tags__isnull=False).values_list('tags', flat=True)
         order_by = 'tag_he' if lang == 'he' else 'tag_en'
-        tags = Tag.objects.filter(id__in=[t for t in tags_list]).order_by(order_by)
+        tags = Tag.objects.filter(id__in=[t for t in tags_list]).order_by(
+            order_by)
         d = OrderedDict()
         for tag in tags:
-            d[tag] = [x for x in MosaicPicture.objects.filter(tags__in=[tag.id])]
+            d[tag] = [x for x in
+                      MosaicPicture.objects.filter(tags__in=[tag.id])]
 
         return d
 

@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Django = "*"
+django-extensions = "*"
+Pillow = "*"
+"psycopg2-binary" = "*"
+ipython = "*"
+
+[dev-packages]
+#django-autofixture = "*"
+#xlrd = "*"
+#pandas = "*"
+#silly = "*"
+fabric3 = "*"
+
+[requires]
+python_version = "3.6"

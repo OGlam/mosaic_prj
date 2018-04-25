@@ -2,11 +2,11 @@
 
 from django.db import migrations
 
-from main.get_data import add_info_to_pictures
-
-
-def create_info(apps, schema_editor):
-    add_info_to_pictures()
+# from main.get_data import add_info_to_pictures
+#
+#
+# def create_info(apps, schema_editor):
+#     add_info_to_pictures()
 
 
 class Migration(migrations.Migration):
@@ -15,5 +15,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_info)
+        # migrations.RunPython(create_info)
     ]
