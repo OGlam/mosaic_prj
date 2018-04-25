@@ -137,6 +137,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'mosaic_prj', 'locale'),
 )
 
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected-static')
 STATIC_URL = '/static/'
 
