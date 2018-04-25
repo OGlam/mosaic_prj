@@ -1,12 +1,8 @@
-/*
-    change #212121
-     with #212121
-*/
+/* Generic */
 h5 {
-  --caption-font-size: 1.125rem;
+    --caption-font-size: 1.125rem;
 }
 
-/* Generic */
 .text-white {
     color: #fff;
 }
@@ -263,6 +259,8 @@ header {
     display: block;
     width: 200px;
     height: 170px;
+    /*width: 201px;*/
+    /*height: 160px;*/
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -281,7 +279,8 @@ header {
     padding: 12px;
     background-color: #fff;
 }
-.subjects .tag-item a h5 {
+
+.subjects .tag-item a h4 {
     margin: 0;
     text-align: center;
     background-color: #fff;
@@ -582,7 +581,7 @@ header div.hero h1 {
 }
 
 .gallery-item {
-    padding: 2px 0px 55px 0px;
+    padding: 2px 0 55px 0;
     box-sizing: border-box;
     height: 260px;
     overflow: hidden;
