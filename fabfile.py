@@ -81,13 +81,13 @@ APT_PACKAGES = [
 @task
 def apt_install():
     pkgs = " ".join(APT_PACKAGES)
-    sudo(f"DEBIAN_FRONTEND=noninteractive apt-get install -y -q {pkgs}",
+    sudo(f"DEBIAN_FRONTEND=noninteractive apt install -y -q {pkgs}",
          pty=False)
 
 @task
 def apt_upgrade():
-    sudo("apt-get update", pty=False)
-    sudo("apt-get upgrade -y", pty=False)
+    sudo("DEBIAN_FRONTEND=noninteractive apt update -y", pty=False)
+    sudo("DEBIAN_FRONTEND=noninteractive apt upgrade -y", pty=False)
 
 
 @task
