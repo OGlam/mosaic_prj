@@ -10,7 +10,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from main.solo_models import SingletonModel
 
-
 HOME_BANNERS = [
     {
         'title': _("Bet She'an, Synagogue"),
@@ -25,6 +24,7 @@ HOME_BANNERS = [
         'image': f'{settings.STATIC_URL}images/banner3.jpg'
     },
 ]
+
 
 def mosaic_dir(instance, filename):
     # name, ext = os.path.splitext(filename)
@@ -101,6 +101,13 @@ class Tag(models.Model):
     def get_sites(self):
         return MosaicSite.objects.filter(id__in=[x.mosaic_site_id for x in self.mosaic_items.all().distinct()])
 
+    def get_random_image(self):
+        mosaic_picture = MosaicPicture.objects.filter(tags=self.id).order_by('?').first()
+        if mosaic_picture:
+            if mosaic_picture.picture:
+                return mosaic_picture.picture.url
+        return f"{settings.STATIC_URL}images/empty-image.png"
+
 
 class MosaicSite(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
@@ -121,7 +128,7 @@ class MosaicSite(models.Model):
     longitude = models.FloatField(_('Longitude'), blank=True, null=True)
 
     def __str__(self):
-        return u'[{}] {}'.format(self.site_id, self.title_he if settings.LANGUAGE_CODE == 'he' else self.title_en)
+        return f'[{self.site_id}] {self.title_he if settings.LANGUAGE_CODE == "he" else self.title_en}'
 
     def get_site_cover_image(self):
         return self.get_site_pictures().filter(is_cover=True).order_by('?').first()
@@ -132,7 +139,7 @@ class MosaicSite(models.Model):
     def get_site_cover_image_url(self):
         if self.get_site_cover_image():
             return self.get_site_cover_image().picture.url
-        return "{}images/empty-image.png".format(settings.STATIC_URL)
+        return f"{settings.STATIC_URL}images/empty-image.png"
 
 
 class MosaicItem(models.Model):

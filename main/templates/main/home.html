@@ -55,9 +55,9 @@
                 {% for tag in tags %}
                     <div class="tag-item item">
                         <a href="{% url 'main:subject' tag.id %}">
-                            <span style="background-image: url({{ tag.get_image }});"></span>
+                            <span style="background-image: url({{ tag.get_random_image }});"></span>
                             <h4>
-                                {{ tag.get_random_tag|bd:'tag'|title }}
+                                {{ tag|bd:'tag'|title }}
                             </h4>
                         </a>
                     </div>

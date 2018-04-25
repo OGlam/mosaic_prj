@@ -50,12 +50,13 @@ class HomeView(IAAUIMixin, TemplateView):
         context['popular_sites_sub'] = mosaic_items[:2]
         # context['popular_sites_sub'] = mosaic_items[3:5]
         tags = Tag.objects.filter(featured=True)
-        tag_pic_ids = []
-        for tag in tags:
-            tag_pic_ids.extend(
-                tag.mosaic_pictures.values_list('id', flat=True))
-        context['tags'] = MosaicPicture.objects.filter(
-            id__in=tag_pic_ids).order_by('?')[:5]
+        # tag_pic_ids = []
+        # for tag in tags:
+        #     tag_pic_ids.extend(
+        #         tag.mosaic_pictures.values_list('id', flat=True))
+        # context['tags'] = MosaicPicture.objects.filter(
+        #     id__in=tag_pic_ids).order_by('?')[:5]
+        context['tags'] = tags.order_by('?')[:5]
         context['archaeological_context'] = [
             MosaicPicture.objects.filter(
                 mosaic__mosaic_site__archaeological_context=x[0]).exclude(
