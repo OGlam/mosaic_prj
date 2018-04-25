@@ -13,12 +13,13 @@ from fabric import operations
 from fabric.api import *
 from fabric.contrib.console import confirm
 from fabfile_postfix import setup_postfix, setup_opendkim, postfix_log
+from fabfile_local import ADMIN_EMAIL
 
 env.user = "sysop"
 env.hosts = ["psifas.oglam.hasadna.org.il"]
 
 env.app_name = "psifas"
-env.wsgi_file = "psifas/wsgi.py"
+env.wsgi_file = "mosaic_prj/wsgi.py"
 env.stats_port = 9000
 env.project = "psifas"
 env.code_dir = f"/home/sysop/{env.project}"
@@ -84,6 +85,7 @@ def apt_install():
     pkgs = " ".join(APT_PACKAGES)
     sudo(f"DEBIAN_FRONTEND=noninteractive apt install -y -q {pkgs}",
          pty=False)
+
 
 @task
 def apt_upgrade():
@@ -240,7 +242,7 @@ server {{
 }}"""
 
 env.uwsgi_socket = f"/run/uwsgi/app/{env.app_name}/socket"
-env.static_path = f"{env.code_dir}/collected_static/"
+env.static_path = f"{env.code_dir}/collected-static/"
 
 
 @task
@@ -283,13 +285,13 @@ def reload_app():
 
 @task
 def upgrade():
-    stop_celery()
+    # stop_celery()
     git_pull()
     pip_install()
     migrate()
     collect_static()
     reload_app()
-    start_celery()
+    # start_celery()
 
 
 def make_backup():
@@ -436,8 +438,6 @@ logs-dir = /home/certbot/logs/"""
 
 @task
 def install_certbot():
-    from local_fabfile import ADMIN_EMAIL
-
     # For "Cannot add PPA. Please check that the PPA name or format is correct" error, use:
     # sudo("apt-get install -q --reinstall ca-certificates")
     # Source: https://askubuntu.com/questions/429803/cannot-add-ppa-please-check-that-the-ppa-name-or-format-is-correct
@@ -495,7 +495,6 @@ CERTBOT_CRON = """MAILTO={email}
 
 @task
 def setup_certbot_crontab():
-    from local_fabfile import ADMIN_EMAIL
     s = CERTBOT_CRON.format(AUTO_RENEW_SCRIPT, email=ADMIN_EMAIL)
     put(StringIO(s), '/tmp/crontab')
     run('sudo -iu certbot crontab < /tmp/crontab')
@@ -505,4 +504,3 @@ def setup_certbot_crontab():
 def nginx_log():
     sudo('tail -f /var/log/nginx/*')
     # sudo('tail -n 200 /var/log/nginx/error.log  /var/log/nginx/access.log')
-

@@ -137,7 +137,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'mosaic_prj', 'locale'),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'collect-static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected-static')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
