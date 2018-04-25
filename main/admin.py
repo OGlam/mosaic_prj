@@ -26,6 +26,13 @@ class PictureInline(admin.StackedInline):
 
 class MosaicItemAdmin(admin.ModelAdmin):
     inlines = [PictureInline]
+    list_display = (
+        'id',
+        'mosaic_site',
+        'misp_rashut',
+        'description_he',
+        'description_en',
+    )
 
 
 class PictureAdmin(admin.ModelAdmin):
