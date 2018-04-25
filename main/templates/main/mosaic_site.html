@@ -7,60 +7,74 @@
             <img src="{{ mosaic.get_site_cover_image_url }}">
             <div class="hero">
                 <h1>
-                    {{ mosaic|bd:'origin' }}
+                    {{ mosaic|bd:'title' }}
                 </h1>
             </div>
         </header>
     </div>
     <div class="container">
-        <h4>{% trans 'Site Album' %}</h4>
-        <div class="row">
-            {% for picture in mosaic.get_site_pictures %}
-                {% if picture.picture %}
-                    <div class="col-2 gallery-item">
-                        <a href="{% url 'main:detail' picture.mosaic.id %}">
+        <ul class="list-inline">
+            <li class="list-inline-item border p-1">
+                <b>{% trans 'Motsa' %}</b>: {{ mosaic.site_id }} </li>
+            <li class="list-inline-item border p-1">
+                <b>{% trans 'Title' %}</b>: {{ mosaic|bd:'title' }} </li>
+            <li class="list-inline-item border p-1">
+                <b>{% trans 'Origin' %}</b>: {{ mosaic|bd:'origin' }} </li>
+            <li class="list-inline-item border p-1">
+                <b>{% trans 'Story' %}</b>: {{ mosaic|bd:'story' }} </li>
+            <li class="list-inline-item border p-1">
+                <b>{% trans 'Period' %}</b>: {{ mosaic.get_period_display }}
+            </li>
+        </ul>
 
-                            <div class="frame">
-                                <img src="{{ picture.picture.url }}">
-                            </div>
-                            <div class="misp_rashut">
-                                {{ picture.mosaic.misp_rashut }}
-                            </div>
-                        </a>
+        {% if mosaic.video_id %}
+            <div class="container">
+                <div class="embed-responsive embed-responsive-16by9 mb-5">
+                    <iframe class="embed-responsive-item"
+                            src="https://www.youtube.com/embed/{{ mosaic.video_id }}"
+                            frameborder="0"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        {% endif %}
+
+        {% for item in mosaic.items.all %}
+            <div class="card mb-3">
+
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>{{ item|bd:"description" }}
+                            <small class="misp_rashut">({{ item.misp_rashut }})
+                            </small>
+                        </h2>
                     </div>
-                    <!-- if last column in row -->
-                    {% if forloop.counter|divisibleby:"6" and not forloop.last %}
+                    <div class="card-text">
+                        <div class="container">
+                            <div class="row">
+                                {% for p in item.pictures.all|slice:":5" %}
+                                    <div class="col-2 gallery-item">
+                                        <a href="{% url 'main:detail' item.id %}">
+                                            <div class="frame">
+                                                <img src="{{ p.picture.url }}">
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                                <div class="col-2 gallery-item">
+                                    <div class="frame next">
+                                        <a href="{% url 'main:detail' item.id %}"
+                                           class="">
+                                            {{ item.pictures.count }} {% trans "Pictures" %}
+                                            &raquo;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row">
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+                    </div>
+                </div>
             </div>
+        {% endfor %}
     </div>
-    <div class="container">
-        <h4>{% trans 'Details' %}</h4>
-        <div class="row">
-            <div class="col-3">
-                <div class="bold">{% trans 'Motsa' %}: {{ mosaic.site_id }} </div>
-                <div class="bold">{% trans 'Title' %}: {{ mosaic|bd:'title' }} </div>
-                <div class="bold">{% trans 'Origin' %}: {{ mosaic|bd:'origin' }} </div>
-                {#                <div class="bold">: {{ mosaic. }} </div>#}
-                {#                <div class="bold">: {{ mosaic. }} </div>#}
-            </div>
-            <div class="col-3">
-                <div class="bold">{% trans 'Story' %}: {{ mosaic|bd:'story' }} </div>
-                <div class="bold">{% trans 'Period' %}: {{ mosaic.get_period_display }} </div>
-            </div>
-        </div>
-    </div>
-    <br><br>
-    {% if mosaic.video_id %}
-        <div class="container">
-            <div class="embed-responsive embed-responsive-16by9 mb-5">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ mosaic.video_id }}"
-                        frameborder="0"
-                        allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
-        </div>
-    {% endif %}
 {% endblock %}

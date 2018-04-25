@@ -36,7 +36,20 @@ class MosaicItemAdmin(admin.ModelAdmin):
 
 
 class PictureAdmin(admin.ModelAdmin):
-    list_display = ('site_id', 'mosaic', 'is_cover', 'image_tag', 'negative_id')
+    list_display = (
+        'site_id',
+        'mosaic',
+        'is_cover',
+        'taken_date',
+        'taken_at',
+        'image_tag',
+        'picture_type',
+        'negative_id',
+        'photographer_name_he',
+        'photographer_name_en',
+        'comments_he',
+        'comments_en',
+    )
 
     # fields = ('image_tag',)
     # readonly_fields = ('image_tag',)

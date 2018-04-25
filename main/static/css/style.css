@@ -598,6 +598,15 @@ header div.hero h1 {
     box-shadow: 0 1px 10px #666;
 }
 
+.gallery-item .next {
+    background: #DDD;
+}
+
+.gallery-item .next a {
+    font-size: 1.4rem;
+    padding: 10px;
+}
+
 .frame img {
     flex-shrink: 0;
     min-height: 100%;

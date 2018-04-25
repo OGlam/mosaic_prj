@@ -178,7 +178,7 @@ def create_db():
 @task
 def create_media_folder():
     run(f'mkdir -p {env.media_path}')
-    sudo(f'chown -R www-data {env.media_path}')
+    sudo(f'chown -Rv www-data {env.media_path}')
 
 
 @task
@@ -313,7 +313,7 @@ def make_backup():
     run('mkdir -p {}'.format(env.backup_dir))
     fullpath = env.backup_dir + filename
     run('sudo -u postgres pg_dump --no-acl --no-owner {} | gzip > {}'.format(
-        env.app_name,
+        'mosaic',
         fullpath))
     return fullpath
 

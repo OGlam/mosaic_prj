@@ -1,9 +1,7 @@
-import os
-from uuid import uuid4
-
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
@@ -84,44 +82,66 @@ class ArchaeologicalContext(object):
 
 
 class TagCategory(models.Model):
-    tag_category_he = models.CharField(_('Tag category hebrew'), max_length=100)
-    tag_category_en = models.CharField(_('Tag category english'), max_length=100)
+    tag_category_he = models.CharField(_('Tag category hebrew'),
+                                       max_length=100)
+    tag_category_en = models.CharField(_('Tag category english'),
+                                       max_length=100)
 
 
 class Tag(models.Model):
     tag_he = models.CharField(_('Tag hebrew'), max_length=100)
     tag_en = models.CharField(_('Tag english'), max_length=100)
-    tag_category = models.ForeignKey(TagCategory, verbose_name=_('Tag category'), on_delete=models.CASCADE,
-                                     related_name='tags', blank=True, null=True)
+    tag_category = models.ForeignKey(TagCategory,
+                                     verbose_name=_('Tag category'),
+                                     on_delete=models.CASCADE,
+                                     related_name='tags', blank=True,
+                                     null=True)
     featured = models.BooleanField(_('Is featured?'), default=True)
 
     def __str__(self):
         return self.tag_he if settings.LANGUAGE_CODE == 'he' else self.tag_en
 
+    def get_absolute_url(self):
+        return reverse("main:subject", args=(self.id,))
+
     def get_sites(self):
-        return MosaicSite.objects.filter(id__in=[x.mosaic_site_id for x in self.mosaic_items.all().distinct()])
+        return MosaicSite.objects.filter(id__in=[x.mosaic_site_id for x in
+                                                 self.mosaic_items.all().distinct()])
 
     def get_random_image(self):
-        mosaic_picture = MosaicPicture.objects.filter(tags=self.id).order_by('?').first()
+        mosaic_picture = MosaicPicture.objects.filter(tags=self.id).order_by(
+            '?').first()
         if mosaic_picture:
             if mosaic_picture.picture:
                 return mosaic_picture.picture.url
         return f"{settings.STATIC_URL}images/empty-image.png"
 
+    def a_picture(self):
+        qs1 = MosaicPicture.objects.filter(tags=self.id).order_by('?')
+        qs2 = MosaicPicture.objects.filter(mosaic__tags=self.id).order_by('?')
+        return qs1.first() or qs2.first()
+
 
 class MosaicSite(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
     site_id = models.CharField(_('Site ID'), max_length=200)  # MOTSA (3357/12)
-    title_he = models.CharField(_('Title hebrew'), max_length=200)  # Display name
-    title_en = models.CharField(_('Title english'), max_length=200)  # Display name
-    origin_he = models.CharField(_('Origin hebrew'), max_length=100)  # MOTSA (address)
-    origin_en = models.CharField(_('Origin english'), max_length=100)  # MOTSA (address)
+    title_he = models.CharField(_('Title hebrew'),
+                                max_length=200)  # Display name
+    title_en = models.CharField(_('Title english'),
+                                max_length=200)  # Display name
+    origin_he = models.CharField(_('Origin hebrew'),
+                                 max_length=100)  # MOTSA (address)
+    origin_en = models.CharField(_('Origin english'),
+                                 max_length=100)  # MOTSA (address)
     story_he = models.TextField(_('Story hebrew'), blank=True)
     story_en = models.TextField(_('Story english'), blank=True)
-    archaeological_context = models.CharField(_('Archaeological context'), max_length=50, blank=True,
+    archaeological_context = models.CharField(_('Archaeological context'),
+                                              max_length=50, blank=True,
                                               choices=ArchaeologicalContext.CHOICES)
-    period = models.CharField(_('Period'), max_length=50, blank=True, choices=Periods.CHOICES)
-    video_id = models.CharField(_('Youtube video ID'), max_length=50, blank=True)
+    period = models.CharField(_('Period'), max_length=50, blank=True,
+                              choices=Periods.CHOICES)
+    video_id = models.CharField(_('Youtube video ID'), max_length=50,
+                                blank=True)
     comments = models.TextField(_('Comments'), blank=True)
     featured = models.BooleanField(_('Is featured?'), default=False)
     latitude = models.FloatField(_('Latitude'), blank=True, null=True)
@@ -130,8 +150,12 @@ class MosaicSite(models.Model):
     def __str__(self):
         return f'[{self.site_id}] {self.title_he if settings.LANGUAGE_CODE == "he" else self.title_en}'
 
+    def get_absolute_url(self):
+        return reverse("main:site", args=(self.id,))
+
     def get_site_cover_image(self):
-        return self.get_site_pictures().filter(is_cover=True).order_by('?').first()
+        return self.get_site_pictures().filter(is_cover=True).order_by(
+            '?').first()
 
     def get_site_pictures(self):
         return MosaicPicture.objects.filter(mosaic__mosaic_site=self)
@@ -144,20 +168,29 @@ class MosaicSite(models.Model):
 
 class MosaicItem(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
-    mosaic_site = models.ForeignKey(MosaicSite, verbose_name=_('Mosaic site'), on_delete=models.CASCADE,
+    mosaic_site = models.ForeignKey(MosaicSite, verbose_name=_('Mosaic site'),
+                                    on_delete=models.CASCADE,
                                     related_name='items')
-    misp_rashut = models.CharField(verbose_name=_('Rashut number'), max_length=200)
+    misp_rashut = models.CharField(verbose_name=_('Rashut number'),
+                                   max_length=200)
     description_he = models.TextField(_('Description hebrew'), blank=True)
     description_en = models.TextField(_('Description english'), blank=True)
-    tags = models.ManyToManyField(Tag, verbose_name=_('Tags'), blank=True, related_name='mosaic_items')
-    length = models.DecimalField(_('Length'), max_digits=10, decimal_places=4, blank=True, null=True)
-    width = models.DecimalField(_('Width'), max_digits=10, decimal_places=4, blank=True, null=True)
-    area = models.DecimalField(_('Area'), max_digits=15, decimal_places=2, blank=True, null=True)
+    tags = models.ManyToManyField(Tag, verbose_name=_('Tags'), blank=True,
+                                  related_name='mosaic_items')
+    length = models.DecimalField(_('Length'), max_digits=10, decimal_places=4,
+                                 blank=True, null=True)
+    width = models.DecimalField(_('Width'), max_digits=10, decimal_places=4,
+                                blank=True, null=True)
+    area = models.DecimalField(_('Area'), max_digits=15, decimal_places=2,
+                               blank=True, null=True)
     rishayon = models.CharField(_('Rishayon'), max_length=50, blank=True)
-    materials = ArrayField(models.CharField(_('Material'), max_length=50, choices=Materials.CHOICES),
+    materials = ArrayField(models.CharField(_('Material'), max_length=50,
+                                            choices=Materials.CHOICES),
                            blank=True, null=True)
-    year = models.CharField(_('Year'), max_length=200, blank=True)  # RISHAYON (/1972)
-    displayed_at = models.CharField(_('Displayed at'), max_length=200, blank=True)
+    year = models.CharField(_('Year'), max_length=200,
+                            blank=True)  # RISHAYON (/1972)
+    displayed_at = models.CharField(_('Displayed at'), max_length=200,
+                                    blank=True)
     bibliography_he = models.TextField(_('Bibliography hebrew'), blank=True)
     bibliography_en = models.TextField(_('Bibliography english'), blank=True)
 
@@ -167,11 +200,15 @@ class MosaicItem(models.Model):
     class Meta:
         ordering = ['misp_rashut']
 
+    def get_absolute_url(self):
+        return reverse("main:detail", args=(self.id,))
+
     def get_materials(self):
         return ",".join(self.materials)
 
     def get_highest_cover(self):
-        res = self.pictures.filter(is_cover=True).order_by('order_priority').first()
+        res = self.pictures.filter(is_cover=True).order_by(
+            'order_priority').first()
         if res:
             return res.picture.url
         return '{}images/empty-image.png'.format(settings.STATIC_URL)
@@ -179,16 +216,22 @@ class MosaicItem(models.Model):
 
 class MosaicPicture(models.Model):
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
-    mosaic = models.ForeignKey(MosaicItem, verbose_name=_('Mosaic'), on_delete=models.CASCADE, related_name='pictures')
-    tags = models.ManyToManyField(Tag, verbose_name=_('Tags'), blank=True, related_name='mosaic_pictures')
+    mosaic = models.ForeignKey(MosaicItem, verbose_name=_('Mosaic'),
+                               on_delete=models.CASCADE,
+                               related_name='pictures')
+    tags = models.ManyToManyField(Tag, verbose_name=_('Tags'), blank=True,
+                                  related_name='mosaic_pictures')
     is_cover = models.BooleanField(_('Cover image'), default=False)
     order_priority = models.IntegerField(_('Order priority'), default=100)
     picture = models.ImageField(_('Picture'), upload_to=mosaic_dir)
     negative_id = models.CharField(_('Negative ID'), max_length=50)
-    photographer_name_he = models.CharField(_('Photographer name hebrew'), max_length=200, blank=True)
-    photographer_name_en = models.CharField(_('Photographer name english'), max_length=200, blank=True)
+    photographer_name_he = models.CharField(_('Photographer name hebrew'),
+                                            max_length=200, blank=True)
+    photographer_name_en = models.CharField(_('Photographer name english'),
+                                            max_length=200, blank=True)
     taken_at = models.CharField(_('Taken at'), max_length=200, blank=True)
-    picture_type = models.CharField(_('Picture type'), max_length=50, choices=PictureType.CHOICES, blank=True)
+    picture_type = models.CharField(_('Picture type'), max_length=50,
+                                    choices=PictureType.CHOICES, blank=True)
     taken_date = models.DateField(_('Taken date'), blank=True, null=True)
     comments_he = models.TextField(_('Comments hebrew'), blank=True)
     comments_en = models.TextField(_('Comments english'), blank=True)
@@ -209,21 +252,30 @@ class MosaicPicture(models.Model):
 
     def image_tag(self):
         if self.picture:
-            return mark_safe('<img src="{}" height="100" width="auto" />'.format(self.picture.url))
+            return mark_safe(
+                '<img src="{}" height="100" width="auto" />'.format(
+                    self.picture.url))
         else:
-            return mark_safe('<img src="/static/images/empty-image.png" height="100" width="auto" />')
+            return mark_safe(
+                '<img src="/static/images/empty-image.png" height="100" width="auto" />')
 
     image_tag.short_description = 'Image'
 
 
 class GeneralSettings(SingletonModel):
     logo = models.FileField(_('Logo'), blank=True, null=True)
-    site_name_he = models.CharField(verbose_name=_('Site name Hebrew'), max_length=255, blank=True)
-    site_name_en = models.CharField(verbose_name=_('Site name English'), max_length=255, blank=True)
-    admin_email_from = models.CharField(verbose_name=_('Admin email from'), max_length=255, blank=True)
-    admin_email_to = models.EmailField(verbose_name=_('Admin email to'), max_length=255, blank=True)
-    about_he = models.TextField(verbose_name=_('About Hebrew'), blank=True, null=True)
-    about_en = models.TextField(verbose_name=_('About English'), blank=True, null=True)
+    site_name_he = models.CharField(verbose_name=_('Site name Hebrew'),
+                                    max_length=255, blank=True)
+    site_name_en = models.CharField(verbose_name=_('Site name English'),
+                                    max_length=255, blank=True)
+    admin_email_from = models.CharField(verbose_name=_('Admin email from'),
+                                        max_length=255, blank=True)
+    admin_email_to = models.EmailField(verbose_name=_('Admin email to'),
+                                       max_length=255, blank=True)
+    about_he = models.TextField(verbose_name=_('About Hebrew'), blank=True,
+                                null=True)
+    about_en = models.TextField(verbose_name=_('About English'), blank=True,
+                                null=True)
 
     def __str__(self):
         return u"{}".format(_('General settings'))

@@ -356,25 +356,15 @@ class SiteListView(IAAUIMixin, ListView):
 
 
 class SubjectsView(IAAUIMixin, ListView):
-    model = MosaicSite
+    model = Tag
     template_name = 'main/subjects.html'
-    context_object_name = 'tags'
     page_name = 'subjects'
     page_title = _('Subjects')
 
     def get_queryset(self):
         lang = translation.get_language()[:2]
-        tags_list = MosaicPicture.objects.filter(
-            tags__isnull=False).values_list('tags', flat=True)
         order_by = 'tag_he' if lang == 'he' else 'tag_en'
-        tags = Tag.objects.filter(id__in=[t for t in tags_list]).order_by(
-            order_by)
-        d = OrderedDict()
-        for tag in tags:
-            d[tag] = [x for x in
-                      MosaicPicture.objects.filter(tags__in=[tag.id])]
-
-        return d
+        return super().get_queryset().order_by(order_by).exclude(mosaic_items=None)
 
     def get_context_data(self, **kwargs):
         d = super().get_context_data(**kwargs)
@@ -397,9 +387,8 @@ class PeriodsView(IAAUIMixin, ListView):
 
 
 class SubjectView(IAAUIMixin, ListView):
-    model = MosaicPicture
+    model = MosaicItem
     template_name = 'main/subject.html'
-    context_object_name = 'pictures'
     page_name = 'subject'
     page_title = _('Subject')
 
