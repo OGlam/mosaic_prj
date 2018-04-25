@@ -25,12 +25,17 @@ env.project = "psifas"
 env.code_dir = f"/home/sysop/{env.project}"
 env.clone_url = "https://github.com/yaniv14/mosaic_prj.git"
 
+env.static_path = f"{env.code_dir}/collected-static/"
+env.media_path = f"{env.code_dir}/media/"
+
 env.venv_name = env.project
 env.venvs = f"/home/sysop/.virtualenvs/"
 env.venv_path = f"{env.venvs}{env.venv_name}/"
 env.venv_command = f"source {env.venv_path}/bin/activate"
 
 env.backup_dir = f"{env.code_dir}/backup/"
+
+env.uwsgi_socket = f"/run/uwsgi/app/{env.app_name}/socket"
 
 AUTO_RENEW_SCRIPT = '/home/certbot/auto-renew.sh'
 
@@ -170,6 +175,11 @@ def create_db():
     with virtualenv():
         run("./manage.py sqlcreate | psql", pty=False)
 
+@task
+def create_media_folder():
+    run(f'mkdir -p {env.media_path}')
+    sudo(f'chown -R www-data {env.media_path}')
+
 
 @task
 def migrate():
@@ -235,14 +245,16 @@ server {{
         alias {env.static_path};
     }}
 
+    location /media/ {{
+        alias {env.media_path};
+    }}
+
     location / {{
         uwsgi_pass  unix://{env.uwsgi_socket};
         include     uwsgi_params;
     }}
 }}"""
 
-env.uwsgi_socket = f"/run/uwsgi/app/{env.app_name}/socket"
-env.static_path = f"{env.code_dir}/collected-static/"
 
 
 @task
