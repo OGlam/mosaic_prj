@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'users.apps.UsersConfig',
     'django_extensions',
-    'autofixture',
 ]
 
 MIDDLEWARE = [
