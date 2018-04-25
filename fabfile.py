@@ -12,6 +12,7 @@ from pathlib import Path
 from fabric import operations
 from fabric.api import *
 from fabric.contrib.console import confirm
+from fabfile_postfix import setup_postfix, setup_opendkim, postfix_log
 
 env.user = "sysop"
 env.hosts = ["psifas.oglam.hasadna.org.il"]
@@ -159,7 +160,7 @@ def createsuperuser():
 @task
 def git_pull():
     with virtualenv():
-        run("git pull nonzero master --ff-only", pty=False)
+        run("git pull --ff-only", pty=False)
 
 
 @task
