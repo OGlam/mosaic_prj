@@ -1,3 +1,11 @@
+/*
+    change #212121
+     with #212121
+*/
+h5 {
+  --caption-font-size: 1.125rem;
+}
+
 /* Generic */
 .text-white {
     color: #fff;
@@ -61,7 +69,7 @@
 }
 
 .carousel-indicators .active {
-    background-color: #e7685a;
+    background-color: #212121;
 }
 
 /* Header */
@@ -235,8 +243,8 @@ header {
 .sub-featured .card-title {
     font-size: 2.5rem;
     line-height: 5rem;
-    border-bottom: 0.4rem solid #999;
-    color: #444;
+    border-bottom: 0.5rem solid #212121;
+    color: #212121;
     margin-bottom: 0;
 }
 
@@ -253,8 +261,8 @@ header {
 
 .subjects .tag-item a span {
     display: block;
-    width: 201px;
-    height: 160px;
+    width: 200px;
+    height: 170px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -269,7 +277,11 @@ header {
     background-size: cover;
 }
 
-.subjects .tag-item a h4 {
+.carouselCaptionBox {
+    padding: 12px;
+    background-color: #fff;
+}
+.subjects .tag-item a h5 {
     margin: 0;
     text-align: center;
     background-color: #fff;
@@ -295,7 +307,7 @@ header {
 }
 
 .white-card-text {
-    color: #e7685a;
+    color: #212121;
     background-color: #fff;
     margin: 0;
     padding-bottom: 5px;
@@ -307,6 +319,7 @@ header {
 
 .carousel-inner {
     max-height: 500px;
+    max-width: 500px;
 }
 
 .carousel-caption {
@@ -317,7 +330,7 @@ header {
 .carousel-control-next-icon {
     height: 100px;
     width: 60px;
-    color: #e7685a;
+    color: #212121;
 }
 
 .carousel-caption h5 {
@@ -546,7 +559,7 @@ a.btn:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden
+    overflow: hidden;
 }
 
 #page header img {
@@ -636,10 +649,10 @@ header div.hero h1 {
     margin: 0;
     text-align: center;
     background-color: #fff;
-    color: #e7685a !important;
+    color: #212121 !important;
     padding: 0.6rem 0;
     font-weight: bold;
-    font-size: 1.125rem;
+    font-size: var(--caption-font-size);
 }
 
 .cover-img {

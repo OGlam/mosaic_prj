@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 {% for site in popular_sites_sub %}
-                    <div class="col-6">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                         <a href="{% url 'main:site' site.mosaic_site.id %}">
                             <div class="card">
                                 <div class="cover-img" style="background-image: url({{ site.get_highest_cover }});"></div>
@@ -34,12 +34,12 @@
             {% if archaeological_context %}
                 <div class="row">
                     {% for arc_context in archaeological_context %}
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                             <div class="card">
                                 <span style="background-image: url({{ arc_context.get_image }});"></span>
-                                <h4 class="gray-card-text text-center">
+                                <h5 class="gray-card-text text-center">
                                     {{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}
-                                </h4>
+                                </h5>
                             </div>
                         </div>
                     {% endfor %}
@@ -74,7 +74,7 @@
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1" data-marker="{{ forloop.counter0 }}">
                                     {{ site|bd:'title' }}
-                                </h5>
+                                </h4>
                             </div>
                             <img class="ml-3" src="{{ site.get_site_cover_image_url }}" alt="{{ site|bd:'title' }}">
                         </div>
