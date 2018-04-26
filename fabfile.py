@@ -526,4 +526,18 @@ def fetch_uploads():
     # print(cmd)
     local(cmd)
 
+@task
+def setup_swap():
+    size = "1G"
+    swapfile = f"/swapfile"
+    sudo(f"fallocate -l {size} {swapfile}")
+    sudo(f"chmod 600 {swapfile}")
+    sudo(f"mkswap {swapfile}")
+    sudo(f"swapon {swapfile}")
+    sudo(f"swapon --show")
+    run(f"echo '{swapfile} none swap sw 0 0' | sudo tee -a /etc/fstab")
+    sudo(f"sysctl vm.swappiness=10")
+    run(f"echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf")
+
+
 
