@@ -20,9 +20,20 @@
         {% comment %}<link href="{% static 'vendors/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet">{% endcomment %}
         <link href="{% static 'vendors/OwlCarousel2-2.2.1/dist/assets/owl.carousel.min.css' %}" rel="stylesheet">
         {% block extrahead %}{% endblock %}
-        <link href="{% static 'css/bootstrap' %}{% if LANGUAGE_BIDI %}_rtl{% endif %}.css" rel="stylesheet">
+        {% if LANGUAGE_BIDI %}
+            <link href="{% static 'css/bootstrap_rtl.css' %}" rel="stylesheet">
+        {% else %}
+            <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+        {% endif %}
+
         <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="{% static 'css/' %}{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}.css" rel="stylesheet">
+
+        {% if LANGUAGE_BIDI %}
+            <link href="{% static 'css/rtl.css' %}" rel="stylesheet">
+        {% else %}
+            <link href="{% static 'css/ltr.css' %}" rel="stylesheet">
+        {% endif %}
+
         {% block extracss %}{% endblock %}
         <script defer src="{% static 'vendors/fontawesome-free-5.0.8/svg-with-js/js/fontawesome-all.js' %}"></script>
     </head>
