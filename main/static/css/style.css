@@ -684,6 +684,7 @@ header div.hero h1 {
     vertical-align: middle;
     text-align: center;
     margin: 0;
+    text-shadow: 0 3px #000;
 }
 
 /* Responsive */

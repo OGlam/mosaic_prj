@@ -4,7 +4,7 @@
 {% block main %}
     <div id="page">
         <header>
-            <img src="{{ mosaic.get_site_cover_image_url }}">
+            <img src="{{ mosaic.get_site_cover_image.huge_thumb.url }}">
             <div class="hero">
                 <h1>
                     {{ mosaic|bd:'title' }}
@@ -49,7 +49,7 @@
                         <div class="col-2 gallery-item">
                             <a href="{% url 'main:detail' item.id %}">
                                 <div class="frame">
-                                    <img src="{{ p.picture.url }}">
+                                    <img src="{{ p.medium_thumb.url }}">
                                 </div>
                             </a>
                         </div>

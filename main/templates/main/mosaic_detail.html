@@ -1,10 +1,10 @@
 {% extends 'main/base.html' %}
-{% load static mosaic i18n %}
+{% load static mosaic i18n humanize %}
 
 {% block main %}
     <div class="container-fluid">
     <div class="cover-image"
-         style="background-image: url({{ mosaic.get_highest_cover }})">
+         style="background-image: url({{ mosaic.get_highest_cover.huge_thumb.url }})">
         <h1>
             {% bidi mosaic.mosaic_site 'title' %}
         </h1>
@@ -59,8 +59,8 @@
     <div class="card-columns">
         {% for p in mosaic.pictures.all %}
             <div class="card mosaic-picture">
-                <a href="{{ p.picture.url }}" data-toggle="lightbox" data-gallery="1">
-                    <img class="card-img-top" src="{{ p.picture.url }}"
+                <a href="{{ p.huge_thumb.url }}" data-toggle="lightbox" data-gallery="1">
+                    <img class="card-img-top" src="{{ p.large_thumb.url }}"
                          alt="Card image cap"></a>
                 <div class="card-body">
                     <p class="card-text">
@@ -69,6 +69,7 @@
                                class="badge badge-primary">{{ t|bd:'tag' }}</a>
                         {% endfor %}
                         <span class="badge badge-secondary">{{ p.get_picture_type_display }}</span>
+                        <a class="badge badge-dark" href="{{ p.picture.url }}" title="{{ p.picture.size|filesizeformat }}"><span class="fa fa-download"></span></a>
                     </p>
                 </div>
                 <div class="card-footer">

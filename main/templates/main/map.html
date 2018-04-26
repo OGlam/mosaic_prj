@@ -19,7 +19,7 @@
                                     </h5>
                                 </div>
                                 <img class="ml-3"
-                                     src="{{ site.get_site_cover_image_url }}"
+                                     src="{{ site.get_site_cover_image.small_thumb.url }}"
                                      alt="{{ site|bd:'title' }}">
                             </div>
                         {% endfor %}
@@ -325,7 +325,7 @@
                 '<h3 id="firstHeading" class="firstHeading">' + site[0] + '</h3>' +
                 '<div id="bodyContent">' +
                 '<p class="text-center"><a href="' + siteUrl.replace('0', site[3]) + '">' +
-                'Go to site</a> ' +
+                '{% trans 'Go to site' %}</a> ' +
                 '</div>' +
                 '</div>';
         }
@@ -358,24 +358,26 @@
                 google.maps.event.trigger(map, "resize");
                 map.panTo(siteMarkers[$(this).attr('data-marker')].getPosition());
             });
-            {#$(".site-map-item img").on('load', e => {#}
-            {#    const img = e.currentTarget;#}
-            {#    const canvas = document.createElement('canvas');#}
-            {#    canvas.width = img.width * 3;#}
-            {##}
-            {#    const ctx = canvas.getContext("2d");#}
-            {#    canvas.height = canvas.width * (img.height / img.width);#}
-            {#    console.log(img.width, img.height, canvas.width, canvas.height);#}
-            {##}
-            {#    ctx.drawImage(img,#}
-            {#        0, 0, img.width, img.height,#}
-            {#        0, 0, canvas.width, canvas.height);#}
-            {##}
-            {#    const s = canvas.toDataURL();#}
-            {#    const i = $(img).parent().find("h5").data('marker');#}
-            {#    console.log(s.length);#}
-            {#    siteMarkers[i].setIcon(s);#}
-            {# }); #}
+            $(".site-map-item img").on('load', e => {
+                const img = e.currentTarget;
+                {#const canvas = document.createElement('canvas');#}
+                {#canvas.width = img.width * 3;#}
+                {##}
+                {#const ctx = canvas.getContext("2d");#}
+                {#canvas.height = canvas.width * (img.height / img.width);#}
+                {#console.log(img.width, img.height, canvas.width, canvas.height);#}
+                {##}
+                {#ctx.drawImage(img,#}
+                {#    0, 0, img.width, img.height,#}
+                {#    0, 0, canvas.width, canvas.height);#}
+                {##}
+                {#const s = canvas.toDataURL();#}
+                {#const i = $(img).parent().find("h5").data('marker');#}
+                {#console.log(s.length);#}
+                {#siteMarkers[i].setIcon(s);#}
+                const i = $(img).parent().find("h5").data('marker');
+                siteMarkers[i].setIcon(img.src);
+             });
 
         }
     </script>

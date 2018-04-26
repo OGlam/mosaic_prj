@@ -17,7 +17,7 @@
                 <a href="{{ object.get_absolute_url }}">
                     {{ object.items.first }}
                     <img class="card-img-top"
-                         src="{{ object.a_picture.picture.url }}">
+                         src="{{ object.a_picture.medium_thumb.url }}">
                 </a>
             </div>
         {% endfor %}

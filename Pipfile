@@ -9,6 +9,7 @@ django-extensions = "*"
 Pillow = "*"
 "psycopg2-binary" = "*"
 ipython = "*"
+django-imagekit = "*"
 
 [dev-packages]
 #django-autofixture = "*"

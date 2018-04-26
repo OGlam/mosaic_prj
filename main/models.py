@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
+from imagekit.models import ImageSpecField
+from pilkit.processors import ResizeToFill, ResizeToFit, SmartResize
 
 from main.solo_models import SingletonModel
 
@@ -207,11 +209,8 @@ class MosaicItem(models.Model):
         return ",".join(self.materials)
 
     def get_highest_cover(self):
-        res = self.pictures.filter(is_cover=True).order_by(
+        return self.pictures.filter(is_cover=True).order_by(
             'order_priority').first()
-        if res:
-            return res.picture.url
-        return '{}images/empty-image.png'.format(settings.STATIC_URL)
 
 
 class MosaicPicture(models.Model):
@@ -235,6 +234,29 @@ class MosaicPicture(models.Model):
     taken_date = models.DateField(_('Taken date'), blank=True, null=True)
     comments_he = models.TextField(_('Comments hebrew'), blank=True)
     comments_en = models.TextField(_('Comments english'), blank=True)
+
+    small_thumb = ImageSpecField(source='picture',
+                                 processors=[SmartResize(100, 100)],
+                                 format='JPEG',
+                                 options={'quality': 60})
+
+    medium_thumb = ImageSpecField(source='picture',
+                                  processors=[
+                                      ResizeToFit(300, 300, upscale=False)],
+                                  format='JPEG',
+                                  options={'quality': 60})
+
+    large_thumb = ImageSpecField(source='picture',
+                                 processors=[
+                                     ResizeToFit(600, 600, upscale=False)],
+                                 format='JPEG',
+                                 options={'quality': 60})
+
+    huge_thumb = ImageSpecField(source='picture',
+                                 processors=[
+                                     ResizeToFit(1024, 1024, upscale=False)],
+                                 format='JPEG',
+                                 options={'quality': 75})
 
     def __str__(self):
         return self.negative_id
