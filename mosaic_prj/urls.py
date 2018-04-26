@@ -9,15 +9,7 @@ from django.views.i18n import JavaScriptCatalog
 from main import views
 from users import views as users_views
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-urlpatterns += i18n_patterns(
+urlpatterns = i18n_patterns(
     path('', views.HomeView.as_view(), name='home'),
     path('about/', views.AboutView.as_view(), name='about'),
     path('about-edit/', views.AboutEditView.as_view(), name='about_edit'),
@@ -26,6 +18,14 @@ urlpatterns += i18n_patterns(
     path('tags/', views.tags, name='tags'),
     path('account/', include('users.urls')),
     path('tag/<int:tagid>/', views.tag_page, name='tag-url'),
-    path('jsi18n/', JavaScriptCatalog.as_view(packages=['main']), name='javascript-catalog'),
+    path('jsi18n/', JavaScriptCatalog.as_view(packages=['main']),
+         name='javascript-catalog'),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('admin/', admin.site.urls),
 )
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
