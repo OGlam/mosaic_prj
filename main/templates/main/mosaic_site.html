@@ -15,6 +15,9 @@
     <div class="container">
         <ul class="list-inline">
             <li class="list-inline-item border p-1">
+                <b>{{ mosaic.get_archaeological_context_display }}</b>
+            </li>
+            <li class="list-inline-item border p-1">
                 <b>{% trans 'Motsa' %}</b>: {{ mosaic.site_id }} </li>
             <li class="list-inline-item border p-1">
                 <b>{% trans 'Title' %}</b>: {{ mosaic|bd:'title' }} </li>
