@@ -78,6 +78,25 @@ class HomeView(IAAUIMixin, TemplateView):
                                                      longitude__isnull=False)
         return context
 
+class MapView(IAAUIMixin, TemplateView):
+    template_name = 'main/map.html'
+    page_title = _('Map')
+    page_name = 'map'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        lang = translation.get_language()[:2]
+        context['map_lang'] = 'iw' if lang == 'he' else 'en'
+        context['map_markers'] = [
+            [u'{}'.format(getattr(x, "title_" + lang)), x.latitude,
+             x.longitude, x.id] for x in
+            MosaicSite.objects.filter(latitude__isnull=False,
+                                      longitude__isnull=False)
+        ]
+        context['sites'] = MosaicSite.objects.filter(latitude__isnull=False,
+                                                     longitude__isnull=False)
+        return context
+
 
 class AboutView(IAAUIMixin, TemplateView):
     template_name = 'main/about.html'

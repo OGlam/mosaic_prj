@@ -1,0 +1,382 @@
+{% extends 'main/base.html' %}
+{% load static i18n mosaic %}
+
+{% block main %}
+    <div class="container">
+        <h1>
+            {% trans "Map" %}
+        </h1>
+        <div class="map bg-white col-12">
+            <div class="row">
+                <div class="col-sm-3 p-0">
+                    <ul class="list-unstyled">
+                        {% for site in sites %}
+                            <div class="media site-map-item">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1"
+                                        data-marker="{{ forloop.counter0 }}">
+                                        {{ site|bd:'title' }}
+                                    </h5>
+                                </div>
+                                <img class="ml-3"
+                                     src="{{ site.get_site_cover_image_url }}"
+                                     alt="{{ site|bd:'title' }}">
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-sm-9 p-0">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB62OF89NPnsuYWKkt6E1Y4gVz8y7hlm1I&region=il&language={{ map_lang }}&callback=initMap"></script>
+    {% comment %}
+    <script>
+        let navText = (is_rtl) ? [
+            '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
+            '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>'
+        ] : [
+            '<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>',
+            '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
+        ];
+        $(function () {
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                center: true,
+                rtl: is_rtl,
+                dots: false,
+                navText: navText,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    768: {
+                        items: 3
+                    },
+                    1200: {
+                        items: 5
+                    }
+                }
+            })
+        })
+    </script>
+    {% endcomment %}
+    <script>
+        const STYLE = [
+            {
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#bdbdbd"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.neighborhood",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.business",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dadada"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#c9c9c9"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            }
+        ];
+        const markers = {{ map_markers|safe }};
+        const siteUrl = "{% url 'main:site' 0 %}";
+
+        function siteTitle(site) {
+            return '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h3 id="firstHeading" class="firstHeading">' + site[0] + '</h3>' +
+                '<div id="bodyContent">' +
+                '<p class="text-center"><a href="' + siteUrl.replace('0', site[3]) + '">' +
+                'Go to site</a> ' +
+                '</div>' +
+                '</div>';
+        }
+
+        function initMap() {
+            let siteMarkers = [];
+            let IAABase = {lat: 31.7843505, lng: 35.2358804};
+            let map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 6,
+                center: IAABase,
+                styles: STYLE,
+            });
+            for (let i = 0; i < markers.length; i++) {
+                let site = markers[i];
+                let infowindow = new google.maps.InfoWindow({
+                    content: siteTitle(site)
+                });
+                let marker = new google.maps.Marker({
+                    position: {lat: site[1], lng: site[2]},
+                    title: site[0],
+                    map: map
+                });
+                siteMarkers.push(marker);
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                });
+            }
+            $('.site-map-item h5').on('click', function () {
+                google.maps.event.trigger(siteMarkers[$(this).attr('data-marker')], 'click');
+                google.maps.event.trigger(map, "resize");
+                map.panTo(siteMarkers[$(this).attr('data-marker')].getPosition());
+            });
+            {#$(".site-map-item img").on('load', e => {#}
+            {#    const img = e.currentTarget;#}
+            {#    const canvas = document.createElement('canvas');#}
+            {#    canvas.width = img.width * 3;#}
+            {##}
+            {#    const ctx = canvas.getContext("2d");#}
+            {#    canvas.height = canvas.width * (img.height / img.width);#}
+            {#    console.log(img.width, img.height, canvas.width, canvas.height);#}
+            {##}
+            {#    ctx.drawImage(img,#}
+            {#        0, 0, img.width, img.height,#}
+            {#        0, 0, canvas.width, canvas.height);#}
+            {##}
+            {#    const s = canvas.toDataURL();#}
+            {#    const i = $(img).parent().find("h5").data('marker');#}
+            {#    console.log(s.length);#}
+            {#    siteMarkers[i].setIcon(s);#}
+            {# }); #}
+
+        }
+    </script>
+{% endblock %}

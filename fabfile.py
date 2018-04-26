@@ -516,3 +516,14 @@ def setup_certbot_crontab():
 def nginx_log():
     sudo('tail -f /var/log/nginx/*')
     # sudo('tail -n 200 /var/log/nginx/error.log  /var/log/nginx/access.log')
+
+@task
+def fetch_uploads():
+    """Fetch uploads folder from target server."""
+    server = "{}@{}".format(env.user, env.host)
+
+    cmd = f'rsync -aP {server}:{env.media_path} media/'
+    # print(cmd)
+    local(cmd)
+
+

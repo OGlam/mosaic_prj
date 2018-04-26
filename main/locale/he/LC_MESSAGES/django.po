@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-26 00:43+0300\n"
-"PO-Revision-Date: 2018-04-26 00:45+0300\n"
+"POT-Creation-Date: 2018-04-26 03:51+0300\n"
+"PO-Revision-Date: 2018-04-26 03:51+0300\n"
 "Last-Translator: Yaniv Mirel <yanivmirel@gmail.com>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -313,14 +313,8 @@ msgstr "הקשר ארכיאולוגי"
 msgid "Subjects"
 msgstr "נושאים"
 
-msgid "Site Album"
-msgstr "אלבום אתר"
-
-msgid "Details"
-msgstr "פרטים"
-
-msgid "Story"
-msgstr "סיפור"
+msgid "Map"
+msgstr "מפה"
 
 msgid "IAA ID"
 msgstr "מזהה רשות העתיקות"
@@ -330,9 +324,6 @@ msgstr "מידות"
 
 msgid "Location Found"
 msgstr "מיקום שנמצא"
-
-msgid "Address"
-msgstr "כתובת"
 
 msgid "Bibliography"
 msgstr "בִּיבּלִיוֹגְרָפִיָה"
@@ -370,8 +361,8 @@ msgstr "כותרת"
 msgid "Origin"
 msgstr "מקור"
 
-msgid "See all"
-msgstr "לצפיה בכל"
+msgid "Story"
+msgstr "סיפור"
 
 msgid "Pictures"
 msgstr "תמונות"
@@ -461,6 +452,18 @@ msgstr "תקופות"
 
 msgid "Subject"
 msgstr "נושאים"
+
+#~ msgid "Site Album"
+#~ msgstr "אלבום אתר"
+
+#~ msgid "Details"
+#~ msgstr "פרטים"
+
+#~ msgid "Address"
+#~ msgstr "כתובת"
+
+#~ msgid "See all"
+#~ msgstr "לצפיה בכל"
 
 #~ msgid "Search"
 #~ msgstr "חיפוש"

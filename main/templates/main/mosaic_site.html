@@ -40,38 +40,29 @@
         {% endif %}
 
         {% for item in mosaic.items.all %}
-            <div class="card mb-3">
-
-                <div class="card-body">
-                    <div class="card-title">
-                        <h2>{{ item|bd:"description" }}
-                            <small class="misp_rashut">({{ item.misp_rashut }})
-                            </small>
-                        </h2>
-                    </div>
-                    <div class="card-text">
-                        <div class="container">
-                            <div class="row">
-                                {% for p in item.pictures.all|slice:":5" %}
-                                    <div class="col-2 gallery-item">
-                                        <a href="{% url 'main:detail' item.id %}">
-                                            <div class="frame">
-                                                <img src="{{ p.picture.url }}">
-                                            </div>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                                <div class="col-2 gallery-item">
-                                    <div class="frame next">
-                                        <a href="{% url 'main:detail' item.id %}"
-                                           class="">
-                                            {{ item.pictures.count }} {% trans "Pictures" %}
-                                            &raquo;
-                                        </a>
-                                    </div>
+            <div>
+                <h3>
+                    {{ item|bd:"description" }}
+                </h3>
+                <div class="row">
+                    {% for p in item.pictures.all|slice:":5" %}
+                        <div class="col-2 gallery-item">
+                            <a href="{% url 'main:detail' item.id %}">
+                                <div class="frame">
+                                    <img src="{{ p.picture.url }}">
                                 </div>
-                            </div>
+                            </a>
                         </div>
+                    {% endfor %}
+                    <div class="col-2 gallery-item">
+                        <div class="frame next">
+                            <a href="{% url 'main:detail' item.id %}"
+                               class="">
+                                {{ item.pictures.count }} {% trans "Pictures" %}
+                                &raquo;
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>
