@@ -56,7 +56,7 @@ class HomeView(IAAUIMixin, TemplateView):
         #         tag.mosaic_pictures.values_list('id', flat=True))
         # context['tags'] = MosaicPicture.objects.filter(
         #     id__in=tag_pic_ids).order_by('?')[:5]
-        context['tags'] = tags.order_by('?')[:5]
+        context['tags'] = tags.exclude(mosaic_items=None).order_by('?')[:5]
         context['archaeological_context'] = [
             MosaicPicture.objects.filter(
                 mosaic__mosaic_site__archaeological_context=x[0]).exclude(
