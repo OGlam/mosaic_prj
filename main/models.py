@@ -253,10 +253,10 @@ class MosaicPicture(models.Model):
                                  options={'quality': 60})
 
     huge_thumb = ImageSpecField(source='picture',
-                                 processors=[
-                                     ResizeToFit(1024, 1024, upscale=False)],
-                                 format='JPEG',
-                                 options={'quality': 75})
+                                processors=[
+                                    ResizeToFit(1024, 1024, upscale=False)],
+                                format='JPEG',
+                                options={'quality': 75})
 
     def __str__(self):
         return self.negative_id
@@ -272,16 +272,11 @@ class MosaicPicture(models.Model):
     def get_random_tag(self):
         return self.tags.all().order_by('?').first()
 
+    @mark_safe
     def image_tag(self):
-        if self.picture:
-            return mark_safe(
-                '<img src="{}" height="100" width="auto" />'.format(
-                    self.picture.url))
-        else:
-            return mark_safe(
-                '<img src="/static/images/empty-image.png" height="100" width="auto" />')
+        return f'<img src="{self.small_thumb.url}" height="80" width="auto" />'
 
-    image_tag.short_description = 'Image'
+    image_tag.short_description = _('picture')
 
 
 class GeneralSettings(SingletonModel):
