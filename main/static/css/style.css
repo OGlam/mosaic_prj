@@ -718,8 +718,14 @@ footer .list-inline-item:not(:last-child)::after {
         top: -42px;
     }
 
+    .navbar-brand img {
+        margin: 0 !important;
+    }
+
     .banner-title {
         font-size: 2rem;
+        line-height: 2rem;
+        padding-top: 20px;
     }
 
     .home-tags .tag-item {
@@ -784,5 +790,18 @@ footer .list-inline-item:not(:last-child)::after {
 
     footer .list-inline-item:not(:last-child)::after {
         display: none !important;
+    }
+
+    .table-cel {
+        width: calc(50% - 1.2rem);
+    }
+
+    .table-cel .site_title {
+        max-width: 100%;
+    }
+
+    .table-cel .site_image {
+        width: 100%;
+        height: calc(50vw - 2rem);
     }
 }
