@@ -687,6 +687,26 @@ header div.hero h1 {
     text-shadow: 0 3px #000;
 }
 
+.footer {
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    margin-top: 1rem;
+}
+
+footer .list-inline-item:not(:last-child) {
+    position: relative;
+}
+
+footer .list-inline-item:not(:last-child)::after {
+    content: '';
+    height: 1rem;
+    width: 1px;
+    background-color: #ccc;
+    position: absolute;
+    top: 5px;
+    transform: rotate(25deg);
+}
+
 /* Responsive */
 @media only screen and (max-width: 767px) {
     #main-search-form {
@@ -696,5 +716,73 @@ header div.hero h1 {
     header .navbar-toggler {
         position: absolute;
         top: -42px;
+    }
+
+    .banner-title {
+        font-size: 2rem;
+    }
+
+    .home-tags .tag-item {
+        width: 100%;
+    }
+
+    .subjects .tag-item a h4 {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        border: 0;
+    }
+
+    .subjects .tag-item a {
+        display: block;
+        width: calc(100vw - 90px);
+        height: calc(100vw - 90px)
+    }
+
+    .subjects .tag-item a span {
+        width: calc(100vw - 60px);
+        height: calc(100vw - 90px);
+    }
+
+    header div.hero {
+        width: 100%;
+        top: 160px;
+        height: auto;
+        right: 0 !important;
+        left: 0 !important;
+    }
+
+    #page header h1 {
+        margin: 0;
+        font-size: 3em;
+    }
+
+    .list-inline-item:not(.footer-item) {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    .cover-image {
+        height: calc(100vw / 2);
+    }
+
+    .cover-image h1 {
+        line-height: calc(100vw / 2);
+    }
+
+    .badge {
+        padding: 0.25em 0.4em;
+        font-size: 0.8rem;
+        font-weight: 600;
+        line-height: 1rem;
+    }
+
+    footer .list-inline-item:not(:last-child) {
+        margin: 0 !important;
+        width: 100%;
+    }
+
+    footer .list-inline-item:not(:last-child)::after {
+        display: none !important;
     }
 }

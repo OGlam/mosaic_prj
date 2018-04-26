@@ -74,6 +74,31 @@
                 </li>
             {% endfor %}
             <div class="dropdown-divider"></div>
+            <li class="nav-item{% if page_name == 'home' %} active{% endif %} d-md-none">
+                <a class="nav-link" href="{% url 'home' %}">
+                    {% svg_icon 'about' 'menu_list_icon' True %} {% trans 'Home page' %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'sites' %} active{% endif %} d-md-none">
+                <a class="nav-link" href="{% url 'main:site_list' %}">
+                    {% svg_icon 'about' 'menu_list_icon' True %} {% trans 'Sites' %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'subjects' %} active{% endif %} d-md-none">
+                <a class="nav-link" href="{% url 'main:subjects' %}">
+                    {% svg_icon 'about' 'menu_list_icon' True %} {% trans 'Subjects' %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'periods' %} active{% endif %} d-md-none">
+                <a class="nav-link" href="{% url 'main:periods' %}">
+                    {% svg_icon 'about' 'menu_list_icon' True %} {% trans 'Period' %}
+                </a>
+            </li>
+            <li class="nav-item{% if page_name == 'map' %} active{% endif %} d-md-none">
+                <a class="nav-link" href="{% url "main:map" %}">
+                    {% svg_icon 'about' 'menu_list_icon' True %} {% trans 'Map' %}
+                </a>
+            </li>
             <li class="nav-item{% if page_name == 'about' %} active{% endif %}">
                 <a class="nav-link" href="{% url 'about' %}">
                     {% svg_icon 'about' 'menu_list_icon' True %} {% trans 'About' %}

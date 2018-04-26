@@ -44,9 +44,9 @@
 
         {% for item in mosaic.items.all %}
             <div>
-                <h3>
+                <h4>
                     {{ item|bd:"description" }}
-                </h3>
+                </h4>
                 <div class="row">
                     {% for p in item.pictures.all|slice:":5" %}
                         <div class="col-2 gallery-item">
@@ -61,8 +61,7 @@
                         <div class="frame next">
                             <a href="{% url 'main:detail' item.id %}"
                                class="">
-                                {{ item.pictures.count }} {% trans "Pictures" %}
-                                &raquo;
+                                <i class="far fa-images"></i> {{ item.pictures.count }}
                             </a>
                         </div>
 

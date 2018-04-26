@@ -99,7 +99,6 @@
 {% block scripts %}
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB62OF89NPnsuYWKkt6E1Y4gVz8y7hlm1I&region=il&language={{ map_lang }}&callback=initMap"></script>
-    {% comment %}
     <script>
         let navText = (is_rtl) ? [
             '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
@@ -109,29 +108,30 @@
             '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
         ];
         $(function () {
-            $('.owl-carousel').owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-                center: true,
-                rtl: is_rtl,
-                dots: false,
-                navText: navText,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    768: {
-                        items: 3
-                    },
-                    1200: {
-                        items: 5
+            if (screen.width < 768) {
+                $('.home-tags').addClass('owl-carousel owl-theme').owlCarousel({
+                    loop: true,
+                    margin: 10,
+                    nav: true,
+                    center: true,
+                    rtl: is_rtl,
+                    dots: false,
+                    navText: navText,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        768: {
+                            items: 3
+                        },
+                        1200: {
+                            items: 5
+                        }
                     }
-                }
-            })
+                })
+            }
         })
     </script>
-    {% endcomment %}
     <script>
         const STYLE = [
             {
