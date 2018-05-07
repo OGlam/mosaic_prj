@@ -4,6 +4,7 @@ from . import views
 
 app_name = 'main'
 urlpatterns = [
+    path('map/', views.MapView.as_view(), name='map'),
     path('sites/', views.SiteListView.as_view(), name='site_list'),
     path('periods/', views.PeriodsView.as_view(), name='periods'),
     path('subjects/', views.SubjectsView.as_view(), name='subjects'),

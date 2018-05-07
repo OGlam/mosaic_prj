@@ -41,7 +41,7 @@
 }
 
 #page header h1 {
-    padding: 30px 15px 0 0;
+    /*padding: 30px 15px 0 0;*/
 }
 
 .subjects .owl-prev {
@@ -64,6 +64,20 @@ header div.hero {
 .images .img-item {
     float: left;
     margin-right: 10px;
+}
+
+/* Home */
+.home-tags .tag-item {
+    float: left;
+    margin-right: 10px;
+}
+
+footer .list-inline-item:not(:last-child) {
+    margin-right: 2rem;
+}
+
+footer .list-inline-item:not(:last-child)::after {
+    right: -15px;
 }
 
 /* Responsive */

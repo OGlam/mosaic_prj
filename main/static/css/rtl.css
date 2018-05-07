@@ -46,7 +46,7 @@ body {
 }
 
 #page header h1 {
-    padding: 30px 0 0 15px;
+    /*padding: 30px 0 0 15px;*/
 }
 
 .subjects .owl-prev {
@@ -65,10 +65,24 @@ header div.hero {
     right: 35%;
 }
 
+/* Home */
+.home-tags .tag-item {
+    float: right;
+    margin-left: 10px;
+}
+
 /* Mosaic detail page */
 .images .img-item {
     float: right;
     margin-left: 10px;
+}
+
+footer .list-inline-item:not(:last-child) {
+    margin-left: 2rem;
+}
+
+footer .list-inline-item:not(:last-child)::after {
+    left: -15px;
 }
 
 /* Responsive */

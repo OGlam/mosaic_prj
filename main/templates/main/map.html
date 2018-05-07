@@ -2,73 +2,10 @@
 {% load static i18n mosaic %}
 
 {% block main %}
-    {% comment %}
-    {% include 'main/_carousel.html' with id='mosaic' controler=True indicators=True popular_sites=popular_sites %}
-    {% endcomment %}
-    <div class="top-banner"
-         style="background-image: url({{ popular_site.image }})">
-        <div class="banner-title">{{ popular_site.title }}</div>
-    </div>
-    <div class="sub-featured">
-        <div class="container">
-            <div class="row">
-                {% for site in popular_sites_sub %}
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                        <a href="{% url 'main:site' site.mosaic_site.id %}">
-                            <div class="card">
-                                <div class="cover-img"
-                                     style="background-image: url({{ site.get_highest_cover.medium_thumb.url }});"></div>
-                                <h5 class="card-title text-center">
-                                    {{ site.mosaic_site|bd:'title'|title }}
-                                </h5>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="arc-context">
-        <div class="container">
-            <h3 class="text-center">
-                {% trans 'Archaeological Context' %}
-            </h3>
-            {% if archaeological_context %}
-                <div class="row">
-                    {% for arc_context in archaeological_context %}
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-                            <div class="card">
-                                <span style="background-image: url({{ arc_context.medium_thumb.url }});"></span>
-                                <h4 class="gray-card-text text-center">
-                                    <a href="{{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}"></a>
-                                    {{ arc_context.mosaic.mosaic_site.get_archaeological_context_display }}
-                                </h4>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    <div class="container mb-5">
-        <div class="subjects">
-            <h3 class="text-center mb-4">{% trans 'Subjects' %}</h3>
-            <div class="home-tags clearfix">
-                {% for tag in tags %}
-                    <div class="tag-item item">
-                        <a href="{% url 'main:subject' tag.id %}">
-                            <span style="background-image: url({{ tag.a_picture.medium_thumb.url }});"></span>
-                            <h4>
-                                {{ tag|bd:'tag'|title }}
-                            </h4>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
     <div class="container">
+        <h1>
+            {% trans "Map" %}
+        </h1>
         <div class="map bg-white col-12">
             <div class="row">
                 <div class="col-sm-3 p-0">
@@ -99,6 +36,7 @@
 {% block scripts %}
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB62OF89NPnsuYWKkt6E1Y4gVz8y7hlm1I&region=il&language={{ map_lang }}&callback=initMap"></script>
+    {% comment %}
     <script>
         let navText = (is_rtl) ? [
             '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>',
@@ -108,30 +46,29 @@
             '<i class=\"fa fa-chevron-right\" aria-hidden=\"true\"></i>'
         ];
         $(function () {
-            if (screen.width < 768) {
-                $('.home-tags').addClass('owl-carousel owl-theme').owlCarousel({
-                    loop: true,
-                    margin: 10,
-                    nav: true,
-                    center: true,
-                    rtl: is_rtl,
-                    dots: false,
-                    navText: navText,
-                    responsive: {
-                        0: {
-                            items: 1
-                        },
-                        768: {
-                            items: 3
-                        },
-                        1200: {
-                            items: 5
-                        }
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                center: true,
+                rtl: is_rtl,
+                dots: false,
+                navText: navText,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    768: {
+                        items: 3
+                    },
+                    1200: {
+                        items: 5
                     }
-                })
-            }
+                }
+            })
         })
     </script>
+    {% endcomment %}
     <script>
         const STYLE = [
             {
@@ -401,6 +338,7 @@
                 center: IAABase,
                 styles: STYLE,
             });
+            let lastOpened = null;
             for (let i = 0; i < markers.length; i++) {
                 let site = markers[i];
                 let infowindow = new google.maps.InfoWindow({
@@ -413,14 +351,24 @@
                 });
                 siteMarkers.push(marker);
                 marker.addListener('click', function () {
+                    if (lastOpened) {
+                        lastOpened.close();
+                        lastOpened = null;
+                    }
                     infowindow.open(map, marker);
+                    lastOpened = infowindow;
                 });
             }
             $('.site-map-item h5').on('click', function () {
                 google.maps.event.trigger(siteMarkers[$(this).attr('data-marker')], 'click');
                 google.maps.event.trigger(map, "resize");
+                map.setZoom(12);
                 map.panTo(siteMarkers[$(this).attr('data-marker')].getPosition());
             });
+            $(".site-map-item img").each((i, img) => {
+                siteMarkers[i].setIcon(img.src);
+            });
+
         }
     </script>
 {% endblock %}

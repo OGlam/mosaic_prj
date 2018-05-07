@@ -2,21 +2,25 @@
 {% load static i18n mosaic %}
 
 {% block content %}
-    <div class="subjects">
-        {% for tag, pictures in tags.items %}
-            <h3 class="mb-4 mt-4">{{ tag|bd:'tag' }}</h3>
-            <div class="row">
-                {% for picture in pictures %}
-                   <div class="tag-item col-12 col-sm-3">
-                        <a href="{% url 'main:detail' picture.mosaic.id %}">
-                            <span style="background-image: url({{ picture.picture.url }});"></span>
-                            <h4 class="text-white">
-                                {{ picture.mosaic.mosaic_site|bd:'title' }}
-                            </h4>
-                        </a>
-                    </div>
-                {% endfor %}
+    <h1>
+        {% trans "Subjects" %}
+    </h1>
+    <div class="card-columns">
+        {% for object in object_list %}
+            <div class="card">
+                <div class="card-header">
+                    <a
+                            href="{{ object.get_absolute_url }}">
+                        {{ object|bd:'tag' }}
+                    </a>
+                </div>
+                <a href="{{ object.get_absolute_url }}">
+                    {{ object.items.first }}
+                    <img class="card-img-top"
+                         src="{{ object.a_picture.medium_thumb.url }}">
+                </a>
             </div>
         {% endfor %}
     </div>
+
 {% endblock %}

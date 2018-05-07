@@ -23,3 +23,5 @@ pip-selfcheck.json
 local/
 images_to_upload/*
 /backups/
+venv/
+fabfile_local.py

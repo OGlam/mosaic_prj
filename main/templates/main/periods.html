@@ -2,22 +2,26 @@
 {% load static i18n mosaic %}
 
 {% block content %}
-    <div class="subjects">
-        {% for site in sites %}
-            {% ifchanged site.period %}
-                <h3 class="mb-4 mt-4">{{ site.get_period_display }}</h3>
-                <div class="row">
-                    {% if not forloop.first %}</div>{% endif %}
-            {% endifchanged %}
-            <div class="tag-item col-12 col-sm-3">
-                <a href="{% url 'main:site' site.id %}">
-                    <span style="background-image: url({{ site.get_site_cover_image_url }});"></span>
-                    <h4 class="text-white">
-                        {{ site|bd:'title' }}
-                    </h4>
-                </a>
-            </div>
-        {% endfor %}
+    {% regroup sites by period as grouped %}
+    {% for group in grouped %}
+        <h2 class="mb-4 mt-4">{{ group.list.0.get_period_display }}</h2>
+        <div class="card-columns">
+            {% for object in group.list %}
+                <div class="card">
+                    <a href="{{ object.get_absolute_url }}">
+                        <img class="card-img-top"
+                             src="{{ object.items.first.pictures.first.medium_thumb.url }}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title"><a
+                                href="{{ object.get_absolute_url }}">
+                            {{ object|bd:'title' }}
+
+                        </a>
+                        </h5>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    </div>
+    {% endfor %}
 {% endblock %}

@@ -36,10 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'main.apps.MainConfig',
     'users.apps.UsersConfig',
     'django_extensions',
-    'autofixture',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -138,11 +139,8 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'mosaic_prj', 'locale'),
 )
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'collect-static')
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected-static')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
